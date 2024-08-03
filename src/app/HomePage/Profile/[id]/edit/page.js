@@ -28,7 +28,7 @@ export default function ProfilePage({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
+        const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })

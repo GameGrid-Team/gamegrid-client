@@ -28,12 +28,15 @@ export default function Posts({ keyPost }) {
   const fetchPosts = async () => {
     try {
       if (keyPost === 'following') {
-        const response = await fetch(`http://localhost:3001/api/posts/${userId}/${keyPost}/posts`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+        const response = await fetch(
+          `https://gamegrid-server.onrender.com/api/posts/${userId}/${keyPost}/posts`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
         const data = await response.json()
         if (response.ok) {
           setPosts(data.posts_list)
@@ -43,7 +46,7 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'all') {
-        const response = await fetch(`http://localhost:3001/api/posts/${keyPost}posts`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${keyPost}posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +64,7 @@ export default function Posts({ keyPost }) {
 
       if (keyPost === 'MyPost') {
         console.log(userId)
-        const response = await fetch(`http://localhost:3001/api/posts/${userId}/posts`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +83,7 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MySaved') {
-        const response = await fetch(`http://localhost:3001/api/posts/${userId}/saved`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/saved`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -96,7 +99,7 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MyLiked') {
-        const response = await fetch(`http://localhost:3001/api/posts/${userId}/liked`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/liked`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -155,15 +158,18 @@ export default function Posts({ keyPost }) {
 
       if (isSaved) {
         // User already saved the post, remove the save
-        response = await fetch(`http://localhost:3001/api/posts/${post._id}/${userId}/unsave`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+        response = await fetch(
+          `https://gamegrid-server.onrender.com/api/posts/${post._id}/${userId}/unsave`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
       } else {
         // User has not saved the post yet, add the save
-        response = await fetch(`http://localhost:3001/api/posts/${post._id}/${userId}/save`, {
+        response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${post._id}/${userId}/save`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -217,7 +223,7 @@ export default function Posts({ keyPost }) {
         }
       }
 
-      const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/share`, {
+      const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/post/share`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -262,7 +268,7 @@ export default function Posts({ keyPost }) {
       // User already liked the post, remove the like
       try {
         const response = await fetch(
-          `http://localhost:3001/api/posts/${posts[postIndex]._id}/${userId}/unlike`,
+          `https://gamegrid-server.onrender.com/api/posts/${posts[postIndex]._id}/${userId}/unlike`,
           {
             method: 'GET',
             headers: {
@@ -285,7 +291,7 @@ export default function Posts({ keyPost }) {
       // Send the updated like status to the server
       try {
         const response = await fetch(
-          `http://localhost:3001/api/posts/${posts[postIndex]._id}/${userId}/like`,
+          `https://gamegrid-server.onrender.com/api/posts/${posts[postIndex]._id}/${userId}/like`,
           {
             method: 'GET',
             headers: {
@@ -318,7 +324,7 @@ export default function Posts({ keyPost }) {
           if (post.shared) {
             try {
               const response = await fetch(
-                `http://localhost:3001/api/posts/${post.shared_post.original_post}/post`,
+                `https://gamegrid-server.onrender.com/api/posts/${post.shared_post.original_post}/post`,
                 {
                   method: 'GET',
                   headers: {
@@ -343,7 +349,7 @@ export default function Posts({ keyPost }) {
 
             try {
               const og_userResponse = await fetch(
-                `http://localhost:3001/api/users/${post.shared_post.original_owner}/data`
+                `https://gamegrid-server.onrender.com/api/users/${post.shared_post.original_owner}/data`
               )
               const original_data = await og_userResponse.json()
 
@@ -356,7 +362,9 @@ export default function Posts({ keyPost }) {
           }
 
           try {
-            const userResponse = await fetch(`http://localhost:3001/api/users/${post.user_id}/data`)
+            const userResponse = await fetch(
+              `https://gamegrid-server.onrender.com/api/users/${post.user_id}/data`
+            )
             const userData = await userResponse.json()
 
             if (userResponse.ok) {

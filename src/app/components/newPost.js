@@ -40,7 +40,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
