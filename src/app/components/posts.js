@@ -54,7 +54,7 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          console.log(post_data)
+          // console.log(post_data)
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
