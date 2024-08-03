@@ -3,37 +3,42 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { loginbtn } from '../actions'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [nickMail, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [userData,setUserData] = useState(false)
-  
-  // const [data, setData] = useState(null)
-  const handleLogin =  (e) => {
+
+  let input
+  if (nickMail.includes('@')) input = `?email=${nickMail}&password=${password}`
+  else input = `?nickname=${nickMail}&password=${password}`
+
+  const handleLogin = async (e) => {
     e.preventDefault()
 
+    //delay for loading components
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
     // שליחת בקשת POST לשרת
-    const response =  fetch('http://localhost:3001/api/login', {
-      method: 'POST',
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/login/${input}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: email, password: password }),
-      
     })
-    setUserData(response.json())
-    
-    
-    console.log(';;;;;;;;;;;',userData)
+
+    const data = await response.json()
+
     if (response.ok) {
-      console.log('Login successful:\n', userData)
       // Redirect to home page on success
-      alert(JSON.stringify(userData))
-      window.location.href = '/toBeContinued'
+      alert(JSON.stringify(data))
+      loginbtn(data.userid)
+      window.location.href = `/HomePage`
     } else {
-      console.log('Login failed:\n', userData.error)
+      alert(JSON.stringify(data))
+
+      console.log('Login failed:\n', data.error)
     }
   }
 
@@ -43,10 +48,6 @@ export default function Login() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
-      {/* <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
-        <source src="636f8c0b-ce4b-4587-954c-5102a9708b16.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video> */}
       <div className="relative z-10 w-full max-w-md p-8 space-y-6 bg-gray-900 bg-opacity-75 rounded-lg shadow-lg border-2 border-gray-700">
         <div className="flex justify-center mb-4">
           <FontAwesomeIcon icon={faUser} size="3x" className="text-white" />
@@ -55,14 +56,13 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-              E-mail:
+              E-mail\Nickname:
             </label>
             <input
               id="email"
               name="email"
-              type="email"
               required
-              value={email}
+              value={nickMail}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 mt-1 border border-gray-700 rounded-md bg-gray-800 text-gray-300 focus:ring focus:ring-blue-500 focus:border-blue-500"
             />

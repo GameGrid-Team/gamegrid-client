@@ -1,0 +1,69 @@
+
+import Link from 'next/link'
+<<<<<<< HEAD:src/app/components/topBar.js
+import BaseButton from './baseButton'
+import Image from 'next/image'
+
+export default function Header(){
+
+  return (
+    <nav className='flex'>
+      <Link href="/">
+          <Image
+            src="/GameGridOnlyLogo.png"
+            width={100}
+            height={100}
+            alt="GameGrid Logo"
+          />
+      </Link>
+      <div>
+        <Link href="/about">
+            <BaseButton name="about">
+              About
+            </BaseButton>
+        </Link>
+=======
+import Alertss from '../components/Alert'
+
+const Header = () => {
+  return (
+    <nav>
+      <div className="h-10vh flex justify-between z-50 text-white lg:py-5 px-20 py-4 flex-1 ">
+        <div className="flex items-center flex-1">
+          <span className="text-2xl font-bold">Logo</span>
+        </div>
+
+        <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">
+          <div className="flex-10">
+            <ul className="flex gap-8 -mr-12 text-[18px]">
+              <Link href="/HomePage">
+                <li> TempHomePage </li>
+              </Link>
+              <Link href="/login">
+                <li data-cy="login_button_in_heade_menu" className=" hover:bg-cyan-800 hover:rounded">
+                  {' '}
+                  Login{' '}
+                </li>
+              </Link>
+
+              <Link href="/register">
+                <li className=" hover:bg-cyan-800 hover:rounded">Register </li>
+              </Link>
+
+              <Link href="about" className="hover:bg-cyan-800 hover:marker">
+                <li> About </li>
+              </Link>
+            </ul>
+          </div>
+        </div>
+>>>>>>> 82d1b909680d028340e9709ad09161e1f22d790f:src/app/components/Header.js
+      </div>
+    </nav>
+  )
+}
+
+<<<<<<< HEAD:src/app/components/topBar.js
+
+=======
+export default Header
+>>>>>>> 82d1b909680d028340e9709ad09161e1f22d790f:src/app/components/Header.js

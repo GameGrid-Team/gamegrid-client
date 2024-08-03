@@ -1,5 +1,5 @@
 'use client'
-import Header from '../components/topBar'
+import Header from '../components/Header'
 import { useEffect, useState } from 'react'
 export default function About() {
   const [data, setData] = useState(null)
@@ -7,7 +7,7 @@ export default function About() {
   useEffect(() => {
     const fetchData = async () => {
       //   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/about`)
-      const res = await fetch('http://localhost:3001/api/about')
+      const res = await fetch('${process.env.NEXT_PUBLIC_SERVER_HOST}/api/about')
       const json = await res.json()
       setData(json)
     }
