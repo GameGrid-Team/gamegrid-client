@@ -46,11 +46,6 @@ const Menu = ({ userId }) => {
               <AiOutlineSetting /> Edit Profile
             </Link>
           </li>
-          <li>
-            <Link href="/about" className="text-primary">
-              <FcAbout /> About
-            </Link>
-          </li>
           <hr />
         </ul>
       </div>

@@ -12,6 +12,14 @@ export default function ProfilePage({ params }) {
     confirmPassword: '',
     gender: '',
     birth_date: '',
+    social:{
+      social_networks:{
+        0:{
+          link:'',
+          platform:'',
+        }
+      }
+    }
   })
 
   const [initialData, setInitialData] = useState({})
@@ -26,7 +34,9 @@ export default function ProfilePage({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/data`)
+        const userResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/id/data`
+        )
         const userData = await userResponse.json()
 
         if (userResponse.ok) {
@@ -39,6 +49,15 @@ export default function ProfilePage({ params }) {
             confirmPassword: userData.password,
             gender: userData.gender,
             birth_date: userData.birth_date,
+            social:{
+              social_networks:{
+                0:{
+                  link:'',
+                  platform:'',
+                }
+              }
+            }
+            //instagram: userData.social.social_networks[0].link,
           })
           setInitialData({
             first_name: userData.first_name,
@@ -47,6 +66,14 @@ export default function ProfilePage({ params }) {
             email: userData.email,
             gender: userData.gender,
             birth_date: userData.birth_date,
+            social:{
+              social_networks:{
+                0:{
+                  link:'',
+                  platform:'',
+                }
+              }
+            }
           })
         } else {
           console.error('Error fetching user data:', userData)
@@ -207,6 +234,26 @@ export default function ProfilePage({ params }) {
               type="date"
               name="birth_date"
               value={formData.birth_date}
+              onChange={handleChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              value={formData.facebook}
+              onChange={handleChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Instagram</label>
+            <input
+              type="text"
+              name="instagram"
+              value={formData.instagram}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
