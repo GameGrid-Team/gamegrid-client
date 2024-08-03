@@ -20,7 +20,7 @@ export default function Login() {
     //delay for loading components
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/login/${input}`, {
+    const response = await fetch(`http://localhost:3001/api/login/${input}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

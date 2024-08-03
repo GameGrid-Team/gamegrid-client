@@ -28,13 +28,10 @@ export default function ProfilePage({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${params.id}/data`,
-          {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          }
-        )
+        const userResponse = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        })
         const userData = await userResponse.json()
 
         if (userResponse.ok) {
