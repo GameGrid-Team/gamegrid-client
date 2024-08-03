@@ -72,8 +72,15 @@ export const HomeNav = ({ userId }) => {
             <Link href={`/HomePage/Profile/${userId}/edit`}>Edit Profile</Link>
           </li>
           <li>
+            <Link href={`/HomePage/Profile/${userId}/Save`}>Saved</Link>
+          </li>
+          <li>
+            <Link href={`/HomePage/Profile/${userId}/Like`}>Liked</Link>
+          </li>
+          <li>
             <Link href="/">Logout</Link>
           </li>
+          
         </ul>
       </div>
     </div>

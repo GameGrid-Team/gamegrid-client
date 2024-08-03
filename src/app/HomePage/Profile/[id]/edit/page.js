@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 export default function ProfilePage({ params }) {
-  const [formData, setFormData] = useState({
+  const [userData, setFormData] = useState({
     first_name: '',
     last_name: '',
     nickname: '',
@@ -12,14 +12,8 @@ export default function ProfilePage({ params }) {
     confirmPassword: '',
     gender: '',
     birth_date: '',
-    social:{
-      social_networks:{
-        0:{
-          link:'',
-          platform:'',
-        }
-      }
-    }
+    instagram: '',
+    facebook: '',
   })
 
   const [initialData, setInitialData] = useState({})
@@ -35,7 +29,11 @@ export default function ProfilePage({ params }) {
     const fetchUserData = async () => {
       try {
         const userResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/id/data`
+          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${params.id}/data`,
+          {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          }
         )
         const userData = await userResponse.json()
 
@@ -49,14 +47,9 @@ export default function ProfilePage({ params }) {
             confirmPassword: userData.password,
             gender: userData.gender,
             birth_date: userData.birth_date,
-            social:{
-              social_networks:{
-                0:{
-                  link:'',
-                  platform:'',
-                }
-              }
-            }
+            instagram: userData.social.instagram,
+            facebook: userData.social.facebook,
+
             //instagram: userData.social.social_networks[0].link,
           })
           setInitialData({
@@ -66,14 +59,8 @@ export default function ProfilePage({ params }) {
             email: userData.email,
             gender: userData.gender,
             birth_date: userData.birth_date,
-            social:{
-              social_networks:{
-                0:{
-                  link:'',
-                  platform:'',
-                }
-              }
-            }
+            instagram: userData.social.instagram,
+            facebook: userData.social.facebook,
           })
         } else {
           console.error('Error fetching user data:', userData)
@@ -90,7 +77,7 @@ export default function ProfilePage({ params }) {
 
   const handleChange = (e) => {
     setFormData({
-      ...formData,
+      ...userData,
       [e.target.name]: e.target.value,
     })
   }
@@ -98,7 +85,7 @@ export default function ProfilePage({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const { confirmPassword, password, ...currentData } = formData
+    const { confirmPassword, password, ...currentData } = userData
 
     if (password && !validatePassword(password)) {
       alert(
@@ -118,6 +105,8 @@ export default function ProfilePage({ params }) {
         changedData[key] = currentData[key]
       }
     })
+    console.log('curr:', currentData)
+    console.log('after change', changedData)
 
     if (password) {
       changedData.password = password
@@ -159,7 +148,7 @@ export default function ProfilePage({ params }) {
             <input
               type="text"
               name="first_name"
-              value={formData.first_name}
+              value={userData.first_name}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -169,7 +158,7 @@ export default function ProfilePage({ params }) {
             <input
               type="text"
               name="last_name"
-              value={formData.last_name}
+              value={userData.last_name}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -179,7 +168,7 @@ export default function ProfilePage({ params }) {
             <input
               type="text"
               name="nickname"
-              value={formData.nickname}
+              value={userData.nickname}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -189,7 +178,7 @@ export default function ProfilePage({ params }) {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={userData.email}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -199,7 +188,7 @@ export default function ProfilePage({ params }) {
             <input
               type="password"
               name="password"
-              value={formData.password}
+              value={userData.password}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -209,7 +198,7 @@ export default function ProfilePage({ params }) {
             <input
               type="password"
               name="confirmPassword"
-              value={formData.confirmPassword}
+              value={userData.confirmPassword}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -218,7 +207,7 @@ export default function ProfilePage({ params }) {
             <label className="block text-sm font-medium">Gender</label>
             <select
               name="gender"
-              value={formData.gender}
+              value={userData.gender}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             >
@@ -233,7 +222,7 @@ export default function ProfilePage({ params }) {
             <input
               type="date"
               name="birth_date"
-              value={formData.birth_date}
+              value={userData.birth_date}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -243,7 +232,7 @@ export default function ProfilePage({ params }) {
             <input
               type="text"
               name="facebook"
-              value={formData.facebook}
+              value={userData.facebook}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -253,7 +242,7 @@ export default function ProfilePage({ params }) {
             <input
               type="text"
               name="instagram"
-              value={formData.instagram}
+              value={userData.instagram}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />

@@ -44,6 +44,7 @@ export default function Posts({ keyPost }) {
           console.log('Failed to fetch posts:', data.error)
         }
       }
+
       if (keyPost === 'all') {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${keyPost}posts`, {
           method: 'GET',
@@ -59,8 +60,11 @@ export default function Posts({ keyPost }) {
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
-      } else {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${keyPost}/posts`, {
+      }
+
+      if (keyPost === 'MyPost') {
+        console.log(userId)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -68,11 +72,49 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          setPosts(data.posts_list)
+          console.log(data)
+          let post_data = data.posts_list
+          console.log(userId)
+          // console.log(post_data)
+          setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
       }
+
+      if (keyPost === 'MySaved') {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/saved`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await response.json()
+        if (response.ok) {
+          let post_data = data.posts_list
+          setPosts(post_data)
+        } else {
+          console.log('Failed to fetch posts:', data.error)
+        }
+      }
+
+      if (keyPost === 'MyLiked') {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/liked`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await response.json()
+        if (response.ok) {
+          let post_data = data.posts_list
+          // console.log(post_data)
+          setPosts(post_data)
+        } else {
+          console.log('Failed to fetch posts:', data.error)
+        }
+      }
+      
     } catch (error) {
       console.error('Error fetching posts:', error)
     }
@@ -120,7 +162,7 @@ export default function Posts({ keyPost }) {
         response = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post._id}/${userId}/unsave`,
           {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -131,7 +173,7 @@ export default function Posts({ keyPost }) {
         response = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post._id}/${userId}/save`,
           {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },

@@ -4,7 +4,7 @@ import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-export default function ProfilePage({ params }) {
+export default function ProfileLike({ params }) {
   const [userData, setUserData] = useState()
 
   useEffect(() => {
@@ -19,7 +19,10 @@ export default function ProfilePage({ params }) {
         if (response.ok) {
           setUserData(data)
         }
-      } catch (error) {
+      }
+      
+      
+      catch (error) {
         console.error('Error fetching user data:', error)
       }
     }
@@ -49,22 +52,13 @@ export default function ProfilePage({ params }) {
 
         {/* Rank progress gauge section */}
         <div className="mt-4">
-          <h3 className="text-lg font-medium text-center mb-2">Rank Progress</h3>
-          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div
-              className="bg-blue-600 h-2.5 rounded-full"
-              style={{ width: `${(userData.social.rank.exp / userData.social.rank.next_rank) * 100}%` }}
-            ></div>
-          </div>
-          <p className="text-center mt-2">
-            {userData.social.rank.exp} / {userData.social.rank.next_rank}
-          </p>
+          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"></div>
         </div>
       </div>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
-        <Posts keyPost={'MyPost'} />
+        <Posts keyPost={params.id} />
       </div>
     </div>
   )
