@@ -41,11 +41,25 @@ export default function ProfilePage({ params }) {
         <Image
           src={userData.avatar}
           alt="User Avatar"
-          width={24}
-          height={24}
+          width={1000000000000}
+          height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
+        <h3 className="text-xl font-bold">Nickname: {userData.nickname}
+                  <div>
+          <h3 className="text-xl font-bold">Rank: {userData.social.rank.rank_name}</h3>
+        </div>
+        </h3>
+
+        <div>
+          <Image
+            src={userData.social.rank.rank_image_url}
+            alt="User Avatar"
+            width={10000000000}
+            height={1000000000}
+            className="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+        </div>
 
         {/* Rank progress gauge section */}
         <div className="mt-4">
