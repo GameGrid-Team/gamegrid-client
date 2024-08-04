@@ -19,10 +19,7 @@ export default function ProfileLike({ params }) {
         if (response.ok) {
           setUserData(data)
         }
-      }
-      
-      
-      catch (error) {
+      } catch (error) {
         console.error('Error fetching user data:', error)
       }
     }
@@ -50,15 +47,11 @@ export default function ProfileLike({ params }) {
         />
         <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
 
-        {/* Rank progress gauge section */}
-        <div className="mt-4">
-          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"></div>
-        </div>
       </div>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
-        <Posts keyPost={params.id} />
+        <Posts keyPost={'MyLiked'} />
       </div>
     </div>
   )

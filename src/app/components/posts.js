@@ -72,7 +72,6 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          console.log(data)
           let post_data = data.posts_list
           console.log(userId)
           // console.log(post_data)
@@ -83,6 +82,9 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MySaved') {
+        // console.log(data)
+        console.log(userId)
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/saved`, {
           method: 'GET',
           headers: {
@@ -91,8 +93,11 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          let post_data = data.posts_list
+          let post_data = data.saved_post_list
+          console.log('data:', data)
+          console.log('post_data:', post_data)
           setPosts(post_data)
+          console.log('post_data2:', post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
@@ -107,14 +112,14 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          let post_data = data.posts_list
-          // console.log(post_data)
+          let post_data = data.liked_post_list
+          console.log(post_data)
+          
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
       }
-      
     } catch (error) {
       console.error('Error fetching posts:', error)
     }
@@ -162,7 +167,7 @@ export default function Posts({ keyPost }) {
         response = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post._id}/${userId}/unsave`,
           {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -197,7 +202,8 @@ export default function Posts({ keyPost }) {
       }
 
       setPosts(updatedPosts) // Trigger re-render
-      fetchPosts() // Refresh posts list
+      // fetchPosts()
+      location.reload() // Refresh posts list
     } catch (error) {
       console.error('Error updating save status:', error)
     }
