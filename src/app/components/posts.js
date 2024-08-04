@@ -14,6 +14,7 @@ export default function Posts({ keyPost }) {
       original_post: '',
     },
   })
+  console.log(keyPost)
   const [posts, setPosts] = useState([])
   const [updatedPosts, setUpdatedPosts] = useState(posts)
 
@@ -114,7 +115,24 @@ export default function Posts({ keyPost }) {
         if (response.ok) {
           let post_data = data.liked_post_list
           console.log(post_data)
-          
+
+          setPosts(post_data)
+        } else {
+          console.log('Failed to fetch posts:', data.error)
+        }
+      } else {
+        console.log(userId)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${keyPost}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await response.json()
+        if (response.ok) {
+          let post_data = data.posts_list
+          console.log(userId)
+          // console.log(post_data)
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
@@ -398,17 +416,21 @@ export default function Posts({ keyPost }) {
       <div className="w-full max-w-lg">
         {updatedPosts.map((post, index) => (
           <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
-            <Link href={`/HomePage/Profile/${post.user_id}`}>
-              <p>
-                {post.shared
-                  ? `${post.userNickname} has shared form: ${post.og_user}`
-                  : `${post.userNickname}`}
-              </p>
-            </Link>
+            <div>
+              <Link href={`/HomePage/Profile/${post.user_id}`}>{post.userNickname}</Link>
+              {post.shared && (
+                <>
+                  <span> has shared from: </span>
+                  <Link href={`/HomePage/Profile/${post.shared_post.original_owner}`}>{post.og_user}</Link>
+                </>
+              )}
+            </div>
+
             <p>Text: {post.text ? post.text : 'post unavailable'}</p>
             <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
             <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
             <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
+            <p>{post.original_owner}</p>
             <div className="flex items-center justify-between mt-2">
               <div className="flex items-center">
                 <button onClick={() => handleLikeClick(index)}>

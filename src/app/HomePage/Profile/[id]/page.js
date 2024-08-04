@@ -45,10 +45,11 @@ export default function ProfilePage({ params }) {
           height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">Nickname: {userData.nickname}
-                  <div>
-          <h3 className="text-xl font-bold">Rank: {userData.social.rank.rank_name}</h3>
-        </div>
+        <h3 className="text-xl font-bold">
+          Nickname: {userData.nickname}
+          <div>
+            <h3 className="text-xl font-bold">Rank: {userData.social.rank.rank_name}</h3>
+          </div>
         </h3>
 
         <div>
@@ -78,7 +79,7 @@ export default function ProfilePage({ params }) {
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
-        <Posts keyPost={'MyPost'} />
+        <Posts keyPost={params.id} />
       </div>
     </div>
   )
