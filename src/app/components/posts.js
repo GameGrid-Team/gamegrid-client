@@ -14,17 +14,9 @@ export default function Posts({ keyPost }) {
       original_post: '',
     },
   })
-  console.log(keyPost)
   const [posts, setPosts] = useState([])
   const [updatedPosts, setUpdatedPosts] = useState(posts)
 
-  // const [newPost, setNewPost] = useState({
-  //   tags: [],
-  //   game: [],
-  //   platform: [],
-  //   text: '',
-  //   //shared: false,
-  // })
   const [userId, setUserId] = useState(null) // Add state for userId
   const fetchPosts = async () => {
     try {
@@ -56,7 +48,6 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          // console.log(post_data)
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
@@ -64,7 +55,6 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MyPost') {
-        console.log(userId)
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/posts`, {
           method: 'GET',
           headers: {
@@ -74,7 +64,7 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          console.log(userId)
+
           // console.log(post_data)
           setPosts(post_data)
         } else {
@@ -84,7 +74,6 @@ export default function Posts({ keyPost }) {
 
       if (keyPost === 'MySaved') {
         // console.log(data)
-        console.log(userId)
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/saved`, {
           method: 'GET',
@@ -95,10 +84,7 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.saved_post_list
-          console.log('data:', data)
-          console.log('post_data:', post_data)
           setPosts(post_data)
-          console.log('post_data2:', post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
@@ -120,8 +106,7 @@ export default function Posts({ keyPost }) {
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
-      } else {
-        console.log(userId)
+      } else if (keyPost !== 'all') {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${keyPost}/posts`, {
           method: 'GET',
           headers: {
@@ -131,7 +116,6 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          console.log(userId)
           // console.log(post_data)
           setPosts(post_data)
         } else {
@@ -276,7 +260,7 @@ export default function Posts({ keyPost }) {
 
     // Update the local state
     setPosts(updatedPosts)
-    fetchPosts() // Refresh posts list
+    location.reload()
   }
 
   const handleLikeClick = async (postIndex) => {
