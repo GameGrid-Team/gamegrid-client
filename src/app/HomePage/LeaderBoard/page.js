@@ -1,153 +1,95 @@
+'use client'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { getSessionData } from '../../actions'
+import FollowButton from '@/app/components/followButton'
+import LoadingOverlay from '@/app/components/loading'
+
 export default function LeaderBoard() {
+  const [users, setUsers] = useState([])
+  const [userId, setUserId] = useState(null) // Add state for userId
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://localhost:3001/api/users/leaderboard`) // Adjust the endpoint to your setup
+      const data = await response.json()
+
+      setUsers(data.users)
+    }
+    fetchData()
+  }, [])
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const id = await getSessionData()
+        setUserId(id)
+      } catch (error) {
+        console.error('Error fetching user ID:', error)
+      }
+    }
+
+    fetchUserId()
+  }, [])
+
+  if (!users) return <LoadingOverlay />
+
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-main-background w-full">
-      <main className="flex flex-col items-center justify-center">
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
+    <div className="h-screen flex flex-col items-center justify-center w-full">
+      <main className="flex flex-col items-center justify-center w-full max-w-4xl p-4">
+        <div className="overflow-x-auto w-full">
+          <table className="table-auto w-full border-collapse">
             <thead>
-              <tr>
-                <th>
-                  <label></label>
-                </th>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
-                <th></th>
+              <tr className="bg-gray-200 bg-opacity-30 text-gray-800 text-lg font-bold">
+                <th className="px-6 py-4 border-none"></th>
+                <th className="px-6 py-4 border-none">Nickname</th>
+                <th className="px-6 py-4 border-none">Avatar</th>
+                <th className="px-6 py-4 border-none">Rank Name</th>
+                <th className="px-6 py-4 border-none">Rank Image</th>
+                <th className="px-6 py-4 border-none">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label></label>
-                </th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
+              {users.slice(0, 20).map((user, index) => (
+                <tr
+                  key={user._id}
+                  className="bg-white bg-opacity-10 mb-4 rounded-lg overflow-hidden shadow-md"
+                >
+                  <td className="px-6 py-4 border-none text-lg font-semibold text-center"># {index + 1}</td>
+                  <td className="px-6 py-4 border-none text-lg">
+                    <div className="flex items-center justify-center">
+                      <Link href={`/HomePage/Profile/${user._id}`} className="hover:underline">
+                        {user.nickname}
+                      </Link>
                     </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
+                  </td>
+                  <td className="px-6 py-4 border-none">
+                    <div className="flex items-center justify-center">
+                      <img
+                        className="w-16 h-16 rounded-full"
+                        src={user.avatar}
+                        alt={`${user.nickname}'s avatar`}
+                      />
                     </div>
-                  </div>
-                </td>
-                <td>
-                  Zemlak, Daniel and Leannon
-                  <br />
-                  <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-                </td>
-                <td>Purple</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
-              {/* row 2 */}
-              <tr>
-                <th>
-                  <label></label>
-                </th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Brice Swyre</div>
-                      <div className="text-sm opacity-50">China</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Carroll Group
-                  <br />
-                  <span className="badge badge-ghost badge-sm">Tax Accountant</span>
-                </td>
-                <td>Red</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
-              {/* row 3 */}
-              <tr>
-                <th></th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Marjy Ferencz</div>
-                      <div className="text-sm opacity-50">Russia</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Rowe-Schoen
-                  <br />
-                  <span className="badge badge-ghost badge-sm">Office Assistant I</span>
-                </td>
-                <td>Crimson</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
-              {/* row 4 */}
-              <tr>
-                <th></th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Yancy Tear</div>
-                      <div className="text-sm opacity-50">Brazil</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Wyman-Ledner
-                  <br />
-                  <span className="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-                </td>
-                <td>Indigo</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
+                  </td>
+                  <td className="px-6 py-4 border-none">
+                    <div className="flex items-center justify-center">{user.social.rank.rank_name}</div>
+                  </td>
+                  <td className="px-6 py-4 border-none flex items-center justify-center">
+                    <img
+                      className="w-16 h-16"
+                      src={user.social.rank.rank_image_url}
+                      alt={`${user.social.rank.rank_name} badge`}
+                    />
+                  </td>
+                  <td className="px-6 py-4 border-none text-center">
+                    <FollowButton
+                      userId={userId}
+                      followId={user._id}
+                      initialIsFollowing={user.social.followers.includes(userId)}
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
-            {/* foot */}
-            <tfoot>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
-                <th></th>
-              </tr>
-            </tfoot>
           </table>
         </div>
       </main>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { loginbtn } from '../actions'
+import LoadingOverlay from '../components/loading'
 
 export default function Login() {
   const [nickMail, setEmail] = useState('')
@@ -18,10 +19,9 @@ export default function Login() {
     e.preventDefault()
 
     //delay for loading components
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
+    // await new Promise((resolve) => setTimeout(resolve, 2000))
     // שליחת בקשת POST לשרת
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/login/${input}`, {
+    const response = await fetch(`http://localhost:3001/api/login/${input}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -30,6 +30,7 @@ export default function Login() {
 
     const data = await response.json()
 
+    if (!data) return <LoadingOverlay />
     if (response.ok) {
       // Redirect to home page on success
       alert(JSON.stringify(data))

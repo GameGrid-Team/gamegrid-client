@@ -11,7 +11,7 @@ export default function ProfileSave({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${params.id}/data`, {
+        const response = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -20,10 +20,7 @@ export default function ProfileSave({ params }) {
         if (response.ok) {
           setUserData(data)
         }
-      }
-      
-      
-      catch (error) {
+      } catch (error) {
         console.error('Error fetching user data:', error)
       }
     }
@@ -45,21 +42,16 @@ export default function ProfileSave({ params }) {
         <Image
           src={userData.avatar}
           alt="User Avatar"
-          width={24}
-          height={24}
+          width={1000000000000}
+          height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
         <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
-
-        {/* Rank progress gauge section */}
-        <div className="mt-4">
-          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"></div>
-        </div>
       </div>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
-        <Posts keyPost={params.id} />
+        <Posts keyPost={'MySaved'} />
       </div>
     </div>
   )

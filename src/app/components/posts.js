@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import LoadingOverlay from '../components/loading'
 
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
@@ -17,26 +18,16 @@ export default function Posts({ keyPost }) {
   const [posts, setPosts] = useState([])
   const [updatedPosts, setUpdatedPosts] = useState(posts)
 
-  // const [newPost, setNewPost] = useState({
-  //   tags: [],
-  //   game: [],
-  //   platform: [],
-  //   text: '',
-  //   //shared: false,
-  // })
   const [userId, setUserId] = useState(null) // Add state for userId
   const fetchPosts = async () => {
     try {
       if (keyPost === 'following') {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/${keyPost}/posts`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
+        const response = await fetch(`http://localhost:3001/api/posts/${userId}/${keyPost}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         const data = await response.json()
         if (response.ok) {
           setPosts(data.posts_list)
@@ -46,7 +37,7 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'all') {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${keyPost}posts`, {
+        const response = await fetch(`http://localhost:3001/api/posts/${keyPost}posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -55,7 +46,6 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          // console.log(post_data)
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
@@ -63,8 +53,7 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MyPost') {
-        console.log(userId)
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/posts`, {
+        const response = await fetch(`http://localhost:3001/api/posts/${userId}/posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -72,9 +61,8 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          console.log(data)
           let post_data = data.posts_list
-          console.log(userId)
+
           // console.log(post_data)
           setPosts(post_data)
         } else {
@@ -83,7 +71,9 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MySaved') {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/saved`, {
+        // console.log(data)
+
+        const response = await fetch(`http://localhost:3001/api/posts/${userId}/saved`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -91,7 +81,7 @@ export default function Posts({ keyPost }) {
         })
         const data = await response.json()
         if (response.ok) {
-          let post_data = data.posts_list
+          let post_data = data.saved_post_list
           setPosts(post_data)
         } else {
           console.log('Failed to fetch posts:', data.error)
@@ -99,7 +89,23 @@ export default function Posts({ keyPost }) {
       }
 
       if (keyPost === 'MyLiked') {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/liked`, {
+        const response = await fetch(`http://localhost:3001/api/posts/${userId}/liked`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await response.json()
+        if (response.ok) {
+          let post_data = data.liked_post_list
+          console.log(post_data)
+
+          setPosts(post_data)
+        } else {
+          console.log('Failed to fetch posts:', data.error)
+        }
+      } else if (keyPost !== 'all') {
+        const response = await fetch(`http://localhost:3001/api/posts/${keyPost}/posts`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -114,7 +120,6 @@ export default function Posts({ keyPost }) {
           console.log('Failed to fetch posts:', data.error)
         }
       }
-      
     } catch (error) {
       console.error('Error fetching posts:', error)
     }
@@ -159,26 +164,20 @@ export default function Posts({ keyPost }) {
 
       if (isSaved) {
         // User already saved the post, remove the save
-        response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post._id}/${userId}/unsave`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
+        response = await fetch(`http://localhost:3001/api/posts/${post._id}/${userId}/unsave`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
       } else {
         // User has not saved the post yet, add the save
-        response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post._id}/${userId}/save`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
+        response = await fetch(`http://localhost:3001/api/posts/${post._id}/${userId}/save`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
       }
 
       const data = await response.json()
@@ -197,7 +196,8 @@ export default function Posts({ keyPost }) {
       }
 
       setPosts(updatedPosts) // Trigger re-render
-      fetchPosts() // Refresh posts list
+      // fetchPosts()
+      location.reload() // Refresh posts list
     } catch (error) {
       console.error('Error updating save status:', error)
     }
@@ -227,7 +227,7 @@ export default function Posts({ keyPost }) {
         }
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/post/share`, {
+      const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/share`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ export default function Posts({ keyPost }) {
 
     // Update the local state
     setPosts(updatedPosts)
-    fetchPosts() // Refresh posts list
+    location.reload()
   }
 
   const handleLikeClick = async (postIndex) => {
@@ -272,7 +272,7 @@ export default function Posts({ keyPost }) {
       // User already liked the post, remove the like
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${posts[postIndex]._id}/${userId}/unlike`,
+          `http://localhost:3001/api/posts/${posts[postIndex]._id}/${userId}/unlike`,
           {
             method: 'GET',
             headers: {
@@ -295,7 +295,7 @@ export default function Posts({ keyPost }) {
       // Send the updated like status to the server
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${posts[postIndex]._id}/${userId}/like`,
+          `http://localhost:3001/api/posts/${posts[postIndex]._id}/${userId}/like`,
           {
             method: 'GET',
             headers: {
@@ -328,7 +328,7 @@ export default function Posts({ keyPost }) {
           if (post.shared) {
             try {
               const response = await fetch(
-                `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${post.shared_post.original_post}/post`,
+                `http://localhost:3001/api/posts/${post.shared_post.original_post}/post`,
                 {
                   method: 'GET',
                   headers: {
@@ -353,7 +353,7 @@ export default function Posts({ keyPost }) {
 
             try {
               const og_userResponse = await fetch(
-                `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${post.shared_post.original_owner}/data`
+                `http://localhost:3001/api/users/${post.shared_post.original_owner}/data`
               )
               const original_data = await og_userResponse.json()
 
@@ -366,9 +366,7 @@ export default function Posts({ keyPost }) {
           }
 
           try {
-            const userResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${post.user_id}/data`
-            )
+            const userResponse = await fetch(`http://localhost:3001/api/users/${post.user_id}/data`)
             const userData = await userResponse.json()
 
             if (userResponse.ok) {
@@ -387,22 +385,28 @@ export default function Posts({ keyPost }) {
     fetchOriginalPostsAndUserData()
   }, [posts])
 
+  if (!posts) return <LoadingOverlay />
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="w-full max-w-lg">
         {updatedPosts.map((post, index) => (
           <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
-            <Link href={`/HomePage/Profile/${post.user_id}`}>
-              <p>
-                {post.shared
-                  ? `${post.userNickname} has shared form: ${post.og_user}`
-                  : `${post.userNickname}`}
-              </p>
-            </Link>
+            <div>
+              <Link href={`/HomePage/Profile/${post.user_id}`}>{post.userNickname}</Link>
+              {post.shared && (
+                <>
+                  <span> has shared from: </span>
+                  <Link href={`/HomePage/Profile/${post.shared_post.original_owner}`}>{post.og_user}</Link>
+                </>
+              )}
+            </div>
+
             <p>Text: {post.text ? post.text : 'post unavailable'}</p>
             <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
             <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
             <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
+            <p>{post.original_owner}</p>
             <div className="flex items-center justify-between mt-2">
               <div className="flex items-center">
                 <button onClick={() => handleLikeClick(index)}>

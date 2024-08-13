@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { getSessionData } from '../actions'
+import LoadingOverlay from '../components/loading'
 
 export default function NewPost() {
   const [newPost, setNewPost] = useState({
@@ -40,7 +41,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,6 +66,8 @@ export default function NewPost() {
       console.log('Post failed to upload:\n', data.error)
     }
   }
+
+  if (!newPost) return <LoadingOverlay />
   return (
     <div className=" flex flex-col items-center">
       <div className="w-full max-w-xl">

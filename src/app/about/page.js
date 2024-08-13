@@ -1,13 +1,14 @@
 'use client'
 import Header from '../components/Header'
 import { useEffect, useState } from 'react'
+import LoadingOverlay from '../components/loading'
 export default function About() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       //   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/about`)
-      const res = await fetch('${process.env.NEXT_PUBLIC_SERVER_HOST}/api/about')
+      const res = await fetch(`http://localhost:3001/api/about`)
       const json = await res.json()
       setData(json)
     }
@@ -16,7 +17,7 @@ export default function About() {
   }, [])
 
   if (!data) {
-    return <div>Loading...</div>
+    return <LoadingOverlay />
   }
   return (
     <div className="">
