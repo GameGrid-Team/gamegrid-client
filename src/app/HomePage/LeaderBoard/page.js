@@ -43,6 +43,9 @@ export default function LeaderBoard() {
       console.error('Error following user:', error)
     }
   }
+
+  if (!users) return <LoadingOverlay />
+
   return (
     <div className="h-screen flex flex-col items-center justify-center w-full">
       <main className="flex flex-col items-center justify-center w-full max-w-4xl p-4">

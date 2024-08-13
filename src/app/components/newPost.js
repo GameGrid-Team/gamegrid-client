@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { getSessionData } from '../actions'
+import LoadingOverlay from '../components/loading'
 
 export default function NewPost() {
   const [newPost, setNewPost] = useState({
@@ -65,6 +66,8 @@ export default function NewPost() {
       console.log('Post failed to upload:\n', data.error)
     }
   }
+
+  if (!newPost) return <LoadingOverlay />
   return (
     <div className=" flex flex-col items-center">
       <div className="w-full max-w-xl">

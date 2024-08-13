@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import LoadingOverlay from '../components/loading'
 
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
@@ -394,6 +395,8 @@ export default function Posts({ keyPost }) {
 
     fetchOriginalPostsAndUserData()
   }, [posts])
+
+  if (!posts) return <LoadingOverlay />
 
   return (
     <div className="min-h-screen flex flex-col items-center">
