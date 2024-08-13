@@ -11,7 +11,7 @@ export default function ProfileSave({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${params.id}/data`, {
+        const response = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -46,10 +46,7 @@ export default function ProfileSave({ params }) {
           height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">
-          Nickname: {userData.nickname}
-        </h3>
-
+        <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
       </div>
 
       {/* Posts Section */}

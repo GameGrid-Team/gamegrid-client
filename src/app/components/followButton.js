@@ -7,12 +7,9 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
   const handleClick = async () => {
     if (isFollowing) {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${userId}/${followId}/unfollow`,
-          {
-            method: 'POST',
-          }
-        )
+        const response = await fetch(`http://localhost:3001/api/users/${userId}/${followId}/unfollow`, {
+          method: 'POST',
+        })
         const data = await response.json()
         console.log('Unfollow response:', data)
         setIsFollowing(false) // Update the state
@@ -21,12 +18,9 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
       }
     } else {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/${userId}/${followId}/follow`,
-          {
-            method: 'POST',
-          }
-        )
+        const response = await fetch(`http://localhost:3001/api/users/${userId}/${followId}/follow`, {
+          method: 'POST',
+        })
         const data = await response.json()
         console.log('Follow response:', data)
         setIsFollowing(true) // Update the state

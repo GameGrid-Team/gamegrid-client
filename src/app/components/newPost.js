@@ -41,7 +41,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getSessionData } from '../../actions'
 import FollowButton from '@/app/components/followButton'
+import LoadingOverlay from '@/app/components/loading'
 
 export default function LeaderBoard() {
   const [users, setUsers] = useState([])
   const [userId, setUserId] = useState(null) // Add state for userId
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/users/leaderboard`) // Adjust the endpoint to your setup
+      const response = await fetch(`http://localhost:3001/api/users/leaderboard`) // Adjust the endpoint to your setup
       const data = await response.json()
 
       setUsers(data.users)
@@ -52,9 +53,7 @@ export default function LeaderBoard() {
                   key={user._id}
                   className="bg-white bg-opacity-10 mb-4 rounded-lg overflow-hidden shadow-md"
                 >
-                  <td className="px-6 py-4 border-none text-lg font-semibold text-center">
-                    # {index + 1}
-                  </td>
+                  <td className="px-6 py-4 border-none text-lg font-semibold text-center"># {index + 1}</td>
                   <td className="px-6 py-4 border-none text-lg">
                     <div className="flex items-center justify-center">
                       <Link href={`/HomePage/Profile/${user._id}`} className="hover:underline">
@@ -82,7 +81,11 @@ export default function LeaderBoard() {
                     />
                   </td>
                   <td className="px-6 py-4 border-none text-center">
-                    <FollowButton userId={userId} followId={user._id} initialIsFollowing={user.social.followers.includes(userId)} />
+                    <FollowButton
+                      userId={userId}
+                      followId={user._id}
+                      initialIsFollowing={user.social.followers.includes(userId)}
+                    />
                   </td>
                 </tr>
               ))}
