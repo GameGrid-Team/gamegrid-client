@@ -55,7 +55,7 @@ export default function ProfilePage({ params }) {
           height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">
+        <h3 className="text-xl font-bold text-white">
           Nickname: {userData.nickname}
           <div>
             <h3 className="text-xl font-bold">Rank: {userData.social.rank.rank_name}</h3>
