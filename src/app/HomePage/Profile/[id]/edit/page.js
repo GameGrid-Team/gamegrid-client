@@ -14,11 +14,12 @@ export default function ProfilePage({ params }) {
     birth_date: '',
     instagram: '',
     facebook: '',
+    avatar: null, // Add avatar field
   })
 
   const [initialData, setInitialData] = useState({})
   const [loading, setLoading] = useState(true)
-  const [showPassword, setShowPassword] = useState(false)
+  const [avatarPreview, setAvatarPreview] = useState(null)
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Z]).{1,8}$/
@@ -40,14 +41,12 @@ export default function ProfilePage({ params }) {
             last_name: userData.last_name,
             nickname: userData.nickname,
             email: userData.email,
-            password: userData.password,
-            confirmPassword: userData.password,
+            password: '',
+            confirmPassword: '',
             gender: userData.gender,
             birth_date: userData.birth_date,
             instagram: userData.social.instagram,
             facebook: userData.social.facebook,
-
-            //instagram: userData.social.social_networks[0].link,
           })
           setInitialData({
             first_name: userData.first_name,
@@ -79,10 +78,48 @@ export default function ProfilePage({ params }) {
     })
   }
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    setFormData({
+      ...userData,
+      avatar: file,
+    })
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setAvatarPreview(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
+  const deleteAvatar = async () => {
+    const response = await fetch(`http://localhost:3001/api/users/${params.id}/avatar/remove`, {
+      method: 'DELETE',
+    })
+    if (response.ok) {
+      uploadAvatar()
+    }
+  }
+  const uploadAvatar = async () => {
+    const formData = new FormData()
+    formData.append('image', userData.avatar)
+
+    const response = await fetch(`http://localhost:3001/api/users/${params.id}/avatar/upload`, {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await response.json()
+
+    if (response.ok) {
+      return
+    } else {
+      deleteAvatar()
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const { confirmPassword, password, ...currentData } = userData
+    const { confirmPassword, password, avatar, ...currentData } = userData
 
     if (password && !validatePassword(password)) {
       alert(
@@ -102,11 +139,17 @@ export default function ProfilePage({ params }) {
         changedData[key] = currentData[key]
       }
     })
-    console.log('curr:', currentData)
-    console.log('after change', changedData)
 
     if (password) {
       changedData.password = password
+    }
+
+    let avatarURL = null
+    if (avatar) {
+      avatarURL = await uploadAvatar()
+      alert('uploading avatar...')
+      window.location.href = '/HomePage'
+       
     }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/update`, {
@@ -244,7 +287,22 @@ export default function ProfilePage({ params }) {
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
           </div>
-          <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded-md">
+          <div>
+            <label className="block text-sm font-medium">Avatar</label>
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+            {avatarPreview && (
+              <div className="mt-2">
+                <img src={avatarPreview} alt="Avatar Preview" className="h-32 w-32 rounded-full" />
+              </div>
+            )}
+          </div>
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
             Save Changes
           </button>
         </form>

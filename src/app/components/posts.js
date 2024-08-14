@@ -217,7 +217,7 @@ export default function Posts({ keyPost }) {
         sharePostData = {
           shared_post: {
             original_owner: posts[postIndex].shared_post.original_owner,
-            original_post: posts[postIndex]._id,
+            original_post: posts[postIndex].shared_post.original_post,
           },
         }
       } else {
