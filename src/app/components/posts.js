@@ -17,6 +17,7 @@ export default function Posts({ keyPost }) {
   })
   const [posts, setPosts] = useState([])
   const [updatedPosts, setUpdatedPosts] = useState(posts)
+  const [isLoading, setIsLoading] = useState(true)
 
   const [userId, setUserId] = useState(null) // Add state for userId
   const fetchPosts = async () => {
@@ -43,6 +44,7 @@ export default function Posts({ keyPost }) {
             'Content-Type': 'application/json',
           },
         })
+
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
@@ -380,70 +382,75 @@ export default function Posts({ keyPost }) {
         })
       )
       setUpdatedPosts(newPosts)
+      setIsLoading(false)
     }
 
     fetchOriginalPostsAndUserData()
   }, [posts])
 
-  if (!posts) return <LoadingOverlay />
-
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="w-full max-w-lg">
-        {updatedPosts.map((post, index) => (
-          <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
-            <div>
-              <Link href={`/HomePage/Profile/${post.user_id}`}>{post.userNickname}</Link>
-              {post.shared && (
-                <>
-                  <span> has shared from: </span>
-                  <Link href={`/HomePage/Profile/${post.shared_post.original_owner}`}>{post.og_user}</Link>
-                </>
-              )}
-            </div>
-
-            <p>Text: {post.text ? post.text : 'post unavailable'}</p>
-            <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
-            <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
-            <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
-            <p>{post.original_owner}</p>
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center">
-                <button onClick={() => handleLikeClick(index)}>
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className={`mr-2 transition-colors duration-300 ${
-                      post.likes.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
-                    }`}
-                  />
-                </button>
-                <span>{post.likes.count}</span>
-              </div>
-              <div className="flex items-center">
-                <button onClick={() => handleSaveClick(index)}>
-                  <FontAwesomeIcon
-                    icon={faBookmark}
-                    className={`mr-2 transition-colors duration-300 ${
-                      post.saves.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
-                    }`}
-                  />
-                </button>
-                <span>{post.saves.count}</span>
-              </div>
-              <div className="flex items-center">
-                <button onClick={() => handleShare(index)}>
-                  <FontAwesomeIcon
-                    icon={faShare}
-                    className={`mr-2 transition-colors duration-300 ${
-                      post.shares.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
-                    }`}
-                  />
-                </button>
-                <span>{post.shares.count}</span>
-              </div>
-            </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <LoadingOverlay />
           </div>
-        ))}
+        ) : (
+          updatedPosts.map((post, index) => (
+            <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
+              <div>
+                <Link href={`/HomePage/Profile/${post.user_id}`}>{post.userNickname}</Link>
+                {post.shared && (
+                  <>
+                    <span> has shared from: </span>
+                    <Link href={`/HomePage/Profile/${post.shared_post.original_owner}`}>{post.og_user}</Link>
+                  </>
+                )}
+              </div>
+
+              <p>Text: {post.text ? post.text : 'post unavailable'}</p>
+              <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
+              <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
+              <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
+              <p>{post.original_owner}</p>
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center">
+                  <button onClick={() => handleLikeClick(index)}>
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      className={`mr-2 transition-colors duration-300 ${
+                        post.likes.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
+                      }`}
+                    />
+                  </button>
+                  <span>{post.likes.count}</span>
+                </div>
+                <div className="flex items-center">
+                  <button onClick={() => handleSaveClick(index)}>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      className={`mr-2 transition-colors duration-300 ${
+                        post.saves.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                      }`}
+                    />
+                  </button>
+                  <span>{post.saves.count}</span>
+                </div>
+                <div className="flex items-center">
+                  <button onClick={() => handleShare(index)}>
+                    <FontAwesomeIcon
+                      icon={faShare}
+                      className={`mr-2 transition-colors duration-300 ${
+                        post.shares.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                      }`}
+                    />
+                  </button>
+                  <span>{post.shares.count}</span>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )

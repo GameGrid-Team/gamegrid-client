@@ -10,7 +10,7 @@ export default async function HomePage() {
         <title>Lobby</title>
       </Head>
       <div className="">
-        <NewPost  />
+        <NewPost />
         <Posts keyPost={'all'} />
       </div>
     </div>
