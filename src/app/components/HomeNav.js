@@ -3,6 +3,7 @@ import Menu from '../components/Menu'
 import Link from 'next/link'
 
 export const HomeNav = ({ userId }) => {
+  
   return (
     <div className="navbar ">
       <div className="navbar-start">

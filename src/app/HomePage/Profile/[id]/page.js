@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import FollowButton from '@/app/components/followButton'
 import { getSessionData } from '@/app/actions'
+import LoadingOverlay from '@/app/components/loading'
 
 export default function ProfilePage({ params }) {
   const [userData, setUserData] = useState()
@@ -32,7 +33,11 @@ export default function ProfilePage({ params }) {
   }, [])
 
   if (!userData) {
-    return <div>Loading...</div>
+    return (
+      <div className="flex items-center h-screen ml-96 p-96">
+        <LoadingOverlay />
+      </div>
+    )
   }
 
   return (
