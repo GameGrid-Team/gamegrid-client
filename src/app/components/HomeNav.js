@@ -3,7 +3,6 @@ import Menu from '../components/Menu'
 import Link from 'next/link'
 
 export const HomeNav = ({ userId }) => {
-  
   return (
     <div className="navbar ">
       <div className="navbar-start">
@@ -79,9 +78,11 @@ export const HomeNav = ({ userId }) => {
             <Link href={`/HomePage/Profile/${userId}/Like`}>Liked</Link>
           </li>
           <li>
+            <Link href={`/HomePage/Profile/${userId}/stats`}>Stats</Link>
+          </li>
+          <li>
             <Link href="/">Logout</Link>
           </li>
-          
         </ul>
       </div>
     </div>
