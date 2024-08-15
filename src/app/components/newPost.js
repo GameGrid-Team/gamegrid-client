@@ -82,7 +82,7 @@ export default function NewPost() {
               type="text"
               value={newPost.text}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
             />
           </div>
           <div className="mb-4">
@@ -95,7 +95,7 @@ export default function NewPost() {
               type="text"
               value={newPost.tags.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
             />
           </div>
           <div className="mb-4">
@@ -108,7 +108,7 @@ export default function NewPost() {
               type="text"
               value={newPost.game.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
             />
           </div>
           <div className="mb-4">
@@ -121,7 +121,7 @@ export default function NewPost() {
               type="text"
               value={newPost.platform.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
             />
           </div>
           <div className="flex items-center justify-between">
