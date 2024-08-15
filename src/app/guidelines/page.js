@@ -9,7 +9,6 @@ export default function Policy() {
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-center text-white-800">Community Guidlines</h1>
       </header>
-
       <SectionWrapper>
         <h2 className="text-2xl font-semibold text-white-700 mb-4">1. Respect and Courtesy</h2>
         <ul className="list-disc list-inside text-white-600 mb-4">
@@ -47,7 +46,7 @@ export default function Policy() {
         <h2 className="text-2xl font-semibold text-white-700 mb-4">3. Privacy and Security</h2>
         <ul className="list-disc list-inside text-white-600 mb-4">
           <li>
-            Protect Personal Information: Do not share your own or others' personal information without
+            Protect Personal Information: Do not share your own or others&apos; personal information without
             consent. This includes addresses, phone numbers, and other sensitive data.
           </li>
           <li>Account Security: Keep your account credentials secure and do not share them with others.</li>
