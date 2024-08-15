@@ -58,11 +58,12 @@ export default function ProfilePage({ params }) {
         <title>Profile</title>
       </Head>
 
+
       <div className="flex w-full justify-between">
         {/* Main Content */}
         <div className="flex-1 flex flex-col items-center">
           {/* User Data Section */}
-          <div className="w-full max-w-md bg-primary shadow-md rounded-lg p-6 mb-8 relative">
+          <div className="w-full max-w-md bg-[#16303b] shadow-md rounded-lg p-6 mb-8 relative">
             <Image
               src={userData.avatar}
               alt="User Avatar"
@@ -70,21 +71,28 @@ export default function ProfilePage({ params }) {
               height={100000000000}
               className="w-24 h-24 rounded-full mx-auto mb-4"
             />
-            <h3 className="text-xl font-bold">
-              Nickname: {userData.nickname}
-              <div>
-                <h3 className="text-xl font-bold">Rank: {userData.social.rank.rank_name}</h3>
+    
+            <div className="p-6 max-w-lg mx-auto">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold mb-4 -mt-6">{userData.nickname}</h3>
               </div>
-            </h3>
 
-            <div>
-              <Image
-                src={userData.social.rank.rank_image_url}
-                alt="User Avatar"
-                width={10000000000}
-                height={1000000000}
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-              />
+              <div className="flex flex-col items-center space-y-4">
+                <div className="relative">
+                  <Image
+                    src={userData.social.rank.rank_image_url}
+                    alt="Rank Image"
+                    width={100000}
+                    height={100000}
+                    className="w-20 h-20 rounded-full -mb-5"
+                  />
+                </div>
+
+                <h3 className="text-xl font-semibold -mt-3">{userData.social.rank.rank_name}</h3>
+              </div>
+            </div>
+            <div className="mt-4 ">
+              <p className="text-lg ">{userData.bio}</p>
             </div>
 
             {/* Rank progress gauge section */}
@@ -139,7 +147,7 @@ export default function ProfilePage({ params }) {
                     <Link href={`/HomePage/Profile/${follower._id}`}>
                       <p className="text-xl font-medium">{follower.nickname}</p>
                     </Link>
-                    <div className='pl-10'>
+                    <div className="pl-10">
                       <FollowButton
                         userId={userId}
                         followId={follower._id}
