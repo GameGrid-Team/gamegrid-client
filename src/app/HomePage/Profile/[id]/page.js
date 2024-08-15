@@ -58,6 +58,7 @@ export default function ProfilePage({ params }) {
         <title>Profile</title>
       </Head>
 
+
       <div className="flex w-full justify-between">
         {/* Main Content */}
         <div className="flex-1 flex flex-col items-center">
@@ -70,25 +71,7 @@ export default function ProfilePage({ params }) {
               height={100000000000}
               className="w-24 h-24 rounded-full mx-auto mb-4"
             />
-            {/* <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
-            <div className="flex items-center space-x-4 justify-center ">
-              <div>
-                <Image
-                  src={userData.social.rank.rank_image_url}
-                  alt="User Avatar"
-                  width={10000000000}
-                  height={1000000000}
-                  className="w-24 h-24 rounded-full mx-auto mb-4"
-                />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold -mt-7">{userData.social.rank.rank_name}</h3>
-              </div>
-            </div>
-
-            <div>
-              <p>{userData.bio}</p>
-            </div> */}
+    
             <div className="p-6 max-w-lg mx-auto">
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold mb-4 -mt-6">{userData.nickname}</h3>

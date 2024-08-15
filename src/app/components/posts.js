@@ -7,6 +7,7 @@ import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import LoadingOverlay from '../components/loading'
+import Image from 'next/image'
 
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
@@ -18,8 +19,8 @@ export default function Posts({ keyPost }) {
   const [posts, setPosts] = useState([])
   const [updatedPosts, setUpdatedPosts] = useState(posts)
   const [isLoading, setIsLoading] = useState(true)
-
   const [userId, setUserId] = useState(null) // Add state for userId
+
   const fetchPosts = async () => {
     try {
       if (keyPost === 'following') {
@@ -360,7 +361,11 @@ export default function Posts({ keyPost }) {
               const original_data = await og_userResponse.json()
 
               if (og_userResponse.ok) {
-                updatedPost = { ...updatedPost, og_user: original_data.nickname }
+                updatedPost = {
+                  ...updatedPost,
+                  og_user: original_data.nickname,
+                  avatar: original_data.avatar,
+                }
               }
             } catch (error) {
               console.error('Error fetching original user data:', error)
@@ -372,7 +377,7 @@ export default function Posts({ keyPost }) {
             const userData = await userResponse.json()
 
             if (userResponse.ok) {
-              updatedPost = { ...updatedPost, userNickname: userData.nickname }
+              updatedPost = { ...updatedPost, userNickname: userData.nickname, avatar: userData.avatar }
             }
           } catch (error) {
             console.error('Error fetching user data:', error)
@@ -399,7 +404,7 @@ export default function Posts({ keyPost }) {
           updatedPosts.map((post, index) => (
             <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
               <div>
-                <Link href={`/HomePage/Profile/${post.user_id}`}>{post.userNickname}</Link>
+                <Link href={`/HomePage/Profile/${post.user_id}`}> <Image src={post.avatar} alt="User avatar" height={100} width={100} className="left-0 rounded-xl" />{post.userNickname}</Link>
                 {post.shared && (
                   <>
                     <span> has shared from: </span>
