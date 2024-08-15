@@ -17,7 +17,7 @@ export default function About() {
           Welcome to GameGrid (GG), the ultimate social media platform designed specifically for gamers! Our
           mission is to create a vibrant and engaging community where gamers from all around the world can
           connect, share, and compete. With features tailored to enhance the gaming experience, GameGrid is
-          more than just a social network; it's a hub for gamers to thrive.
+          more than just a social network; it&apos;s a hub for gamers to thrive.
         </p>
 
         <h3 className="text-xl font-semibold text-white-700 mb-3">Key Features of GameGrid:</h3>
@@ -27,8 +27,8 @@ export default function About() {
             discover new content from the community.
           </li>
           <li>
-            <strong>Player's Hub (Profile Page):</strong> Showcase your gaming achievements, share your gaming
-            interests, and connect with like-minded gamers.
+            <strong>Player&apos;s Hub (Profile Page):</strong> Showcase your gaming achievements, share your
+            gaming interests, and connect with like-minded gamers.
           </li>
           <li>
             <strong>Rank System:</strong> Earn points for activities like posting and engaging with content,
@@ -51,7 +51,7 @@ export default function About() {
         <h2 className="text-2xl font-semibold text-white-700 mb-4">Meet the Team</h2>
         <p className="text-white-600 mb-4">
           Our dedicated team of developers and designers are passionate about gaming and committed to
-          delivering the best experience for our users. Here's a bit about us:
+          delivering the best experience for our users. Here&apos;s a bit about us:
         </p>
         <ul className="list-disc list-inside text-white-600 mb-4">
           <li>Kobi</li>
@@ -67,10 +67,10 @@ export default function About() {
       <SectionWrapper>
         <h2 className="text-2xl font-semibold text-white-700 mb-4">Our Vision</h2>
         <p className="text-white-600 mb-4">
-          At GameGrid, we believe that gaming is more than just a hobby; it's a way of life. Our platform is
-          built by gamers, for gamers, with the aim of fostering a community where everyone can share their
-          love for games. Whether you're a casual player or a hardcore gamer, GameGrid is the place for you to
-          connect, compete, and grow. Join us on this exciting journey and be a part of the GameGrid
+          At GameGrid, we believe that gaming is more than just a hobby it&apos;s a way of life. Our platform
+          is built by gamers, for gamers, with the aim of fostering a community where everyone can share their
+          love for games. Whether you&apos;re a casual player or a hardcore gamer, GameGrid is the place for
+          you to connect, compete, and grow. Join us on this exciting journey and be a part of the GameGrid
           community!
         </p>
       </SectionWrapper>
