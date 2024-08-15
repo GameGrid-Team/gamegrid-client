@@ -3,9 +3,10 @@ import Header from '../components/Header'
 import { useEffect, useState } from 'react'
 import LoadingOverlay from '../components/loading'
 import SectionWrapper from '../components/textBackground'
+import HomeNav from '../components/HomeNav'
 export default function Policy() {
   return (
-    <div className="p-8 min-h-screen">
+    <><HomeNav /><div className="p-8 min-h-screen">
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-center text-white-800">Community Guidlines</h1>
       </header>
@@ -77,6 +78,6 @@ export default function Policy() {
           </li>
         </ul>
       </SectionWrapper>
-    </div>
+    </div></>
   )
 }
