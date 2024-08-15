@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -212,14 +213,16 @@ export default function Register() {
           >
             Register
           </button>
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="flex items-center justify-center w-full py-3 text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
-          >
-            <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-            Sign in with Google
-          </button>
+          <div className="py-2">
+            <Link href={'/login'} className="">
+              <button
+                type="button"
+                className="flex items-center justify-center w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-red-500"
+              >
+                Login
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     </main>
