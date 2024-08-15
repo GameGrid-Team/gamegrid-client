@@ -6,7 +6,7 @@ import Image from 'next/image'
 import FollowButton from '@/app/components/followButton'
 import { getSessionData } from '@/app/actions'
 import LoadingOverlay from '@/app/components/loading'
-
+import Link from 'next/link'
 export default function ProfilePage({ params }) {
   const [userData, setUserData] = useState()
   const [following, setFollowing] = useState([]) // סטייט עבור רשימת העוקבים
@@ -127,14 +127,24 @@ export default function ProfilePage({ params }) {
               following.map((follower) => (
                 <li key={follower._id} className="mb-2">
                   <div className="flex items-center">
-                    <Image
-                      src={follower.avatar}
-                      alt={follower.nickname}
-                      width={40}
-                      height={40}
-                      className="rounded-full mr-2"
+                    <Link href={`/HomePage/Profile/${follower._id}`}>
+                      <Image
+                        src={follower.avatar}
+                        alt={follower.nickname}
+                        width={40}
+                        height={40}
+                        className="rounded-full mr-2"
+                      />
+                    </Link>
+                    <Link href={`/HomePage/Profile/${follower._id}`}>
+                      <p className="text-sm font-medium p-2">{follower.nickname}</p>
+                    </Link>
+
+                    <FollowButton
+                      userId={userId}
+                      followId={follower._id}
+                      initialIsFollowing={follower.social.followers.includes(userId)}
                     />
-                    <p className="text-sm font-medium">{follower.nickname}</p>
                   </div>
                 </li>
               ))
@@ -144,9 +154,9 @@ export default function ProfilePage({ params }) {
           </ul>
 
           {/* Follow Teammate Button */}
-          <button className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {/* <button className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Follow Teammate
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
