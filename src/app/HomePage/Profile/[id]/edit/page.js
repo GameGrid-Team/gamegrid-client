@@ -149,10 +149,9 @@ export default function ProfilePage({ params }) {
       avatarURL = await uploadAvatar()
       alert('uploading avatar...')
       window.location.href = '/HomePage'
-       
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/update`, {
+    const response = await fetch(`http://localhost:3001/api/users/${params.id}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
