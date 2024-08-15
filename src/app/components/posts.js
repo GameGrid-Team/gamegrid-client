@@ -384,9 +384,9 @@ export default function Posts({ keyPost }) {
   useEffect(() => {
     const fetchOriginalPostsAndUserData = async () => {
       const newPosts = await Promise.all(
-        posts.map(async (post) => {
+        posts?.map(async (post) => {
           let updatedPost = { ...post }
-          if (post.shared) {
+          if (post?.shared) {
             try {
               const response = await fetch(
                 `http://localhost:3001/api/posts/${post.shared_post.original_post}/post`,
@@ -549,33 +549,33 @@ export default function Posts({ keyPost }) {
                     <FontAwesomeIcon
                       icon={faHeart}
                       className={`mr-2 transition-colors duration-300 ${
-                        post.likes.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
+                        post.likes?.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
                       }`}
                     />
                   </button>
-                  <span>{post.likes.count}</span>
+                  <span>{post.likes?.count}</span>
                 </div>
                 <div className="flex items-center">
                   <button onClick={() => handleSaveClick(index)}>
                     <FontAwesomeIcon
                       icon={faBookmark}
                       className={`mr-2 transition-colors duration-300 ${
-                        post.saves.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                        post.saves?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
                       }`}
                     />
                   </button>
-                  <span>{post.saves.count}</span>
+                  <span>{post.saves?.count}</span>
                 </div>
                 <div className="flex items-center">
                   <button onClick={() => handleShare(index)}>
                     <FontAwesomeIcon
                       icon={faShare}
                       className={`mr-2 transition-colors duration-300 ${
-                        post.shares.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                        post.shares?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
                       }`}
                     />
                   </button>
-                  <span>{post.shares.count}</span>
+                  <span>{post.shares?.count}</span>
                 </div>
                 {/* Conditional Edit and Delete Buttons */}
                 {post.user_id === userId && (
