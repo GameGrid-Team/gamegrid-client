@@ -1,13 +1,14 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-
+import LoadingOverlay from '@/app/components/loading'
 export default function ProfilePage({ params }) {
   const [userData, setFormData] = useState({
     first_name: '',
     last_name: '',
     nickname: '',
     email: '',
+    bio: '',
     password: '',
     confirmPassword: '',
     gender: '',
@@ -41,6 +42,7 @@ export default function ProfilePage({ params }) {
             last_name: userData.last_name,
             nickname: userData.nickname,
             email: userData.email,
+            bio: userData.bio,
             password: '',
             confirmPassword: '',
             gender: userData.gender,
@@ -53,6 +55,7 @@ export default function ProfilePage({ params }) {
             last_name: userData.last_name,
             nickname: userData.nickname,
             email: userData.email,
+            bio: userData.bio,
             gender: userData.gender,
             birth_date: userData.birth_date,
             instagram: userData.social.instagram,
@@ -148,11 +151,10 @@ export default function ProfilePage({ params }) {
     if (avatar) {
       avatarURL = await uploadAvatar()
       alert('uploading avatar...')
-      window.location.href = '/HomePage'
-       
+      window.location.href = '/HomePage/Profile/' + params.id
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_HOST}/api/users/${params.id}/update`, {
+    const response = await fetch(`http://localhost:3001/api/users/${params.id}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -165,14 +167,14 @@ export default function ProfilePage({ params }) {
     if (response.ok) {
       console.log('Update successful:', data)
       // Navigate to the home page after success
-      window.location.href = '/HomePage'
+      window.location.href = '/HomePage/Profile/' + params.id
     } else {
       console.error('Update failed:', data)
     }
   }
 
   if (loading) {
-    return <div>Loading...</div>
+    return <LoadingOverlay />
   }
 
   return (
@@ -219,6 +221,16 @@ export default function ProfilePage({ params }) {
               type="email"
               name="email"
               value={userData.email}
+              onChange={handleChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Bio</label>
+            <input
+              type="text"
+              name="bio"
+              value={userData.bio}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />

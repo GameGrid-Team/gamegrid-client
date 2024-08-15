@@ -107,7 +107,7 @@ export default function Posts({ keyPost }) {
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
-      } else if (keyPost !== 'all') {
+      } else if (keyPost !== 'all' && keyPost !== 'MySaved') {
         const response = await fetch(`http://localhost:3001/api/posts/${keyPost}/posts`, {
           method: 'GET',
           headers: {
