@@ -10,15 +10,19 @@ export const HomeNav = ({ userId }) => {
   console.log('User ID:', userId)
   useEffect(() => {
     const userResponse = async () => {
-      if (userId) {
-        const response = await fetch(`http://localhost:3001/api/users/${userId}/data`)
-        const userData = await response.json()
+      try {
+        if (userId) {
+          const response = await fetch(`http://localhost:3001/api/users/${userId}/data`)
+          const userData = await response.json()
 
-        if (response.ok) {
-          console.log('User data:', userData)
-          setUsername(userData.nickname)
-          setAvatarPreview(userData.avatar)
+          if (response.ok) {
+            console.log('User data:', userData)
+            setUsername(userData.nickname)
+            setAvatarPreview(userData.avatar)
+          }
         }
+      } catch {
+        console.log('fuck you')
       }
     }
     userResponse()
@@ -28,7 +32,7 @@ export const HomeNav = ({ userId }) => {
       <div className="navbar ">
         <div className="navbar-start">
           <Link href="/HomePage" className="p-2">
-            <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100}/>
+            <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100} />
           </Link>
         </div>
 

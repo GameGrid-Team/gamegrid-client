@@ -2,11 +2,10 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { getSessionData } from '../actions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import LoadingOverlay from '../components/loading'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
@@ -257,6 +256,64 @@ export default function Posts({ keyPost }) {
     location.reload()
   }
 
+  const handleDeleteClick = async (postId) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/posts/${postId}/post/delete`, {
+        method: 'DELETE',
+      })
+      if (response.ok) {
+        fetchPosts()
+      } else {
+        console.error('Failed to delete the post.')
+      }
+    } catch (error) {
+      console.error('Error deleting the post:', error)
+    }
+  }
+
+  const handleEditClick = (index) => {
+    const newPosts = [...updatedPosts]
+    newPosts[index].isEditing = true
+    setUpdatedPosts(newPosts)
+  }
+
+  const handleEditChange = (index, field, value) => {
+    const newPosts = [...updatedPosts]
+    newPosts[index][field] = value
+    setUpdatedPosts(newPosts)
+  }
+
+  const handleSaveEdit = async (index) => {
+    const post = updatedPosts[index]
+    try {
+      const response = await fetch(`http://localhost:3001/api/posts/${post._id}/post/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: post.text,
+          tags: post.tags,
+          game: post.game,
+          platform: post.platform,
+        }),
+      })
+      if (response.ok) {
+        const newPosts = [...updatedPosts]
+        newPosts[index].isEditing = false
+        setUpdatedPosts(newPosts)
+      } else {
+        console.error('Failed to update post')
+      }
+    } catch (error) {
+      console.error('Error updating post:', error)
+    }
+  }
+
+  const handleCancelEdit = (index) => {
+    const newPosts = [...updatedPosts]
+    newPosts[index].isEditing = false
+    setUpdatedPosts(newPosts)
+  }
+
   const handleLikeClick = async (postIndex) => {
     if (!userId) {
       console.error('User ID is not available')
@@ -408,11 +465,78 @@ export default function Posts({ keyPost }) {
                 )}
               </div>
 
-              <p>Text: {post.text ? post.text : 'post unavailable'}</p>
-              <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
-              <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
-              <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
-              <p>{post.original_owner}</p>
+              {/* Conditionally render edit form or post details */}
+              {post.isEditing ? (
+                <div>
+                  <textarea
+                    value={post.text}
+                    onChange={(e) => handleEditChange(index, 'text', e.target.value)}
+                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
+                  />
+                  <input
+                    type="text"
+                    value={post.tags.join(', ')}
+                    onChange={(e) =>
+                      handleEditChange(
+                        index,
+                        'tags',
+                        e.target.value.split(',').map((tag) => tag.trim())
+                      )
+                    }
+                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
+                    placeholder="Tags"
+                  />
+                  <input
+                    type="text"
+                    value={post.game.join(', ')}
+                    onChange={(e) =>
+                      handleEditChange(
+                        index,
+                        'game',
+                        e.target.value.split(',').map((game) => game.trim())
+                      )
+                    }
+                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
+                    placeholder="Games"
+                  />
+                  <input
+                    type="text"
+                    value={post.platform.join(', ')}
+                    onChange={(e) =>
+                      handleEditChange(
+                        index,
+                        'platform',
+                        e.target.value.split(',').map((platform) => platform.trim())
+                      )
+                    }
+                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100 "
+                    placeholder="Platforms"
+                  />
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => handleSaveEdit(index)}
+                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => handleCancelEdit(index)}
+                      className="bg-gray-500 text-white px-4 py-2 rounded"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p>Text: {post.text ? post.text : 'post unavailable'}</p>
+                  <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
+                  <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
+                  <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
+                  <p>{post.original_owner}</p>
+                </>
+              )}
+
               <div className="flex items-center justify-between mt-2">
                 <div className="flex items-center">
                   <button onClick={() => handleLikeClick(index)}>
@@ -447,6 +571,23 @@ export default function Posts({ keyPost }) {
                   </button>
                   <span>{post.shares.count}</span>
                 </div>
+                {/* Conditional Edit and Delete Buttons */}
+                {post.user_id === userId && (
+                  <div className="flex items-center bg-white text-white ">
+                    <button onClick={() => handleEditClick(index)}>
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        className="text-yellow-500 transition-colors duration-300  hover:text-yellow-700 mr-2"
+                      />
+                    </button>
+                    <button onClick={() => handleDeleteClick(post._id)}>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="text-red-500 transition-colors duration-300 hover:text-red-700"
+                      />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ))
