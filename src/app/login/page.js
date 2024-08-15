@@ -1,11 +1,10 @@
 'use client'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { loginbtn } from '../actions'
 import LoadingOverlay from '../components/loading'
-
+import Link from 'next/link'
 export default function Login() {
   const [nickMail, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -41,10 +40,6 @@ export default function Login() {
 
       console.log('Login failed:\n', data.error)
     }
-  }
-
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In')
   }
 
   return (
@@ -89,18 +84,20 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="w-full py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
+            className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-blue-500"
           >
             Login
           </button>
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="flex items-center justify-center w-full py-3 text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
-          >
-            <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-            Sign in with Google
-          </button>
+          <div className="py-2">
+            <Link href={'/register'} >
+              <button
+                type="button"
+                className="flex items-center justify-center w-full py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-red-500"
+              >
+                register
+              </button>
+            </Link>
+          </div>
           <button
             type="button"
             className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500"
