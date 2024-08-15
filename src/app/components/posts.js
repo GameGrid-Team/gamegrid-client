@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 
-
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
     shared_post: {
@@ -387,6 +386,7 @@ export default function Posts({ keyPost }) {
         posts.map(async (post) => {
           let updatedPost = { ...post }
           if (post.shared) {
+            console.log('post:', post)
             try {
               const response = await fetch(
                 `http://localhost:3001/api/posts/${post.shared_post.original_post}/post`,
@@ -462,7 +462,17 @@ export default function Posts({ keyPost }) {
           updatedPosts.map((post, index) => (
             <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
               <div>
-                <Link href={`/HomePage/Profile/${post.user_id}`}> <Image src={post.avatar} alt="User avatar" height={100} width={100} className="left-0 rounded-xl" />{post.userNickname}</Link>
+                <Link href={`/HomePage/Profile/${post.user_id}`}>
+                  {' '}
+                  <Image
+                    src={post.avatar}
+                    alt="User avatar"
+                    height={100}
+                    width={100}
+                    className="left-0 rounded-xl"
+                  />
+                  {post.userNickname}
+                </Link>
                 {post.shared && (
                   <>
                     <span> has shared from: </span>
