@@ -42,8 +42,8 @@ export default function LeaderBoard() {
                 <th className="px-6 py-4 border-none"></th>
                 <th className="px-6 py-4 border-none">Nickname</th>
                 <th className="px-6 py-4 border-none">Avatar</th>
-                <th className="px-6 py-4 border-none">Rank Name</th>
-                <th className="px-6 py-4 border-none">Rank Image</th>
+                <th className="px-6 py-4 border-none">Rank</th>
+                <th className="px-6 py-4 border-none">Rank Emblem</th>
                 <th className="px-6 py-4 border-none">Actions</th>
               </tr>
             </thead>
