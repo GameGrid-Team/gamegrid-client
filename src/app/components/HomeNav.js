@@ -28,7 +28,7 @@ export const HomeNav = ({ userId }) => {
       <div className="navbar ">
         <div className="navbar-start">
           <Link href="/HomePage" className="p-2">
-            <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100} />
+            <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100}/>
           </Link>
         </div>
 
@@ -86,7 +86,6 @@ export const HomeNav = ({ userId }) => {
             <li>
               <Link href={`/HomePage/Profile/${userId}`} className="justify-between">
                 Profile
-                <span className="badge">New</span>
               </Link>
             </li>
             <li>

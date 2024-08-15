@@ -148,7 +148,7 @@ export default function ProfilePage({ params }) {
     if (avatar) {
       avatarURL = await uploadAvatar()
       alert('uploading avatar...')
-      window.location.href = '/HomePage'
+      window.location.href = '/HomePage/Profile/' + params.id
     }
 
     const response = await fetch(`http://localhost:3001/api/users/${params.id}/update`, {
@@ -164,7 +164,7 @@ export default function ProfilePage({ params }) {
     if (response.ok) {
       console.log('Update successful:', data)
       // Navigate to the home page after success
-      window.location.href = '/HomePage'
+      window.location.href = '/HomePage/Profile/' + params.id
     } else {
       console.error('Update failed:', data)
     }
