@@ -120,31 +120,32 @@ export default function ProfilePage({ params }) {
         </div>
 
         {/* Following Section - Centered Vertically and Aligned to the Right */}
-        <div className="w-64 bg-secondary shadow-md rounded-lg p-6 mb-8 fixed right-0 top-1/2 transform -translate-y-1/2 mr-4">
+        <div className=" w-80 bg-secondary shadow-md rounded-lg p-6 mb-8 absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
           <h3 className="text-xl font-bold mb-4">Following:</h3>
           <ul>
             {following.length > 0 ? (
               following.map((follower) => (
-                <li key={follower._id} className="mb-2">
+                <li key={follower._id} className="mb-5">
                   <div className="flex items-center">
                     <Link href={`/HomePage/Profile/${follower._id}`}>
                       <Image
                         src={follower.avatar}
                         alt={follower.nickname}
-                        width={40}
-                        height={40}
-                        className="rounded-full mr-2"
+                        width={100000}
+                        height={1000000}
+                        className="rounded-full mr-2 w-14 h-14"
                       />
                     </Link>
                     <Link href={`/HomePage/Profile/${follower._id}`}>
-                      <p className="text-sm font-medium p-2">{follower.nickname}</p>
+                      <p className="text-xl font-medium">{follower.nickname}</p>
                     </Link>
-
-                    <FollowButton
-                      userId={userId}
-                      followId={follower._id}
-                      initialIsFollowing={follower.social.followers.includes(userId)}
-                    />
+                    <div className='pl-10'>
+                      <FollowButton
+                        userId={userId}
+                        followId={follower._id}
+                        initialIsFollowing={follower.social.followers.includes(userId)}
+                      />
+                    </div>
                   </div>
                 </li>
               ))
