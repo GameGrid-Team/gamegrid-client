@@ -92,7 +92,7 @@ export default function Login() {
             <Link href={'/register'} >
               <button
                 type="button"
-                className="flex items-center justify-center w-full py-3 text-white bg-blue-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-red-500"
+                className="flex items-center justify-center w-full py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-red-500"
               >
                 register
               </button>
