@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function FollowButton({ userId, followId, initialIsFollowing }) {
   const [isFollowing, setIsFollowing] = useState(initialIsFollowing)
 
-  const handleClick = async () => {
+  const handleClick = async (followId) => {
     if (isFollowing) {
       try {
         const response = await fetch(`http://localhost:3001/api/users/${userId}/${followId}/unfollow`, {
@@ -29,10 +29,11 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
       }
     }
   }
+
   return (
     <>
       <button
-        onClick={() => document.getElementById('my_modal_1').showModal()}
+        onClick={() => isFollowing? document.getElementById(`my_modal_${followId}`).showModal(): handleClick(followId)}
         disabled={followId === userId}
         className={`btn text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out ${
           isFollowing ? 'bg-red-600' : 'bg-green-600'
@@ -40,7 +41,7 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
       >
         {followId === userId ? 'You' : isFollowing ? 'Unfollow' : 'Follow'}
       </button>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id={`my_modal_${followId}`} className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg m-3">
             Are you sure you want to {isFollowing ? 'unfollow' : 'follow'}?
@@ -48,7 +49,7 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
 
           <div className="modal-action justify-center">
             <form method="dialog">
-              <button className="btn p-4 bg-green-600 text-black" onClick={() => handleClick()}>
+              <button className="btn p-4 bg-green-600 text-black" onClick={() => handleClick(followId)}>
                 Confirm
               </button>
               <button className="btn m-3 bg-red-700 text-black">Close</button>

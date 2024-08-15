@@ -32,8 +32,8 @@ export default function Login() {
     if (!data) return <LoadingOverlay />
     if (response.ok) {
       // Redirect to home page on success
-      alert(JSON.stringify(data))
       loginbtn(data.userid)
+      
       window.location.href = `/HomePage`
     } else {
       alert(JSON.stringify(data))
@@ -43,69 +43,90 @@ export default function Login() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center p-6">
-      <div className="relative z-10 w-full max-w-md p-8 space-y-6 bg-gray-900 bg-opacity-75 rounded-lg shadow-lg border-2 border-gray-700">
-        <div className="flex justify-center mb-4">
-          <FontAwesomeIcon icon={faUser} size="3x" className="text-white" />
+    <>
+      <main className="relative flex min-h-screen items-center justify-center p-6">
+        <div className="relative z-10 w-full max-w-md p-8 space-y-6 bg-gray-900 bg-opacity-75 rounded-lg shadow-lg border-2 border-gray-700">
+          <div className="flex justify-center mb-4">
+            <FontAwesomeIcon icon={faUser} size="3x" className="text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-center text-white">Login</h1>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                E-mail\Nickname:
+              </label>
+              <input
+                id="email"
+                name="email"
+                required
+                value={nickMail}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 mt-1 border border-gray-700 rounded-md bg-gray-800 text-gray-300 focus:ring focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                Password:
+              </label>
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 mt-1 border border-gray-700 rounded-md bg-gray-800 text-gray-300 focus:ring focus:ring-blue-500 focus:border-blue-500"
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-blue-500"
+              onClick={()=>document.getElementById('login-dialog').showModal()}
+            >
+              Login
+            </button>
+            <div className="py-2">
+              <Link href={'/register'}>
+                <button
+                  type="button"
+                  className="flex items-center justify-center w-full py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-red-500"
+                >
+                  register
+                </button>
+              </Link>
+            </div>
+            <button
+              type="button"
+              className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500"
+            >
+              Forget My Password?
+            </button>
+          </form>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white">Login</h1>
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-              E-mail\Nickname:
-            </label>
-            <input
-              id="email"
-              name="email"
-              required
-              value={nickMail}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 mt-1 border border-gray-700 rounded-md bg-gray-800 text-gray-300 focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div className="relative">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-              Password:
-            </label>
-            <input
-              id="password"
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 mt-1 border border-gray-700 rounded-md bg-gray-800 text-gray-300 focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-            <FontAwesomeIcon
-              icon={showPassword ? faEyeSlash : faEye}
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-blue-500"
+      </main>
+      <dialog id="login-dialog" class="modoal">
+        <div role="alert" className="alert alert-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
           >
-            Login
-          </button>
-          <div className="py-2">
-            <Link href={'/register'} >
-              <button
-                type="button"
-                className="flex items-center justify-center w-full py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-red-500"
-              >
-                register
-              </button>
-            </Link>
-          </div>
-          <button
-            type="button"
-            className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500"
-          >
-            Forget My Password?
-          </button>
-        </form>
-      </div>
-    </main>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Logged in!</span>
+        </div>
+      </dialog>
+    </>
   )
 }
