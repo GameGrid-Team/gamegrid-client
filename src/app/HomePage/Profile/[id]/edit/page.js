@@ -191,12 +191,15 @@ export default function ProfilePage({ params }) {
     }
 
     if (password && password !== confirmPassword) {
-      alert('Passwords do not match.')
+      document.getElementById('alert-fail-pass-match').showModal()
+
+      // alert('Passwords do not match.')
       return
     }
     const age = calculateAge(userData.birth_date)
     if (age < 16) {
-      alert('Must be over 16 years old')
+      document.getElementById('alert-age-limit').showModal()
+      // alert('Must be over 16 years old')
       return
     }
 
@@ -250,6 +253,9 @@ export default function ProfilePage({ params }) {
     }
   }
 
+  const alertDialogg = (alertText, alertType) => {
+    return <AlertDialog text={alertText} type={alertType} />
+  }
   if (loading) {
     return <LoadingOverlay />
   }
@@ -440,6 +446,8 @@ export default function ProfilePage({ params }) {
           </div>
         </dialog>
         <AlertDialog text={'Deleted User successfully!'} type={'success'} />
+        <AlertDialog text={'Passwords do not match!'} type={'fail-pass-match'} />
+        <AlertDialog text={'Must be over 16 years old'} type={'age-limit'} />
       </div>
     </div>
   )
