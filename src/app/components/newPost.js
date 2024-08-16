@@ -102,7 +102,8 @@ export default function NewPost() {
     <div className="flex flex-col items-center">
       <div className="w-full max-w-xl ">
         <form onSubmit={handlePosts} className="bg-[#16303b] shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
+          <label className="text-4xl font-bold">Share Something...</label>
+          <div className="mb-4 mt-6">
             <label className="block text-gray-400  text-sm font-bold mb-2" htmlFor="text">
               {/* {'Post a new message'} */}
             </label>
