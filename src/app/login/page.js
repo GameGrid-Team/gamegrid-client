@@ -5,6 +5,7 @@ import { faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { loginbtn } from '../actions'
 import LoadingOverlay from '../components/loading'
 import Link from 'next/link'
+import AlertDialog from '../components/Alerts'
 export default function Login() {
   const [nickMail, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,36 +35,16 @@ export default function Login() {
     if (response.ok) {
       // Redirect to home page on success
       loginbtn(data.userid)
-      document.getElementById('login-success').showModal()
+      document.getElementById('alert-success').showModal()
       await sleep(2000)
 
       window.location.href = `/HomePage`
     } else {
       console.log('Login failed:\n', data.error)
-      document.getElementById('login-failed').showModal()
+      document.getElementById('alert-failed').showModal()
     }
   }
 
-  const handleClose = () => {
-    const dialog = document.getElementById('login-failed')
-    dialog.close()
-  }
-
-  const CloseIcon = ({ className = '' }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  )
   return (
     <>
       <main className="relative flex min-h-screen items-center justify-center p-6">
@@ -131,48 +112,8 @@ export default function Login() {
           </form>
         </div>
       </main>
-      <dialog id="login-success" className="modal">
-        <div role="alert" className="relative bg-green-400 rounded-lg shadow-lg p-6 w-80 max-w-xs">
-          <button
-            onClick={handleClose}
-            className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 text-white"
-          >
-            <CloseIcon className=" w-6 h-6 shrink-0 stroke-current" />
-          </button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          ></svg>
-          <span className="text-lg">Logged in!</span>
-        </div>
-      </dialog>
-      <dialog id="login-failed" className="modal">
-        <div role="alert" className="relative bg-red-400 rounded-lg shadow-lg p-6 w-80 max-w-xs">
-          <button
-            onClick={handleClose}
-            className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 text-white"
-          >
-            <CloseIcon className=" w-6 h-6 shrink-0 stroke-current" />
-          </button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          ></svg>
-          <span className="text-lg">User not exists!</span>
-        </div>
-      </dialog>
+      <AlertDialog text={'Login Success!'} type={'success'} />
+      <AlertDialog text={'User not exist!'} type={'failed'} />
     </>
   )
 }
