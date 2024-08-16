@@ -40,7 +40,7 @@ export const HomeNav = ({ userId }) => {
       const searchData = await response.json()
 
       if (response.ok) {
-        setSearchResults(searchData.users) // Store the results in state
+        setSearchResults(searchData.users)
       } else {
         console.error('Search failed', searchData.message)
       }
@@ -132,9 +132,6 @@ export const HomeNav = ({ userId }) => {
                         </div>
                         <div>
                           <span className="font-semibold">{user.nickname}</span>
-                          <span className="text-sm text-gray-500">
-                            ({user.first_name} {user.last_name})
-                          </span>
                         </div>
                       </Link>
                     </li>

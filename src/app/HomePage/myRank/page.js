@@ -10,9 +10,7 @@ const MyRank = () => {
         />
         <div>
           <h1 className="text-5xl font-bold">My rank:</h1>
-          <p className="py-6">
-            Stay Tuned...
-          </p>
+          <p className="py-6">Stay Tuned...</p>
           <button className="btn btn-primary">Get Started</button>
         </div>
       </div>

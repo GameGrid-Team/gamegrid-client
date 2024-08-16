@@ -8,15 +8,16 @@ import LoadingOverlay from '@/app/components/loading'
 export default function LeaderBoard() {
   const [users, setUsers] = useState([])
   const [userId, setUserId] = useState(null) // Add state for userId
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:3001/api/users/leaderboard`) // Adjust the endpoint to your setup
       const data = await response.json()
-
       setUsers(data.users)
     }
     fetchData()
   }, [])
+
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -39,7 +40,15 @@ export default function LeaderBoard() {
           <table className="table-auto w-full border-collapse">
             <thead>
               <tr className="bg-gray-200 bg-opacity-30 text-gray-800 text-lg font-bold">
-                <th className="px-6 py-4 border-none"></th>
+                <th className="px-6 py-4 border-none flex items-center justify-center">
+                  <div className="flex items-center">
+                    <Link href={`/HomePage/rankInfo`} className="hover:underline">
+                      <button className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-blue-600">
+                        <span className="text-sm">i</span>
+                      </button>
+                    </Link>
+                  </div>
+                </th>
                 <th className="px-6 py-4 border-none">Nickname</th>
                 <th className="px-6 py-4 border-none">Avatar</th>
                 <th className="px-6 py-4 border-none">Rank</th>
