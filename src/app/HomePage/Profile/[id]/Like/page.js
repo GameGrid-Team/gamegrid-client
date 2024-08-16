@@ -41,12 +41,13 @@ export default function ProfileLike({ params }) {
         <Image
           src={userData.avatar}
           alt="User Avatar"
-          width={24}
-          height={24}
+          width={100000000000}
+          height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
+        <h3 className="text-xl font-bold">{userData.nickname}</h3>
       </div>
+      <h3 className="font-bold text-2xl">Liked Posts</h3>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
