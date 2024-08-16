@@ -236,6 +236,7 @@ export default function Posts({ keyPost }) {
         },
         body: JSON.stringify(sharePostData),
       })
+      console.log(sharePostData)
 
       const data = await response.json()
       if (response.ok) {
@@ -495,6 +496,20 @@ export default function Posts({ keyPost }) {
                       )}
                     </div>
                   </div>
+                  {post.media && post.media.length > 0 && (
+                    <div className="">
+                      {post.media.map((image, idx) => (
+                        <Image
+                          key={idx}
+                          src={image}
+                          alt={`Post image ${idx + 1}`}
+                          height={200}
+                          width={290}
+                          className="w-90 h-90 rounded-lg mb-2"
+                        />
+                      ))}
+                    </div>
+                  )}
 
                   {post.isEditing ? (
                     <div>
@@ -563,13 +578,13 @@ export default function Posts({ keyPost }) {
                     <div>
                       <p className="text-gray-800 mb-4">{post.text}</p>
                       <div className="text-sm text-gray-600 mb-2">
-                        <strong>Tags:</strong> {post.tags.join(', ')}
+                        <strong>Tags:</strong> {post.tags}
                       </div>
                       <div className="text-sm text-gray-600 mb-2">
-                        <strong>Games:</strong> {post.game.join(', ')}
+                        <strong>Games:</strong> {post.game}
                       </div>
                       <div className="text-sm text-gray-600 mb-2">
-                        <strong>Platforms:</strong> {post.platform.join(', ')}
+                        <strong>Platforms:</strong> {post.platform}
                       </div>
                     </div>
                   )}
@@ -629,21 +644,6 @@ export default function Posts({ keyPost }) {
                     </div>
                   </div>
                 </div>
-
-                {post.media && post.media.length > 0 && (
-                  <div className="ml-6 flex-shrink-0">
-                    {post.media.map((image, idx) => (
-                      <Image
-                        key={idx}
-                        src={image}
-                        alt={`Post image ${idx + 1}`}
-                        height={150}
-                        width={150}
-                        className="rounded-lg mb-2"
-                      />
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           ))
