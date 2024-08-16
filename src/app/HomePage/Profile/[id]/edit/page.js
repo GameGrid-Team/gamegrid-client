@@ -81,6 +81,23 @@ export default function ProfilePage({ params }) {
     })
   }
 
+  const deleteUser = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/users/${params.id}/delete`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const data = await response.json()
+
+      if (response.ok) {
+        window.location.href = '/'
+        console.log('Delete successfully', data)
+      }
+    } catch (error) {
+      console.error('Error deleting user data:', error)
+    }
+  }
+
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     setFormData({
@@ -340,6 +357,32 @@ export default function ProfilePage({ params }) {
           >
             Cancel
           </button>
+          <button
+            onClick={() => document.getElementById('confirm_modal').showModal()}
+            type="button"
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600  ml-5"
+          >
+            Delete Profile
+          </button>
+          <dialog id="confirm_modal" className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Confirm Delete</h3>
+              <p className="py-4">Are you sure you want to delete your account???</p>
+              <div className="modal-action">
+                <form method="dialog">
+                  <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={deleteUser}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 ml-5"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </form>
       </div>
     </div>
