@@ -451,160 +451,193 @@ export default function Posts({ keyPost }) {
   }, [posts])
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <div className="w-full max-w-lg">
+    <div className="min-h-screen flex flex-col items-center bg-transparent py-8">
+      <div className="w-full max-w-2xl">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <LoadingOverlay />
           </div>
         ) : (
           updatedPosts.map((post, index) => (
-            <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
-              <div>
-                <Link href={`/HomePage/Profile/${post.user_id}`}>
-                  {' '}
-                  <Image
-                    src={post.avatar}
-                    alt="User avatar"
-                    height={100}
-                    width={100}
-                    className="left-0 rounded-xl"
-                  />
-                  {post.userNickname}
-                </Link>
-                {post.shared && (
-                  <>
-                    <span> has shared from: </span>
-                    <Link href={`/HomePage/Profile/${post.shared_post.original_owner}`}>{post.og_user}</Link>
-                  </>
-                )}
-              </div>
+            <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+              <div className="p-6 flex">
+                <div className="flex-1">
+                  <div className="flex items-center mb-4">
+                    <Link href={`/HomePage/Profile/${post.user_id}`}>
+                      <Image
+                        src={post.avatar}
+                        alt="User avatar"
+                        height={50}
+                        width={50}
+                        className="rounded-full mr-4"
+                      />
+                    </Link>
+                    <div>
+                      <Link
+                        href={`/HomePage/Profile/${post.user_id}`}
+                        className="font-bold text-lg text-gray-800"
+                      >
+                        {post.userNickname}
+                      </Link>
+                      {post.shared && (
+                        <div className="text-sm text-gray-600">
+                          <span> has shared from: </span>
+                          <Link
+                            href={`/HomePage/Profile/${post.shared_post.original_owner}`}
+                            className="text-blue-500"
+                          >
+                            {post.og_user}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-              {/* Conditionally render edit form or post details */}
-              {post.isEditing ? (
-                <div>
-                  <textarea
-                    value={post.text}
-                    onChange={(e) => handleEditChange(index, 'text', e.target.value)}
-                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
-                  />
-                  <input
-                    type="text"
-                    value={post.tags.join(', ')}
-                    onChange={(e) =>
-                      handleEditChange(
-                        index,
-                        'tags',
-                        e.target.value.split(',').map((tag) => tag.trim())
-                      )
-                    }
-                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
-                    placeholder="Tags"
-                  />
-                  <input
-                    type="text"
-                    value={post.game.join(', ')}
-                    onChange={(e) =>
-                      handleEditChange(
-                        index,
-                        'game',
-                        e.target.value.split(',').map((game) => game.trim())
-                      )
-                    }
-                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100"
-                    placeholder="Games"
-                  />
-                  <input
-                    type="text"
-                    value={post.platform.join(', ')}
-                    onChange={(e) =>
-                      handleEditChange(
-                        index,
-                        'platform',
-                        e.target.value.split(',').map((platform) => platform.trim())
-                      )
-                    }
-                    className="w-full mb-2 p-2 border rounded bg-white focus:bg-green-100 "
-                    placeholder="Platforms"
-                  />
-                  <div className="flex justify-end">
-                    <button
-                      onClick={() => handleSaveEdit(index)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => handleCancelEdit(index)}
-                      className="bg-gray-500 text-white px-4 py-2 rounded"
-                    >
-                      Cancel
-                    </button>
+                  {post.isEditing ? (
+                    <div>
+                      <textarea
+                        value={post.text}
+                        onChange={(e) => handleEditChange(index, 'text', e.target.value)}
+                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                        rows={4}
+                        placeholder="Write your thoughts..."
+                      />
+                      <input
+                        type="text"
+                        value={post.tags.join(', ')}
+                        onChange={(e) =>
+                          handleEditChange(
+                            index,
+                            'tags',
+                            e.target.value.split(',').map((tag) => tag.trim())
+                          )
+                        }
+                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black "
+                        placeholder="Tags"
+                      />
+                      <input
+                        type="text"
+                        value={post.game.join(', ')}
+                        onChange={(e) =>
+                          handleEditChange(
+                            index,
+                            'game',
+                            e.target.value.split(',').map((game) => game.trim())
+                          )
+                        }
+                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                        placeholder="Games"
+                      />
+                      <input
+                        type="text"
+                        value={post.platform.join(', ')}
+                        onChange={(e) =>
+                          handleEditChange(
+                            index,
+                            'platform',
+                            e.target.value.split(',').map((platform) => platform.trim())
+                          )
+                        }
+                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                        placeholder="Platforms"
+                      />
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => handleSaveEdit(index)}
+                          className="bg-blue-600  px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition text-black"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => handleCancelEdit(index)}
+                          className="bg-gray-600  px-6 py-2 rounded-lg shadow ml-2 hover:bg-gray-700 transition text-black"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="text-gray-800 mb-4">{post.text}</p>
+                      <div className="text-sm text-gray-600 mb-2">
+                        <strong>Tags:</strong> {post.tags.join(', ')}
+                      </div>
+                      <div className="text-sm text-gray-600 mb-2">
+                        <strong>Games:</strong> {post.game.join(', ')}
+                      </div>
+                      <div className="text-sm text-gray-600 mb-2">
+                        <strong>Platforms:</strong> {post.platform.join(', ')}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between mt-4">
+                    <div className="flex items-center">
+                      <button onClick={() => handleLikeClick(index)}>
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className={`mr-2 transition-colors duration-300 ${
+                            post.likes?.users.indexOf(userId) !== -1 ? 'text-red-500' : 'text-gray-500'
+                          }`}
+                        />
+                      </button>
+                      <span className="text-gray-600">{post.likes?.count}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <button onClick={() => handleSaveClick(index)}>
+                        <FontAwesomeIcon
+                          icon={faBookmark}
+                          className={`mr-2 transition-colors duration-300 ${
+                            post.saves?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                          }`}
+                        />
+                      </button>
+                      <span className="text-gray-600">{post.saves?.count}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <button onClick={() => handleShare(index)}>
+                        <FontAwesomeIcon
+                          icon={faShare}
+                          className={`mr-2 transition-colors duration-300 ${
+                            post.shares?.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
+                          }`}
+                        />
+                      </button>
+                      <span className="text-gray-600">{post.shares?.count}</span>
+                    </div>
+                    {post.user_id === userId && (
+                      <div className="flex items-center">
+                        <button onClick={() => handleEditClick(index)} disabled={post.shared}>
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            className="text-yellow-500 transition-colors duration-300 hover:text-yellow-700 mr-2"
+                          />
+                        </button>
+                        <button onClick={() => handleDeleteClick(post._id)}>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="text-red-500 transition-colors duration-300 hover:text-red-700"
+                          />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
-              ) : (
-                <>
-                  <p>Text: {post.text ? post.text : 'post unavailable'}</p>
-                  <p>Tags: {post.tags ? post.tags.join(', ') : 'post unavailable'}</p>
-                  <p>Games: {post.game ? post.game.join(', ') : 'post unavailable'}</p>
-                  <p>Platforms: {post.platform ? post.platform.join(', ') : 'post unavailable'}</p>
-                  <p>{post.original_owner}</p>
-                </>
-              )}
 
-              <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center">
-                  <button onClick={() => handleLikeClick(index)}>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      className={`mr-2 transition-colors duration-300 ${
-                        post.likes?.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
-                      }`}
-                    />
-                  </button>
-                  <span>{post.likes?.count}</span>
-                </div>
-                <div className="flex items-center">
-                  <button onClick={() => handleSaveClick(index)}>
-                    <FontAwesomeIcon
-                      icon={faBookmark}
-                      className={`mr-2 transition-colors duration-300 ${
-                        post.saves?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
-                      }`}
-                    />
-                  </button>
-                  <span>{post.saves?.count}</span>
-                </div>
-                <div className="flex items-center">
-                  <button onClick={() => handleShare(index)}>
-                    <FontAwesomeIcon
-                      icon={faShare}
-                      className={`mr-2 transition-colors duration-300 ${
-                        post.shares?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
-                      }`}
-                    />
-                  </button>
-                  <span>{post.shares?.count}</span>
-                </div>
-                {/* Conditional Edit and Delete Buttons */}
-                {post.user_id === userId && (
-                  <div className="flex items-center bg-white text-white ">
-                    <button onClick={() => handleEditClick(index)} disabled={post.shared ? true : false}>
-                      {post.shared ? (
-                        ''
-                      ) : (
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="text-yellow-500 transition-colors duration-300  hover:text-yellow-700 mr-2"
+                {post.media && post.media.length > 0 && (
+                  <div className="ml-6 flex-shrink-0 ">
+                    {post.media.map((image, idx) => (
+                      <Link href={image}>
+                        <Image
+                          key={idx}
+                          src={image}
+                          alt={`Post image ${idx + 1}`}
+                          height={150}
+                          width={150}
+                          className="rounded-lg mb-2 "
                         />
-                      )}
-                    </button>
-                    <button onClick={() => handleDeleteClick(post._id)}>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="text-red-500 transition-colors duration-300 hover:text-red-700"
-                      />
-                    </button>
+                      </Link>
+                    ))}
                   </div>
                 )}
               </div>
