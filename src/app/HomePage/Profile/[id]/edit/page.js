@@ -47,8 +47,8 @@ export default function ProfilePage({ params }) {
             confirmPassword: '',
             gender: userData.gender,
             birth_date: userData.birth_date,
-            instagram: userData.social.instagram,
-            facebook: userData.social.facebook,
+            instagram: userData.instagram,
+            facebook: userData.facebook,
           })
           setInitialData({
             first_name: userData.first_name,
@@ -58,8 +58,8 @@ export default function ProfilePage({ params }) {
             bio: userData.bio,
             gender: userData.gender,
             birth_date: userData.birth_date,
-            instagram: userData.social.instagram,
-            facebook: userData.social.facebook,
+            instagram: userData.instagram,
+            facebook: userData.facebook,
           })
         } else {
           console.error('Error fetching user data:', userData)
@@ -314,7 +314,7 @@ export default function ProfilePage({ params }) {
               </div>
             )}
           </div>
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          <button type="submit" className="px-4 py-2  bg-green-600 text-white rounded-md hover:bg-green-800">
             Save Changes
           </button>
           <button
