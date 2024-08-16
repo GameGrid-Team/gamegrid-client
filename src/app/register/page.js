@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import AlertDialog from '@/app/components/Alerts'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -59,12 +60,14 @@ export default function Register() {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match.')
+      document.getElementById('alert-fail-pass-match').showModal()
+      // alert('Passwords do not match.')
       return
     }
     const age = calculateAge(formData.birth_date)
     if (age < 16) {
-      alert('Must be over 16 years old')
+      document.getElementById('alert-age-limit').showModal()
+      // alert('Must be over 16 years old')
       return
     }
     // שליחת בקשת POST לשרת
@@ -254,6 +257,8 @@ export default function Register() {
             </Link>
           </div>
         </form>
+        <AlertDialog text={'Passwords do not match!'} type={'fail-pass-match'} />
+        <AlertDialog text={'Must be over 16 years old'} type={'age-limit'} />
       </div>
     </main>
   )
