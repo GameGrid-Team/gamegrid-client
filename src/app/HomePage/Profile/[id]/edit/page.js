@@ -163,13 +163,26 @@ export default function ProfilePage({ params }) {
     })
 
     const data = await response.json()
-
     if (response.ok) {
       console.log('Update successful:', data)
-      // Navigate to the home page after success
       window.location.href = '/HomePage/Profile/' + params.id
     } else {
-      console.error('Update failed:', data)
+      if (data.message.includes('Nickname')) {
+        const nicknameEl = document.getElementById('nickname')
+        nicknameEl.placeholder = 'Nickname is taken'
+        nicknameEl.value = ''
+        nicknameEl.style.borderColor = '#c72522'
+        nicknameEl.style.borderWidth = '4px'
+        return
+      }
+      if (data.message.includes('Email')) {
+        const emailEl = document.getElementById('email')
+        emailEl.placeholder = 'Email is taken'
+        emailEl.value = ''
+        emailEl.style.borderColor = '#c72522'
+        emailEl.style.borderWidth = '4px'
+        return
+      }
     }
   }
 
@@ -208,6 +221,8 @@ export default function ProfilePage({ params }) {
           <div>
             <label className="block text-sm font-medium">Nickname</label>
             <input
+              id="nickname"
+              required
               type="text"
               name="nickname"
               value={userData.nickname}
@@ -218,6 +233,7 @@ export default function ProfilePage({ params }) {
           <div>
             <label className="block text-sm font-medium">Email</label>
             <input
+              id="email"
               type="email"
               name="email"
               value={userData.email}
