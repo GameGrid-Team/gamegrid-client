@@ -48,6 +48,7 @@ export default function ProfileSave({ params }) {
         />
         <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
       </div>
+      <h3 className="font-bold text-2xl">Saved Posts</h3>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">

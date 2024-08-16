@@ -463,7 +463,8 @@ export default function Posts({ keyPost }) {
           updatedPosts.map((post, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden mb-6 flex flex-col justify-between"
+              /* Main Div */
+              className=" bg-gray-600 bg-opacity-50 p-6 mt-8 shadow-lg rounded-lg overflow-hidden mb-6 flex flex-col justify-between"
             >
               <div className="p-6 flex">
                 <div className="flex-1">
@@ -480,16 +481,16 @@ export default function Posts({ keyPost }) {
                     <div>
                       <Link
                         href={`/HomePage/Profile/${post.user_id}`}
-                        className="font-bold text-lg text-gray-800"
+                        className="font-bold text-lg text-white"
                       >
                         {post.userNickname}
                       </Link>
                       {post.shared && (
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-green-300">
                           <span> has shared from: </span>
                           <Link
                             href={`/HomePage/Profile/${post.shared_post.original_owner}`}
-                            className="text-blue-500"
+                            className="text-green-300 font-bold"
                           >
                             {post.og_user}
                           </Link>
@@ -497,98 +498,105 @@ export default function Posts({ keyPost }) {
                       )}
                     </div>
                   </div>
-                  {post.media && post.media.length > 0 && (
-                    <div className="">
-                      {post.media.map((image, idx) => (
-                        <Image
-                          key={idx}
-                          src={image}
-                          alt={`Post image ${idx + 1}`}
-                          height={200}
-                          width={290}
-                          className="w-90 h-90 rounded-lg mb-2"
-                        />
-                      ))}
-                    </div>
-                  )}
 
-                  {post.isEditing ? (
-                    <div>
-                      <textarea
-                        value={post.text}
-                        onChange={(e) => handleEditChange(index, 'text', e.target.value)}
-                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
-                        rows={4}
-                        placeholder="Write your thoughts..."
-                      />
-                      <input
-                        type="text"
-                        value={post.tags.join(', ')}
-                        onChange={(e) =>
-                          handleEditChange(
-                            index,
-                            'tags',
-                            e.target.value.split(',').map((tag) => tag.trim())
-                          )
-                        }
-                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
-                        placeholder="Tags"
-                      />
-                      <input
-                        type="text"
-                        value={post.game.join(', ')}
-                        onChange={(e) =>
-                          handleEditChange(
-                            index,
-                            'game',
-                            e.target.value.split(',').map((game) => game.trim())
-                          )
-                        }
-                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
-                        placeholder="Games"
-                      />
-                      <input
-                        type="text"
-                        value={post.platform.join(', ')}
-                        onChange={(e) =>
-                          handleEditChange(
-                            index,
-                            'platform',
-                            e.target.value.split(',').map((platform) => platform.trim())
-                          )
-                        }
-                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
-                        placeholder="Platforms"
-                      />
-                      <div className="flex justify-end">
-                        <button
-                          onClick={() => handleSaveEdit(index)}
-                          className="bg-blue-600 px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition text-black"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => handleCancelEdit(index)}
-                          className="bg-gray-600 px-6 py-2 rounded-lg shadow ml-2 hover:bg-gray-700 transition text-black"
-                        >
-                          Cancel
-                        </button>
-                      </div>
+                  {/* Outer div for both text,image */}
+                  <div className="flex flex-row mt-5 space-x-32">
+                    {/* div for text */}
+                    <div className="w-60">
+                      {post.isEditing ? (
+                        <div>
+                          <textarea
+                            value={post.text}
+                            onChange={(e) => handleEditChange(index, 'text', e.target.value)}
+                            className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                            rows={4}
+                            placeholder="Write your thoughts..."
+                          />
+                          <input
+                            type="text"
+                            value={post.tags.join(', ')}
+                            onChange={(e) =>
+                              handleEditChange(
+                                index,
+                                'tags',
+                                e.target.value.split(',').map((tag) => tag.trim())
+                              )
+                            }
+                            className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                            placeholder="Tags"
+                          />
+                          <input
+                            type="text"
+                            value={post.game.join(', ')}
+                            onChange={(e) =>
+                              handleEditChange(
+                                index,
+                                'game',
+                                e.target.value.split(',').map((game) => game.trim())
+                              )
+                            }
+                            className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                            placeholder="Games"
+                          />
+                          <input
+                            type="text"
+                            value={post.platform.join(', ')}
+                            onChange={(e) =>
+                              handleEditChange(
+                                index,
+                                'platform',
+                                e.target.value.split(',').map((platform) => platform.trim())
+                              )
+                            }
+                            className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
+                            placeholder="Platforms"
+                          />
+                          <div className="flex justify-end">
+                            <button
+                              onClick={() => handleSaveEdit(index)}
+                              className="bg-blue-600 px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition text-black"
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={() => handleCancelEdit(index)}
+                              className="bg-gray-600 px-6 py-2 rounded-lg shadow ml-2 hover:bg-gray-700 transition text-black"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-gray-300 text-2xl mb-7">{post.text}</p>
+                          <div className="text-xl mb-2 text-gray-300">
+                            <strong>Tags:</strong> {post.tags}
+                          </div>
+                          <div className="text-xl mb-2 text-gray-300">
+                            <strong>Games:</strong> {post.game}
+                          </div>
+                          <div className="text-xl mb-2 text-gray-300">
+                            <strong>Platforms:</strong> {post.platform}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div>
-                      <p className="text-gray-800 mb-4">{post.text}</p>
-                      <div className="text-sm text-gray-600 mb-2">
-                        <strong>Tags:</strong> {post.tags}
+                    {/* div for image */}
+                    {post.media && post.media.length > 0 && (
+                      <div className="">
+                        {post.media.map((image, idx) => (
+                          <Image
+                            key={idx}
+                            src={image}
+                            alt={`Post image ${idx + 1}`}
+                            height={10000000000}
+                            width={100000000000}
+                            className="w-80 h-60 rounded-lg"
+                          />
+                        ))}
                       </div>
-                      <div className="text-sm text-gray-600 mb-2">
-                        <strong>Games:</strong> {post.game}
-                      </div>
-                      <div className="text-sm text-gray-600 mb-2">
-                        <strong>Platforms:</strong> {post.platform}
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center">
@@ -596,7 +604,7 @@ export default function Posts({ keyPost }) {
                         <FontAwesomeIcon
                           icon={faHeart}
                           className={`mr-2 transition-colors duration-300 ${
-                            post.likes?.users.indexOf(userId) !== -1 ? 'text-red-500' : 'text-gray-500'
+                            post.likes?.users.indexOf(userId) !== -1 ? 'text-red-500' : 'text-gray-300'
                           }`}
                         />
                       </button>
@@ -607,7 +615,7 @@ export default function Posts({ keyPost }) {
                         <FontAwesomeIcon
                           icon={faBookmark}
                           className={`mr-2 transition-colors duration-300 ${
-                            post.saves?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-500'
+                            post.saves?.users.indexOf(userId) !== -1 ? 'text-blue-500' : 'text-gray-300'
                           }`}
                         />
                       </button>
@@ -618,7 +626,7 @@ export default function Posts({ keyPost }) {
                         <FontAwesomeIcon
                           icon={faShare}
                           className={`mr-2 transition-colors duration-300 ${
-                            post.shares?.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-500'
+                            post.shares?.users.indexOf(userId) !== -1 ? 'text-green-500' : 'text-gray-300'
                           }`}
                         />
                       </button>
