@@ -14,10 +14,6 @@ export async function loginbtn(sessionData) {
 
 export async function logoutbtn() {
   cookies().delete('session', { path: '/' })
-
-  console.log('Response cookies:', response.cookies.getAll())
-
-  return response
 }
 
 export async function getSessionData() {

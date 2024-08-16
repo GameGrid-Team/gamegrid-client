@@ -50,8 +50,10 @@ export const HomeNav = ({ userId }) => {
   }
   const handleLogout = () => {
     toast.success('Logged out successfully')
-    logoutbtn()
-    window.location.href = '/'
+
+    logoutbtn().then(() => {
+      window.location.href = '/'
+    })
   }
   //For search
   useEffect(() => {
