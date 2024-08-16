@@ -163,6 +163,19 @@ export default function ProfilePage({ params }) {
     }
   }
 
+  function calculateAge(dateOfBirth) {
+    const today = new Date()
+    const birthDate = new Date(dateOfBirth)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDifference = today.getMonth() - birthDate.getMonth()
+
+    // Adjust age if the current date is before the birth date in the current year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+
+    return age
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -177,6 +190,11 @@ export default function ProfilePage({ params }) {
 
     if (password && password !== confirmPassword) {
       alert('Passwords do not match.')
+      return
+    }
+    const age = calculateAge(userData.birth_date)
+    if (age < 16) {
+      alert('Must be over 16 years old')
       return
     }
 
@@ -229,6 +247,7 @@ export default function ProfilePage({ params }) {
       }
     }
   }
+
   const handleClose = () => {
     const dialog = document.getElementById('login-success')
     dialog.close()
