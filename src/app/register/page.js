@@ -66,6 +66,26 @@ export default function Register() {
       window.location.href = '/'
     } else {
       console.error('Registration failed:', data)
+      if (emailCheck === 1) {
+        const nicknameInput = document.getElementById('email')
+
+        // Change the placeholder text
+        nicknameInput.placeholder = 'Email is taken'
+        nicknameInput.value = ''
+
+        // Change the border color
+        nicknameInput.style.borderColor = 'red'
+      }
+    }
+
+    if (nickCheck === 1) {
+      const nicknameInput = document.getElementById('nickname')
+
+      // Change the placeholder text
+      nicknameInput.placeholder = 'Nickname is taken'
+
+      // Change the border color
+      nicknameInput.style.borderColor = 'red' // You can add more actions here, like showing an alert or a toast notification
     }
   }
 
