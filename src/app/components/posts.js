@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 
-export default function Posts({ keyPost }) {
+export default function Posts({ keyPost, item = null, category = null }) {
   const [sharePost, setSharePost] = useState({
     shared_post: {
       original_owner: '',
@@ -48,7 +48,50 @@ export default function Posts({ keyPost }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          setPosts(post_data)
+
+          console.log(':::', item, category)
+          if (item !== null && category !== null) {
+            console.log(':::', item)
+            let tag_posts = []
+            console.log(':::111', category)
+            if (category === 'tags') {
+              post_data.forEach((post) => {
+                if (typeof post.tags !== 'undefined' && post.tags.includes(item)) {
+                  tag_posts.push(post)
+                }
+              })
+              setPosts(tag_posts)
+            } else if (category === 'game') {
+              post_data.forEach((post) => {
+                if (typeof post.game !== 'undefined' && post.game.includes(item)) {
+                  tag_posts.push(post)
+                }
+              })
+              setPosts(tag_posts)
+            } else if (category === 'platform') {
+              post_data.forEach((post) => {
+                if (typeof post.platform !== 'undefined' && post.platform.includes(item)) {
+                  tag_posts.push(post)
+                }
+              })
+              setPosts(tag_posts)
+            }
+
+            // if (item !== null) {
+            //   console.log(':::', item)
+            //   let tag_posts = []
+            //   post_data.forEach((post) => {
+            //     console.log(':::111', post)
+            //     if (typeof post.tags !== 'undefined' && post.tags.includes(item)) {
+            //       tag_posts.push(post)
+            //     }
+            //   })
+
+            console.log(':::', tag_posts)
+            // setPosts(tag_posts)
+          } else {
+            setPosts(post_data)
+          }
         } else {
           console.log('Failed to fetch posts:', data.error)
         }
@@ -452,6 +495,22 @@ export default function Posts({ keyPost }) {
     fetchOriginalPostsAndUserData()
   }, [posts])
 
+  const ButtonList = ({ list, category }) => {
+    return (
+      <div className="transparent flex space-x-2">
+        {list.map((item, index) => (
+          <button
+            onClick={() => (window.location.href = `/HomePage/categories/${category}/${item}`)}
+            key={index}
+            className="px-2 py-1 text-sm text-white-800 bg-transparent border border-gray-800 rounded-md hover:bg-gray-200"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-transparent py-8">
       <div className="w-full max-w-2xl">
@@ -570,13 +629,15 @@ export default function Posts({ keyPost }) {
                         <div>
                           <p className="text-gray-300 text-2xl mb-7">{post.text}</p>
                           <div className="text-xl mb-2 text-gray-300">
-                            <strong>Tags:</strong> {post.tags}
+                            <strong>Tags:</strong> <ButtonList list={post.tags} category="tags" />
                           </div>
                           <div className="text-xl mb-2 text-gray-300">
-                            <strong>Games:</strong> {post.game}
+                            <strong>Games:</strong>
+                            <ButtonList list={post.game} category="game" />
                           </div>
                           <div className="text-xl mb-2 text-gray-300">
-                            <strong>Platforms:</strong> {post.platform}
+                            <strong>Platforms:</strong>
+                            <ButtonList list={post.platform} category="platform" />
                           </div>
                         </div>
                       )}
