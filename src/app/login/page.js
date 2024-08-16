@@ -9,6 +9,7 @@ export default function Login() {
   const [nickMail, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
   let input
   if (nickMail.includes('@')) input = `?email=${nickMail}&password=${password}`
@@ -33,15 +34,36 @@ export default function Login() {
     if (response.ok) {
       // Redirect to home page on success
       loginbtn(data.userid)
-      
+      document.getElementById('login-success').showModal()
+      await sleep(3000)
+
       window.location.href = `/HomePage`
     } else {
-      alert(JSON.stringify(data))
-
       console.log('Login failed:\n', data.error)
+      document.getElementById('login-failed').showModal()
     }
   }
 
+  const handleClose = () => {
+    const dialog = document.getElementById('login-failed')
+    dialog.close()
+  }
+
+  const CloseIcon = ({ className = '' }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
   return (
     <>
       <main className="relative flex min-h-screen items-center justify-center p-6">
@@ -86,7 +108,7 @@ export default function Login() {
             <button
               type="submit"
               className="btn w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-blue-500"
-              onClick={()=>document.getElementById('login-dialog').showModal()}
+              // onClick={() => document.getElementById('login-success').showModal()}
             >
               Login
             </button>
@@ -109,7 +131,7 @@ export default function Login() {
           </form>
         </div>
       </main>
-      <dialog id="login-dialog" class="modoal">
+      {/* <dialog id="login-success" class="modoal">
         <div role="alert" className="alert alert-success">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +147,66 @@ export default function Login() {
             />
           </svg>
           <span>Logged in!</span>
+        </div>
+      </dialog> */}
+      <dialog id="login-success" className="modal">
+        <div role="alert" className="relative bg-green-400 rounded-lg shadow-lg p-6 w-80 max-w-xs">
+          <button
+            onClick={handleClose}
+            className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 text-white"
+          >
+            <CloseIcon className=" w-6 h-6 shrink-0 stroke-current" />
+          </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-6 h-6"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Logged in!</span>
+        </div>
+      </dialog>
+      <dialog id="login-failed" className="modal">
+        <div role="alert" className="relative bg-red-400 rounded-lg shadow-lg p-6 w-80 max-w-xs">
+          <button
+            onClick={handleClose}
+            className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 text-white"
+          >
+            <CloseIcon className=" w-6 h-6 shrink-0 stroke-current" />
+          </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-6 h-6"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>User not exists!</span>
         </div>
       </dialog>
     </>
