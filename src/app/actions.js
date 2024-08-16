@@ -8,8 +8,16 @@ export async function loginbtn(sessionData) {
     httpOnly: true,
     // secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7,
-    path: '/HomePage',
+    path: '/',
   })
+}
+
+export async function logoutbtn() {
+  cookies().delete('session', { path: '/' })
+
+  console.log('Response cookies:', response.cookies.getAll())
+
+  return response
 }
 
 export async function getSessionData() {

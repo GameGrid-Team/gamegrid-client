@@ -1,10 +1,9 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import Menu from '../components/Menu'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Toaster, toast } from 'sonner'
+import { logoutbtn } from '../actions'
 
 export const HomeNav = ({ userId }) => {
   const [avatarPreview, setAvatarPreview] = useState(null)
@@ -49,7 +48,11 @@ export const HomeNav = ({ userId }) => {
       console.error('Error executing search', error)
     }
   }
-
+  const handleLogout = () => {
+    toast.success('Logged out successfully')
+    logoutbtn()
+    window.location.href = '/'
+  }
   //For search
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -68,6 +71,7 @@ export const HomeNav = ({ userId }) => {
     setSearchText(e.target.value)
     if (e.target.value) {
       setIsDropdownVisible(true)
+      handleSearch()
     } else {
       setIsDropdownVisible(false)
     }
@@ -109,10 +113,6 @@ export const HomeNav = ({ userId }) => {
               value={searchText}
               onChange={handleInputChange}
             />
-            <button onClick={handleSearch} className="absolute right-2 top-2">
-              <FontAwesomeIcon icon={faSearch} className="text-gray-500" />
-            </button>
-
             {isDropdownVisible && searchResults.length > 0 && (
               <div
                 ref={dropdownRef}
@@ -191,7 +191,10 @@ export const HomeNav = ({ userId }) => {
               <Link href={`/HomePage/Profile/${userId}/stats`}>Stats</Link>
             </li>
             <li>
-              <Link href="/">Logout</Link>
+              <Toaster />
+              <button className="" onClick={() => handleLogout()}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>
