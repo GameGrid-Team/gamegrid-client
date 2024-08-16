@@ -262,160 +262,204 @@ export default function ProfilePage({ params }) {
       <div className="container mx-auto px-4">
         <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium">First Name</label>
-            <input
-              type="text"
-              name="first_name"
-              value={userData.first_name}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Last Name</label>
-            <input
-              type="text"
-              name="last_name"
-              value={userData.last_name}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Nickname</label>
-            <input
-              id="nickname"
-              required
-              type="text"
-              name="nickname"
-              value={userData.nickname}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Email</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={userData.email}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Bio</label>
-            <input
-              type="text"
-              name="bio"
-              value={userData.bio}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={userData.confirmPassword}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Gender</label>
-            <select
-              name="gender"
-              value={userData.gender}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Birth Date</label>
-            <input
-              type="date"
-              name="birth_date"
-              value={userData.birth_date}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Facebook</label>
-            <input
-              type="text"
-              name="facebook"
-              value={userData.facebook}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Instagram</label>
-            <input
-              type="text"
-              name="instagram"
-              value={userData.instagram}
-              onChange={handleChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Avatar</label>
-            <input
-              type="file"
-              name="avatar"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-            {avatarPreview && (
-              <div className="mt-2">
-                <img src={avatarPreview} alt="Avatar Preview" className="h-32 w-32 rounded-full" />
+          <div className=" flex flex-row justify-center space-x-40">
+            {/* //first 6 elements */}
+            <div className="w-80 ">
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  name="first_name"
+                  value={userData.first_name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
               </div>
-            )}
+
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="last_name"
+                  value={userData.last_name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Nickname
+                </label>
+                <input
+                  id="nickname"
+                  required
+                  type="text"
+                  name="nickname"
+                  value={userData.nickname}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={userData.password}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={userData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+            </div>
+            {/* //second 6 elements */}
+            <div className="w-80 ">
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Bio
+                </label>
+                <input
+                  type="text"
+                  name="bio"
+                  value={userData.bio}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={userData.gender}
+                  onChange={handleChange}
+                  className="custom-select w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-gray-300 placeholder-gray-800 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Birth Date
+                </label>
+                <input
+                  type="date"
+                  name="birth_date"
+                  value={userData.birth_date}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Facebook
+                </label>
+                <input
+                  type="text"
+                  name="facebook"
+                  value={userData.facebook}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Instagram
+                </label>
+                <input
+                  type="text"
+                  name="instagram"
+                  value={userData.instagram}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+              </div>
+              <div className="group">
+                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                  Avatar
+                </label>
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="w-full px-4 py-2 border-none  rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
+                />
+                {avatarPreview && (
+                  <div className="mt-2">
+                    <img src={avatarPreview} alt="Avatar Preview" className="h-32 w-32 rounded-full" />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-          <button type="submit" className="px-4 py-2  bg-green-600 text-white rounded-md hover:bg-green-800">
-            Save Changes
-          </button>
-          <button
-            type="button"
-            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5"
-            onClick={() => (window.location.href = '/HomePage/Profile/' + params.id)} // Or replace with your desired cancel action
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => document.getElementById('confirm_modal').showModal()}
-            type="button"
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600  ml-5"
-          >
-            Delete Profile
-          </button>
+          <div className="pt-7 pb-11 ml-4 flex space-x-96">
+            <div className="">
+              <button
+                onClick={() => document.getElementById('confirm_modal').showModal()}
+                type="button"
+                className="px-4 py-2 ml-20  bg-red-500 text-white rounded-md hover:bg-red-600  ml-5"
+              >
+                Delete Profile
+              </button>
+            </div>
+            <div className="flex justify-end ">
+              <button
+                type="submit"
+                className="px-4 py-2  bg-green-600 text-white rounded-md hover:bg-green-800"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5"
+                onClick={() => (window.location.href = '/HomePage/Profile/' + params.id)} // Or replace with your desired cancel action
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </form>
         <dialog id="confirm_modal" className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Confirm Delete</h3>
-            <p className="py-4">Are you sure you want to delete your account???</p>
+            <p className="py-4">Are you sure you want to delete your account?</p>
             <div>
               <input
                 type="password"
