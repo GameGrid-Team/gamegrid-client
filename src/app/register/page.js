@@ -65,7 +65,19 @@ export default function Register() {
       // ניתוב לדף הבית לאחר הצלחה
       window.location.href = '/'
     } else {
-      console.error('Registration failed:', data)
+      console.log('Registration failed:', data)
+      if (data.emailCheck === 1) {
+        const emailInput = document.getElementById('email')
+        emailInput.placeholder = 'Email is taken'
+        emailInput.value = ''
+        emailInput.style.borderColor = 'red'
+      }
+      if (data.nickCheck === 1) {
+        const nicknameInput = document.getElementById('nickname')
+        nicknameInput.placeholder = 'Nickname is taken'
+        nicknameInput.value = ''
+        nicknameInput.style.borderColor = 'red' // You can add more actions here, like showing an alert or a toast notification
+      }
     }
   }
 

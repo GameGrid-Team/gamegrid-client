@@ -317,6 +317,13 @@ export default function ProfilePage({ params }) {
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
             Save Changes
           </button>
+          <button
+            type="button"
+            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5"
+            onClick={() => (window.location.href = '/HomePage/Profile/' + params.id)} // Or replace with your desired cancel action
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </div>
