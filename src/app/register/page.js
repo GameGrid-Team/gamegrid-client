@@ -17,6 +17,20 @@ export default function Register() {
     birth_date: '',
   })
 
+  function calculateAge(dateOfBirth) {
+    const today = new Date()
+    const birthDate = new Date(dateOfBirth)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDifference = today.getMonth() - birthDate.getMonth()
+
+    // Adjust age if the current date is before the birth date in the current year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+
+    return age
+  }
+
   const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (e) => {
@@ -48,7 +62,11 @@ export default function Register() {
       alert('Passwords do not match.')
       return
     }
-
+    const age = calculateAge(formData.birth_date)
+    if (age < 16) {
+      alert('Must be over 16 years old')
+      return
+    }
     // שליחת בקשת POST לשרת
     const response = await fetch(`http://localhost:3001/api/users/insert`, {
       method: 'POST',
@@ -63,7 +81,7 @@ export default function Register() {
     if (response.ok) {
       console.log('Registration successful:', data)
       // ניתוב לדף הבית לאחר הצלחה
-      window.location.href = '/'
+      window.location.href = '/' ////////////////////
     } else {
       console.log('Registration failed:', data)
       if (data.emailCheck === 1) {

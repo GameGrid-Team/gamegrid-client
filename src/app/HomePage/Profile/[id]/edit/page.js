@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import LoadingOverlay from '@/app/components/loading'
 export default function ProfilePage({ params }) {
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
   const [userData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -82,19 +84,44 @@ export default function ProfilePage({ params }) {
   }
 
   const deleteUser = async () => {
+    const inputPassword = document.getElementById('passwordInput')
+    let userPassword = ''
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${params.id}/delete`, {
-        method: 'DELETE',
+      const response = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
       const data = await response.json()
 
       if (response.ok) {
-        window.location.href = '/'
-        console.log('Delete successfully', data)
+        userPassword = data.password
       }
     } catch (error) {
-      console.error('Error deleting user data:', error)
+      console.error('Error ', error)
+    }
+    console.log(userPassword)
+    if (inputPassword.value === userPassword) {
+      try {
+        const response = await fetch(`http://localhost:3001/api/users/${params.id}/delete`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const data = await response.json()
+
+        if (response.ok) {
+          console.log('Delete successfully', data)
+          document.getElementById('confirm_modal').close()
+          document.getElementById('login-success').showModal()
+          await sleep(2000)
+          window.location.href = '/'
+        }
+      } catch (error) {
+        console.error('Error deleting user data:', error)
+      }
+    } else {
+      inputPassword.placeholder = 'password incorrect'
+      inputPassword.value = ''
+      inputPassword.style.borderColor = 'red'
     }
   }
 
@@ -202,6 +229,26 @@ export default function ProfilePage({ params }) {
       }
     }
   }
+  const handleClose = () => {
+    const dialog = document.getElementById('login-success')
+    dialog.close()
+  }
+
+  const CloseIcon = ({ className = '' }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
 
   if (loading) {
     return <LoadingOverlay />
@@ -364,26 +411,55 @@ export default function ProfilePage({ params }) {
           >
             Delete Profile
           </button>
-          <dialog id="confirm_modal" className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Confirm Delete</h3>
-              <p className="py-4">Are you sure you want to delete your account???</p>
-              <div className="modal-action">
-                <form method="dialog">
-                  <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5">
-                    Cancel
-                  </button>
-                  <button
-                    onClick={deleteUser}
-                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 ml-5"
-                  >
-                    Delete
-                  </button>
-                </form>
-              </div>
-            </div>
-          </dialog>
         </form>
+        <dialog id="confirm_modal" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Confirm Delete</h3>
+            <p className="py-4">Are you sure you want to delete your account???</p>
+            <div>
+              <input
+                type="password"
+                id="passwordInput"
+                placeholder="Enter your password"
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 ml-5">
+                  Cancel
+                </button>
+              </form>
+              <button
+                onClick={deleteUser}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 ml-5"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </dialog>
+        <dialog id="login-success" className="modal">
+          <div role="alert" className="relative bg-green-800 rounded-lg shadow-lg p-6 w-80 max-w-xs">
+            <button
+              onClick={handleClose}
+              className="absolute top-2 right-2 p-2 rounded-full bg-gray-800 text-white"
+            >
+              <CloseIcon className=" w-6 h-6 shrink-0 stroke-current" />
+            </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-6 h-6"
+            ></svg>
+            <span className="text-lg">Deleted User successfully!</span>
+          </div>
+        </dialog>
       </div>
     </div>
   )
