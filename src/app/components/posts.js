@@ -589,11 +589,15 @@ export default function Posts({ keyPost }) {
                 {/* Conditional Edit and Delete Buttons */}
                 {post.user_id === userId && (
                   <div className="flex items-center bg-white text-white ">
-                    <button onClick={() => handleEditClick(index)}>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="text-yellow-500 transition-colors duration-300  hover:text-yellow-700 mr-2"
-                      />
+                    <button onClick={() => handleEditClick(index)} disabled={post.shared ? true : false}>
+                      {post.shared ? (
+                        ''
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="text-yellow-500 transition-colors duration-300  hover:text-yellow-700 mr-2"
+                        />
+                      )}
                     </button>
                     <button onClick={() => handleDeleteClick(post._id)}>
                       <FontAwesomeIcon
