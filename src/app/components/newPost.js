@@ -100,11 +100,11 @@ export default function NewPost() {
   if (!newPost) return <LoadingOverlay />
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full max-w-xl">
-        <form onSubmit={handlePosts} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="w-full max-w-xl ">
+        <form onSubmit={handlePosts} className="bg-[#16303b] shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="text">
-              {'Post a new message'}
+            <label className="block text-gray-400  text-sm font-bold mb-2" htmlFor="text">
+              {/* {'Post a new message'} */}
             </label>
             <input
               id="text"
@@ -112,32 +112,16 @@ export default function NewPost() {
               type="text"
               value={newPost.text}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
+              placeholder="Post a new message"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
           {/* Image upload section */}
-          <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="image">
-              Upload Image
-            </label>
-            <input
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
-            />
-            {imagePreview && (
-              <div className="mt-4">
-                <img src={imagePreview} alt="Image Preview" className="w-full h-auto rounded" />
-              </div>
-            )}
-          </div>
+
           {/* Other input fields */}
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="tags">
-              Tags (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="tags">
+              {/* Tags (comma separated) */}
             </label>
             <input
               id="tags"
@@ -145,12 +129,13 @@ export default function NewPost() {
               type="text"
               value={newPost.tags.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
+              placeholder="Tags (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="game">
-              Games (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="game">
+              {/* Games (comma separated) */}
             </label>
             <input
               id="game"
@@ -158,12 +143,13 @@ export default function NewPost() {
               type="text"
               value={newPost.game.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
+              placeholder="Games (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="platform">
-              Platforms (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="platform">
+              {/* Platforms (comma separated) */}
             </label>
             <input
               id="platform"
@@ -171,13 +157,34 @@ export default function NewPost() {
               type="text"
               value={newPost.platform.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
+              placeholder="Platforms (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="mb-4 pt-2 flex-col flex">
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+            <label
+              htmlFor="image-upload"
+              className="w-40 cursor-pointer py-2 px-7 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out"
+            >
+              Upload Image
+            </label>
+            {imagePreview && (
+              <div className=" mt-4">
+                <img src={imagePreview} alt="Image Preview" className="w-full h-auto rounded" />
+              </div>
+            )}
+          </div>
+          <div className="flex">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="ml-80 w-40 mt-5 ml-5 bg-green-600 hover:bg-green-800 transition-all duration-300 ease-in-out text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Post
             </button>
