@@ -406,6 +406,7 @@ export default function Posts({ keyPost }) {
                   tags: data.tags,
                   game: data.game,
                   platform: data.platform,
+                  media: data.media,
                 }
               }
             } catch (error) {
