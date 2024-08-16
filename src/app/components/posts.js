@@ -459,10 +459,13 @@ export default function Posts({ keyPost }) {
           </div>
         ) : (
           updatedPosts.map((post, index) => (
-            <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+            <div
+              key={index}
+              className="bg-white shadow-lg rounded-lg overflow-hidden mb-6 flex flex-col justify-between"
+            >
               <div className="p-6 flex">
                 <div className="flex-1">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-2">
                     <Link href={`/HomePage/Profile/${post.user_id}`}>
                       <Image
                         src={post.avatar}
@@ -512,7 +515,7 @@ export default function Posts({ keyPost }) {
                             e.target.value.split(',').map((tag) => tag.trim())
                           )
                         }
-                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black "
+                        className="w-full mb-3 p-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50 text-black"
                         placeholder="Tags"
                       />
                       <input
@@ -544,13 +547,13 @@ export default function Posts({ keyPost }) {
                       <div className="flex justify-end">
                         <button
                           onClick={() => handleSaveEdit(index)}
-                          className="bg-blue-600  px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition text-black"
+                          className="bg-blue-600 px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition text-black"
                         >
                           Save
                         </button>
                         <button
                           onClick={() => handleCancelEdit(index)}
-                          className="bg-gray-600  px-6 py-2 rounded-lg shadow ml-2 hover:bg-gray-700 transition text-black"
+                          className="bg-gray-600 px-6 py-2 rounded-lg shadow ml-2 hover:bg-gray-700 transition text-black"
                         >
                           Cancel
                         </button>
@@ -621,11 +624,14 @@ export default function Posts({ keyPost }) {
                         </button>
                       </div>
                     )}
+                    <div className="text-center text-gray-500 font-semibold text-sm mt-2 mb-2">
+                      <p>Creation date : {new Date(post.timestamp).toLocaleDateString()}</p>
+                    </div>
                   </div>
                 </div>
 
                 {post.media && post.media.length > 0 && (
-                  <div className="ml-6 flex-shrink-0 ">
+                  <div className="ml-6 flex-shrink-0">
                     {post.media.map((image, idx) => (
                       <Image
                         key={idx}
@@ -633,7 +639,7 @@ export default function Posts({ keyPost }) {
                         alt={`Post image ${idx + 1}`}
                         height={150}
                         width={150}
-                        className="rounded-lg mb-2 "
+                        className="rounded-lg mb-2"
                       />
                     ))}
                   </div>
