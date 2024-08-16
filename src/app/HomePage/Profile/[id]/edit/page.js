@@ -192,7 +192,6 @@ export default function ProfilePage({ params }) {
 
     if (password && password !== confirmPassword) {
       document.getElementById('alert-fail-pass-match').showModal()
-
       // alert('Passwords do not match.')
       return
     }
@@ -253,9 +252,6 @@ export default function ProfilePage({ params }) {
     }
   }
 
-  const alertDialogg = (alertText, alertType) => {
-    return <AlertDialog text={alertText} type={alertType} />
-  }
   if (loading) {
     return <LoadingOverlay />
   }
