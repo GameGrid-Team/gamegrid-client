@@ -10,13 +10,13 @@ export default function RankInfo() {
     },
     {
       name: 'Adventurer',
-      description: "You've begun to find your footing.",
+      description: 'You have begun to find your footing.',
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/gamegrid-f4689.appspot.com/o/files%2FAdventurer.png?alt=media&token=b26dab46-a32f-4b30-9134-60c9631ee71f',
     },
     {
       name: 'Veteran',
-      description: "You're actively engaging with the community.",
+      description: 'You are actively engaging with the community.',
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/gamegrid-f4689.appspot.com/o/files%2FVeteran.png?alt=media&token=4617a7d8-e98f-4d3f-aa7f-ba20869142fb',
     },
@@ -28,7 +28,7 @@ export default function RankInfo() {
     },
     {
       name: 'Elite',
-      description: "You've become a recognized and respected member.",
+      description: 'You have become a recognized and respected member.',
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/gamegrid-f4689.appspot.com/o/files%2FElite.png?alt=media&token=10fd2fc6-af7f-4bcf-80db-b5c8110c7284',
     },
