@@ -35,7 +35,7 @@ export default function Login() {
       // Redirect to home page on success
       loginbtn(data.userid)
       document.getElementById('login-success').showModal()
-      await sleep(3000)
+      await sleep(2000)
 
       window.location.href = `/HomePage`
     } else {
@@ -131,24 +131,6 @@ export default function Login() {
           </form>
         </div>
       </main>
-      {/* <dialog id="login-success" class="modoal">
-        <div role="alert" className="alert alert-success">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>Logged in!</span>
-        </div>
-      </dialog> */}
       <dialog id="login-success" className="modal">
         <div role="alert" className="relative bg-green-400 rounded-lg shadow-lg p-6 w-80 max-w-xs">
           <button
@@ -166,17 +148,8 @@ export default function Login() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="w-6 h-6"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>Logged in!</span>
+          ></svg>
+          <span className="text-lg">Logged in!</span>
         </div>
       </dialog>
       <dialog id="login-failed" className="modal">
@@ -196,17 +169,8 @@ export default function Login() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="w-6 h-6"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>User not exists!</span>
+          ></svg>
+          <span className="text-lg">User not exists!</span>
         </div>
       </dialog>
     </>
