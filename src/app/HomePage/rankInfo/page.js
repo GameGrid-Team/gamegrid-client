@@ -59,7 +59,7 @@ export default function RankInfo() {
       <h2 className="text-4xl font-bold text-center mb-6 text-white">How can I get points?</h2>
       <p className="text-lg text-center mb-8 max-w-2xl text-white">
         The GameGrid Rank System is a dynamic, points-based system that rewards you for various activities on
-        the platform. Each action you take, whether it's posting, liking, sharing, or engaging with other
+        the platform. Each action you take, whether its posting, liking, sharing, or engaging with other
         users, earns you points. As you accumulate points, your rank increases, showcasing your status in the
         GameGrid community.
       </p>
