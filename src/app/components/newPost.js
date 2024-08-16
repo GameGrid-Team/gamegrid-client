@@ -9,14 +9,17 @@ export default function NewPost() {
     game: [],
     platform: [],
     text: '',
-    //shared: false,
   })
-  const [userId, setUserId] = useState(null) //
+
+  const [imagePreview, setImagePreview] = useState(null) // State for image preview
+  const [imageFile, setFile] = useState(null)
+  const [userId, setUserId] = useState(null)
+
   useEffect(() => {
     const fetchUserId = async () => {
       try {
         const id = await getSessionData()
-        setUserId(id) // Set userId once it is resolved
+        setUserId(id)
       } catch (error) {
         console.error('Error fetching user ID:', error)
       }
@@ -24,6 +27,7 @@ export default function NewPost() {
 
     fetchUserId()
   }, [])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'tags' || name === 'game' || name === 'platform') {
@@ -32,6 +36,13 @@ export default function NewPost() {
       setNewPost({ ...newPost, [name]: value })
     }
   }
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0]
+    setImagePreview(URL.createObjectURL(file)) // Create a preview URL
+    setFile(file)
+  }
+
   const handlePosts = async (e) => {
     e.preventDefault()
     await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -50,28 +61,47 @@ export default function NewPost() {
     })
 
     const data = await response.json()
-
     if (response.ok) {
-      // setPosts([newPost, ...posts]) // Add new post to the top of the posts array
+      console.log('data:', data)
+
+      if (imageFile) {
+        const ImageData = new FormData()
+        ImageData.append('image', imageFile)
+
+        const imageResponse = await fetch(`http://localhost:3001/api/posts/${data.post_id}/files/upload`, {
+          method: 'POST',
+          body: ImageData,
+        })
+
+        const imageResponseData = await imageResponse.json()
+        if (imageResponse.ok) {
+          console.log('Image uploaded successfully:', imageResponseData)
+        } else {
+          console.log('Image upload failed:', imageResponseData.error)
+        }
+      }
+
       setNewPost({
         tags: [],
         game: [],
         platform: [],
         text: '',
+        image: null,
       })
+      setImagePreview(null) // Clear the image preview
       alert(JSON.stringify(data))
-      location.reload() // Refresh the page to see the new post
+      location.reload()
     } else {
       alert(JSON.stringify(data))
-      console.log('Post failed to upload:\n', data.error)
+      console.log('Post failed to upload:', data.error)
     }
   }
 
   if (!newPost) return <LoadingOverlay />
   return (
-    <div className=" flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="w-full max-w-xl">
-        <form onSubmit={handlePosts} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
+        <form onSubmit={handlePosts} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2" htmlFor="text">
               {'Post a new message'}
@@ -85,6 +115,26 @@ export default function NewPost() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
             />
           </div>
+          {/* Image upload section */}
+          <div className="mb-4">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="image">
+              Upload Image
+            </label>
+            <input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white focus:bg-green-100"
+            />
+            {imagePreview && (
+              <div className="mt-4">
+                <img src={imagePreview} alt="Image Preview" className="w-full h-auto rounded" />
+              </div>
+            )}
+          </div>
+          {/* Other input fields */}
           <div className="mb-4">
             <label className="block text-black text-sm font-bold mb-2" htmlFor="tags">
               Tags (comma separated)
