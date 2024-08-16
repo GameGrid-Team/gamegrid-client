@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 
-
 export default function Posts({ keyPost }) {
   const [sharePost, setSharePost] = useState({
     shared_post: {
@@ -462,7 +461,17 @@ export default function Posts({ keyPost }) {
           updatedPosts.map((post, index) => (
             <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-black">
               <div>
-                <Link href={`/HomePage/Profile/${post.user_id}`}> <Image src={post.avatar} alt="User avatar" height={100} width={100} className="left-0 rounded-xl" />{post.userNickname}</Link>
+                <Link href={`/HomePage/Profile/${post.user_id}`}>
+                  {' '}
+                  <Image
+                    src={post.avatar}
+                    alt="User avatar"
+                    height={100}
+                    width={100}
+                    className="left-0 rounded-xl"
+                  />
+                  {post.userNickname}
+                </Link>
                 {post.shared && (
                   <>
                     <span> has shared from: </span>
@@ -580,11 +589,13 @@ export default function Posts({ keyPost }) {
                 {/* Conditional Edit and Delete Buttons */}
                 {post.user_id === userId && (
                   <div className="flex items-center bg-white text-white ">
-                    <button onClick={() => handleEditClick(index)}>
-                      <FontAwesomeIcon
+                    <button onClick={() => handleEditClick(index)}
+                    disabled={post.shared? true : false}
+                      >
+                     {post.shared? "":  <FontAwesomeIcon
                         icon={faEdit}
                         className="text-yellow-500 transition-colors duration-300  hover:text-yellow-700 mr-2"
-                      />
+                      />}
                     </button>
                     <button onClick={() => handleDeleteClick(post._id)}>
                       <FontAwesomeIcon
