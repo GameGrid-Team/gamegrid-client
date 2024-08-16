@@ -640,7 +640,7 @@ export default function Posts({ keyPost }) {
                       </div>
                     )}
                     <div className="text-center text-gray-500 font-semibold text-sm mt-2 mb-2">
-                      <p>Creation date : {new Date(post.timestamp).toLocaleDateString()}</p>
+                      <p>{new Date(post.timestamp).toLocaleDateString()}</p>
                     </div>
                   </div>
                 </div>
