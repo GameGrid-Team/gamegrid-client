@@ -1,10 +1,9 @@
-'use client'
-import Header from '../components/Header'
-import { useEffect, useState } from 'react'
-import LoadingOverlay from '../components/loading'
 import SectionWrapper from '../components/textBackground'
 import HomeNav from '../components/HomeNav'
+import { cookies } from 'next/headers'
+
 export default function About() {
+  console.log('Cookies:', cookies().has("session"))
   return (
     <><HomeNav /><div className="p-8 min-h-screen">
       <header className="mb-8">
