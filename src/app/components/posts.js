@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 
-export default function Posts({ keyPost, item = null, type = null }) {
+export default function Posts({ keyPost, item = null, category = null }) {
   const [sharePost, setSharePost] = useState({
     shared_post: {
       original_owner: '',
@@ -49,26 +49,26 @@ export default function Posts({ keyPost, item = null, type = null }) {
         if (response.ok) {
           let post_data = data.posts_list
 
-          console.log(':::', item, type)
-          if (item !== null && type !== null) {
+          console.log(':::', item, category)
+          if (item !== null && category !== null) {
             console.log(':::', item)
             let tag_posts = []
-            console.log(':::111', type)
-            if (type === 'tags') {
+            console.log(':::111', category)
+            if (category === 'tags') {
               post_data.forEach((post) => {
                 if (typeof post.tags !== 'undefined' && post.tags.includes(item)) {
                   tag_posts.push(post)
                 }
               })
               setPosts(tag_posts)
-            } else if (type === 'game') {
+            } else if (category === 'game') {
               post_data.forEach((post) => {
                 if (typeof post.game !== 'undefined' && post.game.includes(item)) {
                   tag_posts.push(post)
                 }
               })
               setPosts(tag_posts)
-            } else if (type === 'platform') {
+            } else if (category === 'platform') {
               post_data.forEach((post) => {
                 if (typeof post.platform !== 'undefined' && post.platform.includes(item)) {
                   tag_posts.push(post)

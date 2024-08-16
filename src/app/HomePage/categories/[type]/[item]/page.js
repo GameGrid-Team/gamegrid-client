@@ -14,7 +14,7 @@ export default async function HomePage({ params }) {
         <h3 className="font-bold text-2xl">{`${type} Result: ${item}`}</h3>
       </div>
       <div className="">
-        <Posts keyPost={'all'} item={item} type={type} />
+        <Posts keyPost={'all'} item={item} category={type} />
       </div>
     </div>
   )
