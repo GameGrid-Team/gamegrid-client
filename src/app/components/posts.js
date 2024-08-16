@@ -627,16 +627,14 @@ export default function Posts({ keyPost }) {
                 {post.media && post.media.length > 0 && (
                   <div className="ml-6 flex-shrink-0 ">
                     {post.media.map((image, idx) => (
-                      <Link href={image}>
-                        <Image
-                          key={idx}
-                          src={image}
-                          alt={`Post image ${idx + 1}`}
-                          height={150}
-                          width={150}
-                          className="rounded-lg mb-2 "
-                        />
-                      </Link>
+                      <Image
+                        key={idx}
+                        src={image}
+                        alt={`Post image ${idx + 1}`}
+                        height={150}
+                        width={150}
+                        className="rounded-lg mb-2 "
+                      />
                     ))}
                   </div>
                 )}
