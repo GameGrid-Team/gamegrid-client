@@ -184,7 +184,7 @@ export default function NewPost() {
           <div className="flex">
             <button
               type="submit"
-              className="ml-80 w-40 mt-5 ml-5 bg-green-600 hover:bg-green-800 transition-all duration-300 ease-in-out text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="ml-80 w-40 mt-5 bg-green-600 hover:bg-green-800 transition-all duration-300 ease-in-out text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Post
             </button>
