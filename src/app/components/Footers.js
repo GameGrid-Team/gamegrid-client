@@ -6,6 +6,10 @@ export default function Footer() {
       <Link href="/about" className="mx-2 font-bold">
         About Us
       </Link>
+      <p>|</p>
+      <Link href="/guidelines" className="mx-2 font-bold">
+        Community Guidlines
+      </Link>
     </div>
   )
 }

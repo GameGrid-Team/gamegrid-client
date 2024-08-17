@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link'
+import AlertDialog from '@/app/components/Alerts'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -16,6 +18,20 @@ export default function Register() {
     birth_date: '',
   })
 
+  function calculateAge(dateOfBirth) {
+    const today = new Date()
+    const birthDate = new Date(dateOfBirth)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDifference = today.getMonth() - birthDate.getMonth()
+
+    // Adjust age if the current date is before the birth date in the current year
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+
+    return age
+  }
+
   const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (e) => {
@@ -27,7 +43,7 @@ export default function Register() {
   }
 
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[A-Z]).{1,8}$/
+    const passwordRegex = /^(?=.*[A-Z]).{8,16}$/
     return passwordRegex.test(password)
   }
 
@@ -37,19 +53,21 @@ export default function Register() {
     const { confirmPassword, ...dataToSend } = formData
 
     if (!validatePassword(formData.password)) {
-      alert(
-        'Password must be at most 8 characters long and contain at least one uppercase letter and at least must contain one symbol.'
-      )
+      document.getElementById('alert-fail-pass').showModal()
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match.')
+      document.getElementById('alert-fail-pass-match').showModal()
       return
     }
-
+    const age = calculateAge(formData.birth_date)
+    if (age < 16) {
+      document.getElementById('alert-age-limit').showModal()
+      return
+    }
     // שליחת בקשת POST לשרת
-    const response = await fetch(`https://gamegrid-server.onrender.com/api/users/insert`, {
+    const response = await fetch(`http://gamegrid-server.onrender.com/api/users/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,17 +78,25 @@ export default function Register() {
     const data = await response.json()
 
     if (response.ok) {
-      console.log('Registration successful:', data)
       // ניתוב לדף הבית לאחר הצלחה
-      window.location.href = '/'
+      window.location.href = '/' ////////////////////
     } else {
-      console.error('Registration failed:', data)
+      if (data.emailCheck === 1) {
+        const emailInput = document.getElementById('email')
+        emailInput.placeholder = 'Email is taken'
+        emailInput.value = ''
+        emailInput.style.borderColor = 'red'
+      }
+      if (data.nickCheck === 1) {
+        const nicknameInput = document.getElementById('nickname')
+        nicknameInput.placeholder = 'Nickname is taken'
+        nicknameInput.value = ''
+        nicknameInput.style.borderColor = 'red' // You can add more actions here, like showing an alert or a toast notification
+      }
     }
   }
 
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In')
-  }
+  const handleGoogleSignIn = () => {}
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
@@ -212,15 +238,20 @@ export default function Register() {
           >
             Register
           </button>
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="flex items-center justify-center w-full py-3 text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500"
-          >
-            <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-            Sign in with Google
-          </button>
+          <div className="py-2">
+            <Link href={'/login'} className="">
+              <button
+                type="button"
+                className="flex items-center justify-center w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-red-500"
+              >
+                Login
+              </button>
+            </Link>
+          </div>
         </form>
+        <AlertDialog text={'Passwords do not match!'} type={'fail-pass-match'} />
+        <AlertDialog text={'Must be over 16 years old'} type={'age-limit'} />
+        <AlertDialog text={'Password lenfth 8-16, incluide upercase and simbol.'} type={'fail-pass'} />
       </div>
     </main>
   )

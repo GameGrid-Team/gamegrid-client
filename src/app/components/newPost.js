@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { getSessionData } from '../actions'
+import LoadingOverlay from '../components/loading'
 
 export default function NewPost() {
   const [newPost, setNewPost] = useState({
@@ -8,14 +9,17 @@ export default function NewPost() {
     game: [],
     platform: [],
     text: '',
-    //shared: false,
   })
-  const [userId, setUserId] = useState(null) //
+
+  const [imagePreview, setImagePreview] = useState(null) // State for image preview
+  const [imageFile, setFile] = useState(null)
+  const [userId, setUserId] = useState(null)
+
   useEffect(() => {
     const fetchUserId = async () => {
       try {
         const id = await getSessionData()
-        setUserId(id) // Set userId once it is resolved
+        setUserId(id)
       } catch (error) {
         console.error('Error fetching user ID:', error)
       }
@@ -23,14 +27,22 @@ export default function NewPost() {
 
     fetchUserId()
   }, [])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'tags' || name === 'game' || name === 'platform') {
-      setNewPost({ ...newPost, [name]: value.split(',') })
+      setNewPost({ ...newPost, [name]: value.replace(/ /g, '-').split(',') })
     } else {
       setNewPost({ ...newPost, [name]: value })
     }
   }
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0]
+    setImagePreview(URL.createObjectURL(file)) // Create a preview URL
+    setFile(file)
+  }
+
   const handlePosts = async (e) => {
     e.preventDefault()
     await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -40,7 +52,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`http://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,29 +61,49 @@ export default function NewPost() {
     })
 
     const data = await response.json()
-
     if (response.ok) {
-      // setPosts([newPost, ...posts]) // Add new post to the top of the posts array
+      if (imageFile) {
+        const ImageData = new FormData()
+        ImageData.append('image', imageFile)
+
+        const imageResponse = await fetch(
+          `http://gamegrid-server.onrender.com/api/posts/${data.post_id}/files/upload`,
+          {
+            method: 'POST',
+            body: ImageData,
+          }
+        )
+
+        const imageResponseData = await imageResponse.json()
+        if (imageResponse.ok) {
+        } else {
+        }
+      }
+
       setNewPost({
         tags: [],
         game: [],
         platform: [],
         text: '',
+        image: null,
       })
+      setImagePreview(null) // Clear the image preview
       alert(JSON.stringify(data))
-      location.reload() // Refresh the page to see the new post
+      location.reload()
     } else {
       alert(JSON.stringify(data))
-      console.log('Post failed to upload:\n', data.error)
     }
   }
+
+  if (!newPost) return <LoadingOverlay />
   return (
-    <div className=" flex flex-col items-center">
-      <div className="w-full max-w-xl">
-        <form onSubmit={handlePosts} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-          <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="text">
-              {'Post a new message'}
+    <div className="flex flex-col items-center">
+      <div className="w-full max-w-xl ">
+        <form onSubmit={handlePosts} className="bg-[#16303b] shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <label className="text-4xl font-bold">Share Something...</label>
+          <div className="mb-4 mt-6">
+            <label className="block text-gray-400  text-sm font-bold mb-2" htmlFor="text">
+              {/* {'Post a new message'} */}
             </label>
             <input
               id="text"
@@ -79,12 +111,16 @@ export default function NewPost() {
               type="text"
               value={newPost.text}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              placeholder="Post a new message"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
+          {/* Image upload section */}
+
+          {/* Other input fields */}
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="tags">
-              Tags (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="tags">
+              {/* Tags (comma separated) */}
             </label>
             <input
               id="tags"
@@ -92,12 +128,13 @@ export default function NewPost() {
               type="text"
               value={newPost.tags.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              placeholder="Tags (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="game">
-              Games (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="game">
+              {/* Games (comma separated) */}
             </label>
             <input
               id="game"
@@ -105,12 +142,13 @@ export default function NewPost() {
               type="text"
               value={newPost.game.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              placeholder="Games (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black text-sm font-bold mb-2" htmlFor="platform">
-              Platforms (comma separated)
+            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="platform">
+              {/* Platforms (comma separated) */}
             </label>
             <input
               id="platform"
@@ -118,13 +156,34 @@ export default function NewPost() {
               type="text"
               value={newPost.platform.join(',')}
               onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              placeholder="Platforms (comma separated)"
+              className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none  text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="mb-4 pt-2 flex-col flex">
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+            <label
+              htmlFor="image-upload"
+              className="w-40 cursor-pointer py-2 px-7 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out"
+            >
+              Upload Image
+            </label>
+            {imagePreview && (
+              <div className=" mt-4">
+                <img src={imagePreview} alt="Image Preview" className="w-full h-auto rounded" />
+              </div>
+            )}
+          </div>
+          <div className="flex">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="ml-80 w-40 mt-5 bg-green-600 hover:bg-green-800 transition-all duration-300 ease-in-out text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Post
             </button>

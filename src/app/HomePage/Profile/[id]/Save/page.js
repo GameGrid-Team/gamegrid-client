@@ -11,7 +11,7 @@ export default function ProfileSave({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+        const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -46,11 +46,9 @@ export default function ProfileSave({ params }) {
           height={100000000000}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
-        <h3 className="text-xl font-bold">
-          Nickname: {userData.nickname}
-        </h3>
-
+        <h3 className="text-xl font-bold">Nickname: {userData.nickname}</h3>
       </div>
+      <h3 className="font-bold text-2xl">Saved Posts</h3>
 
       {/* Posts Section */}
       <div className="w-full max-w-2xl">
