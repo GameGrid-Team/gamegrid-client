@@ -669,7 +669,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
                           }`}
                         />
                       </button>
-                      <span className="text-gray-600">{post.likes?.count}</span>
+                      <span className="text-white">{post.likes?.count}</span>
                     </div>
                     <div className="flex items-center">
                       <button onClick={() => handleSaveClick(index)}>
@@ -680,7 +680,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
                           }`}
                         />
                       </button>
-                      <span className="text-gray-600">{post.saves?.count}</span>
+                      <span className="text-white">{post.saves?.count}</span>
                     </div>
                     <div className="flex items-center">
                       <button onClick={() => handleShare(index)}>
@@ -691,7 +691,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
                           }`}
                         />
                       </button>
-                      <span className="text-gray-600">{post.shares?.count}</span>
+                      <span className="text-white">{post.shares?.count}</span>
                     </div>
                     {post.user_id === userId && (
                       <div className="flex items-center">
@@ -709,8 +709,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
                         </button>
                       </div>
                     )}
-                    <div className="text-center text-gray-500 font-semibold text-sm mt-2 mb-2">
-                      <p>{new Date(post.timestamp).toLocaleDateString()}</p>
+                    <div className="text-center text-white font-semibold text-sm mt-2 mb-2">
+                      <p>{new Date(post.timestamp).toLocaleString()}</p>
                     </div>
                   </div>
                 </div>

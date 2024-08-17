@@ -27,7 +27,7 @@ export default function ProfilePage({ params }) {
   const [avatarPreview, setAvatarPreview] = useState(null)
 
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[A-Z]).{1,8}$/
+    const passwordRegex = /^(?=.*[A-Z]).{8,16}$/
     return passwordRegex.test(password)
   }
 
@@ -196,21 +196,17 @@ export default function ProfilePage({ params }) {
     const { confirmPassword, password, avatar, ...currentData } = userData
 
     if (password && !validatePassword(password)) {
-      alert(
-        'Password must be at most 8 characters long and contain at least one uppercase letter and at least one symbol.'
-      )
+      document.getElementById('alert-fail-pass').showModal()
       return
     }
 
     if (password && password !== confirmPassword) {
       document.getElementById('alert-fail-pass-match').showModal()
-      // alert('Passwords do not match.')
       return
     }
     const age = calculateAge(userData.birth_date)
     if (age < 16) {
       document.getElementById('alert-age-limit').showModal()
-      // alert('Must be over 16 years old')
       return
     }
 
@@ -251,7 +247,6 @@ export default function ProfilePage({ params }) {
     let avatarURL = null
     if (avatar) {
       avatarURL = await uploadAvatar()
-      alert('uploading avatar...')
       window.location.href = '/HomePage/Profile/' + params.id
     }
 
@@ -525,6 +520,7 @@ export default function ProfilePage({ params }) {
         <AlertDialog text={'Deleted User successfully!'} type={'success'} />
         <AlertDialog text={'Passwords do not match!'} type={'fail-pass-match'} />
         <AlertDialog text={'Must be over 16 years old'} type={'age-limit'} />
+        <AlertDialog text={'Password lenfth 8-16, incluide upercase and simbol.'} type={'fail-pass'} />
       </div>
     </div>
   )
