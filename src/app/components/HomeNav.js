@@ -9,9 +9,13 @@ export const HomeNav = ({ userId }) => {
   const [avatarPreview, setAvatarPreview] = useState(null)
   const [username, setUsername] = useState('')
   const [searchText, setSearchText] = useState('')
+  const [numNotify, setNumNotify] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [notifyList, setNotifyList] = useState(false)
   const dropdownRef = useRef(null)
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
   useEffect(() => {
     const userResponse = async () => {
@@ -23,6 +27,14 @@ export const HomeNav = ({ userId }) => {
           if (response.ok) {
             setUsername(userData.nickname)
             setAvatarPreview(userData.avatar)
+            const userResponse = await fetch(`http://localhost:3001/api/users/${userId}/data`, {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
+            })
+            const user = await userResponse.json()
+            const notList = user.notification.map((notification) => notification.message)
+            setNotifyList(notList)
+            setNumNotify(notList.length)
           }
         }
       } catch (error) {
@@ -77,6 +89,36 @@ export const HomeNav = ({ userId }) => {
     } else {
       setIsDropdownVisible(false)
     }
+  }
+
+  const toggleDropdown = async () => {
+    try {
+      const userResponse = await fetch(`http://localhost:3001/api/users/${userId}/data`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const user = await userResponse.json()
+      const notList = user.notification.map((notification) => notification.message)
+
+      setNotifyList(notList)
+      setNumNotify(notList.length)
+      // await sleep(3000)
+    } catch (error) {
+      console.error(error)
+    }
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+  const clearNotification = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/users/${userId}/notification/clear`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      setNumNotify(0)
+    } catch (error) {
+      console.error(error)
+    }
+    setIsDropdownOpen(!isDropdownOpen)
   }
 
   return (
@@ -144,25 +186,52 @@ export const HomeNav = ({ userId }) => {
           </div>
         </div>
 
-        <button className="btn btn-ghost btn-circle">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
+        <div className="relative">
+          <button className="btn btn-ghost btn-circle" onClick={toggleDropdown}>
+            <div className="indicator">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
+              <span className="badge badge-xs badge-primary indicator-item">{notifyList.length}</span>
+            </div>
+          </button>
+          <div className="relative">
+            {isDropdownOpen && (
+              <div className="absolute mt-6 right-0 mt-2 w-48 bg-gray-500 rounded-lg shadow-lg z-50">
+                <ul className="py-2">
+                  {notifyList.map((user, index) => (
+                    <li key={index} className="relative px-4 py-2 text-sm hover:bg-gray-400">
+                      {user}
+                    </li>
+                  ))}
+                  <li className="relative px-4 py-2 text-sm">
+                    {numNotify === 0 ? (
+                      <span className="text-white text-center">No Notifications</span>
+                    ) : (
+                      <button
+                        onClick={clearNotification}
+                        className="w-full text-center text-white bg-gray-600 hover:bg-gray-800 py-2 rounded-md font-medium border-gray-900 border-4"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-        </button>
+        </div>
 
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
