@@ -217,7 +217,7 @@ export const HomeNav = ({ userId }) => {
                   ))}
                   <li className="relative px-4 py-2 text-sm">
                     {numNotify === 0 ? (
-                      <span className="text-white text-center">No Notifications</span>
+                      <span className="text-white text-center">No notifications</span>
                     ) : (
                       <button
                         onClick={clearNotification}
