@@ -31,7 +31,7 @@ export default function NewPost() {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'tags' || name === 'game' || name === 'platform') {
-      setNewPost({ ...newPost, [name]: value.split(',') })
+      setNewPost({ ...newPost, [name]: value.replace(/ /g, '-').split(',') })
     } else {
       setNewPost({ ...newPost, [name]: value })
     }
