@@ -102,12 +102,14 @@ export const HomeNav = ({ userId }) => {
 
       setNotifyList(notList)
       setNumNotify(notList.length)
+
       // await sleep(3000)
     } catch (error) {
       console.error(error)
     }
     setIsDropdownOpen(!isDropdownOpen)
   }
+
   const clearNotification = async () => {
     try {
       const response = await fetch(`http://localhost:3001/api/users/${userId}/notification/clear`, {
@@ -187,7 +189,7 @@ export const HomeNav = ({ userId }) => {
         </div>
 
         <div className="relative">
-          <button className="btn btn-ghost btn-circle" onClick={toggleDropdown}>
+          <button className="btn btn-ghost btn-circle" onClick={toggleDropdown} onChange={toggleDropdown}>
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
