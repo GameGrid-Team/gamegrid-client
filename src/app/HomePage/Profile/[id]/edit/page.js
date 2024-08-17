@@ -297,7 +297,7 @@ export default function ProfilePage({ params }) {
         <title>Profile</title>
       </Head>
       <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
+        <h1 className="text-2xl font-bold mb-4 justify-center flex">Edit Profile</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className=" flex flex-row justify-center space-x-40">
             {/* //first 6 elements */}
@@ -424,7 +424,7 @@ export default function ProfilePage({ params }) {
                 />
               </div>
               <div className="group">
-                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                <label className="mt-3 block text-sm font-medium transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
                   Facebook
                 </label>
                 <input
@@ -433,11 +433,12 @@ export default function ProfilePage({ params }) {
                   name="facebook"
                   value={userData.facebook}
                   onChange={handleChange}
+                  placeholder="https://www.facebook.com/username"
                   className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
                 />
               </div>
               <div className="group">
-                <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
+                <label className="mt-3 block text-sm font-medium transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
                   Instagram
                 </label>
                 <input
@@ -446,9 +447,11 @@ export default function ProfilePage({ params }) {
                   name="instagram"
                   value={userData.instagram}
                   onChange={handleChange}
+                  placeholder="https://www.instagram.com/username"
                   className="w-full px-4 py-2 border-b-2 border-gray-300 rounded-none text-green-200 placeholder-gray-400 focus:border-b-4 focus:border-green-500 focus:outline-none transition-all duration-300 ease-in-out bg-transparent"
                 />
               </div>
+
               <div className="group">
                 <label className="mt-3 block text-sm font-medium  transition-all duration-300 ease-in-out group-focus-within:text-green-500 group-focus-within:font-bold">
                   Avatar
@@ -468,12 +471,12 @@ export default function ProfilePage({ params }) {
               </div>
             </div>
           </div>
-          <div className="pt-7 pb-11 ml-4 flex space-x-96">
+          <div className="pt-7 pb-11 ml-60 flex space-x-5 ">
             <div className="">
               <button
                 onClick={() => document.getElementById('confirm_modal').showModal()}
                 type="button"
-                className="px-4 py-2 ml-20  bg-red-500 text-white rounded-md hover:bg-red-600  ml-5"
+                className="px-10 py-2 ml-72  bg-red-500 text-white rounded-md hover:bg-red-600"
               >
                 Delete Profile
               </button>
