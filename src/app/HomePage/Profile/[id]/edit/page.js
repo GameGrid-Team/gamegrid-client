@@ -114,9 +114,7 @@ export default function ProfilePage({ params }) {
           document.getElementById('confirm_modal').close()
           document.getElementById('alert-success').showModal()
           await sleep(2000)
-          console.log('1 waddadw ')
           logoutbtn().then(async () => {
-            console.log('2 waddadw ')
             window.location.href = '/'
           })
         }
