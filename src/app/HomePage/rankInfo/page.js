@@ -48,20 +48,18 @@ export default function RankInfo() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-8 px-4 pl-20">
-      {/* תוכן ה-div שלך */}
-
       <h1 className="text-4xl font-bold text-center mb-6 text-white">Explanation of the RANK system</h1>
       <p className="text-lg text-center mb-8 max-w-2xl text-white">
         At GameGrid, we believe that recognition for your achievements is key to a rewarding gaming
         experience. Our Rank System is designed to celebrate your journey as you engage with the platform,
         connect with fellow gamers, and share your gaming milestones.
       </p>
-      <h2 className="text-4xl font-bold text-center mb-6 text-white">How can I get points?</h2>
+      <h2 className="text-4xl font-bold text-center mb-6 text-white">How can I get XP?</h2>
       <p className="text-lg text-center mb-8 max-w-2xl text-white">
-        The GameGrid Rank System is a dynamic, points-based system that rewards you for various activities on
-        the platform. Each action you take, whether its posting, liking, sharing, or engaging with other
-        users, earns you points. As you accumulate points, your rank increases, showcasing your status in the
-        GameGrid community.
+        The GameGrid Rank System is a dynamic, points-based(XP) system that rewards you for various activities
+        on the platform. Each action you take, whether its posting, liking, sharing, or engaging with other
+        users, earns you XP. As you accumulate XP, your rank increases, showcasing your status in the GameGrid
+        community.
       </p>
 
       <h3 className="text-3xl font-semibold mb-4 text-white">Ranks and Levels</h3>
@@ -69,7 +67,7 @@ export default function RankInfo() {
         {ranks.map((rank) => (
           <div key={rank.name} className="bg-slate-300 shadow-lg rounded-lg p-6 flex flex-col items-center">
             <Image src={rank.imageUrl} alt={rank.name} width={100} height={100} className="mb-4" />
-            <h3 className="text-xl font-semibold mb-2">{rank.name}</h3>
+            <h3 className="text-xl font-semibold mb-2 text-gray-700">{rank.name}</h3>
             <p className="text-center text-gray-700">{rank.description}</p>
           </div>
         ))}
