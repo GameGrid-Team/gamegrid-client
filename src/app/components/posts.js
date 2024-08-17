@@ -266,7 +266,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
 
       const data = await response.json()
       if (response.ok) {
-        await sendNotification(data.post_owner_id, userId, 'shared')
+        sendNotification(posts[postIndex].user_id, userId, 'shared')
         setSharePost({ shared_post: { original_owner: '', original_post: '' } })
         updatedPosts[postIndex] = {
           ...updatedPosts[postIndex],
@@ -283,7 +283,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
     // Update the local state
     setPosts(updatedPosts)
     // sleep(5000)
-    // location.reload()
+    location.reload()
   }
 
   const handleDeleteClick = async (postId) => {
