@@ -130,7 +130,7 @@ export const HomeNav = ({ userId }) => {
 
   return (
     <>
-      <div className="navbar">
+      <div onFocus={toggleDropdown} className="navbar">
         <div className="navbar-start">
           <Link href="/HomePage" className="p-2">
             <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100} />
