@@ -7,9 +7,12 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
   const handleClick = async (followId) => {
     if (isFollowing) {
       try {
-        const response = await fetch(`http://localhost:3001/api/users/${userId}/${followId}/unfollow`, {
-          method: 'POST',
-        })
+        const response = await fetch(
+          `http://gamegrid-server.onrender.com/api/users/${userId}/${followId}/unfollow`,
+          {
+            method: 'POST',
+          }
+        )
         const data = await response.json()
         setIsFollowing(false) // Update the state
       } catch (error) {
@@ -17,9 +20,12 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
       }
     } else {
       try {
-        const response = await fetch(`http://localhost:3001/api/users/${userId}/${followId}/follow`, {
-          method: 'POST',
-        })
+        const response = await fetch(
+          `http://gamegrid-server.onrender.com/api/users/${userId}/${followId}/follow`,
+          {
+            method: 'POST',
+          }
+        )
         const data = await response.json()
         setIsFollowing(true) // Update the state
       } catch (error) {
