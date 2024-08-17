@@ -34,7 +34,7 @@ export default function ProfilePage({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+        const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -89,7 +89,7 @@ export default function ProfilePage({ params }) {
     const inputPassword = document.getElementById('passwordInput')
     let userPassword = ''
     try {
-      const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+      const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -103,7 +103,7 @@ export default function ProfilePage({ params }) {
     }
     if (inputPassword.value === userPassword) {
       try {
-        const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/delete`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/delete`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -138,9 +138,12 @@ export default function ProfilePage({ params }) {
     reader.readAsDataURL(file)
   }
   const deleteAvatar = async () => {
-    const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/avatar/remove`, {
-      method: 'DELETE',
-    })
+    const response = await fetch(
+      `https://gamegrid-server.onrender.com/api/users/${params.id}/avatar/remove`,
+      {
+        method: 'DELETE',
+      }
+    )
     if (response.ok) {
       uploadAvatar()
     }
@@ -149,10 +152,13 @@ export default function ProfilePage({ params }) {
     const formData = new FormData()
     formData.append('image', userData.avatar)
 
-    const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/avatar/upload`, {
-      method: 'POST',
-      body: formData,
-    })
+    const response = await fetch(
+      `https://gamegrid-server.onrender.com/api/users/${params.id}/avatar/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    )
 
     const data = await response.json()
 
@@ -247,7 +253,7 @@ export default function ProfilePage({ params }) {
       window.location.href = '/HomePage/Profile/' + params.id
     }
 
-    const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/update`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

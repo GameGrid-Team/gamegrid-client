@@ -22,7 +22,7 @@ export default function Login() {
     //delay for loading components
     // await new Promise((resolve) => setTimeout(resolve, 2000))
     // שליחת בקשת POST לשרת
-    const response = await fetch(`http://gamegrid-server.onrender.com/api/login/${input}`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/login/${input}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

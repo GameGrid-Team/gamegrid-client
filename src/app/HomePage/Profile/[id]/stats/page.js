@@ -11,14 +11,14 @@ export default function ProfileStats({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+        const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
         const user = await userResponse.json()
 
         const postsResponse = await fetch(
-          `http://gamegrid-server.onrender.com/api/posts/${params.id}/posts`,
+          `https://gamegrid-server.onrender.com/api/posts/${params.id}/posts`,
           {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

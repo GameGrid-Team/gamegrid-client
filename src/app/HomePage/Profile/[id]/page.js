@@ -18,11 +18,11 @@ export default function ProfilePage({ params }) {
       setUserId(id)
       try {
         const [userResponse, followingResponse] = await Promise.all([
-          fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+          fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           }),
-          fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/list/following`, {
+          fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/list/following`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
           }),

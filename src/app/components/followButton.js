@@ -8,7 +8,7 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
     if (isFollowing) {
       try {
         const response = await fetch(
-          `http://gamegrid-server.onrender.com/api/users/${userId}/${followId}/unfollow`,
+          `https://gamegrid-server.onrender.com/api/users/${userId}/${followId}/unfollow`,
           {
             method: 'POST',
           }
@@ -21,7 +21,7 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
     } else {
       try {
         const response = await fetch(
-          `http://gamegrid-server.onrender.com/api/users/${userId}/${followId}/follow`,
+          `https://gamegrid-server.onrender.com/api/users/${userId}/${followId}/follow`,
           {
             method: 'POST',
           }

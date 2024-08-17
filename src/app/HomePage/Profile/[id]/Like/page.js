@@ -10,7 +10,7 @@ export default function ProfileLike({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })

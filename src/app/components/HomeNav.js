@@ -17,7 +17,7 @@ export const HomeNav = ({ userId }) => {
     const userResponse = async () => {
       try {
         if (userId) {
-          const response = await fetch(`http://gamegrid-server.onrender.com/api/users/${userId}/data`)
+          const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${userId}/data`)
           const userData = await response.json()
 
           if (response.ok) {
@@ -35,7 +35,7 @@ export const HomeNav = ({ userId }) => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `http://gamegrid-server.onrender.com/api/users/search?text=${encodeURIComponent(searchText)}`
+        `https://gamegrid-server.onrender.com/api/users/search?text=${encodeURIComponent(searchText)}`
       )
       const searchData = await response.json()
 

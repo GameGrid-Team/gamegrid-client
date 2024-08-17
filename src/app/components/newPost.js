@@ -52,7 +52,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`http://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function NewPost() {
         ImageData.append('image', imageFile)
 
         const imageResponse = await fetch(
-          `http://gamegrid-server.onrender.com/api/posts/${data.post_id}/files/upload`,
+          `https://gamegrid-server.onrender.com/api/posts/${data.post_id}/files/upload`,
           {
             method: 'POST',
             body: ImageData,
