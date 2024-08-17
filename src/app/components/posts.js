@@ -206,7 +206,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
             'Content-Type': 'application/json',
           },
         })
-        sendNotification(userId, post.user_id, 'save')
+        sendNotification(post.user_id, userId, 'save')
       }
 
       const data = await response.json()
@@ -263,7 +263,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
         },
         body: JSON.stringify(sharePostData),
       })
-      sendNotification(userId, post.user_id, 'share')
+      sendNotification(post.user_id, userId, 'share')
 
       const data = await response.json()
       if (response.ok) {
@@ -392,7 +392,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
           }
         )
         const data = await response.json()
-        sendNotification(userId, post.user_id, 'like')
+        sendNotification(post.user_id, userId, 'like')
 
         if (!response.ok) {
           throw new Error(data.error || 'Failed to update like status')
