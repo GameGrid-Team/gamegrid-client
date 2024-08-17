@@ -22,7 +22,7 @@ This is the client-side application for GameGrid, a social network for gamers. I
 ### Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/nextjs-client.git
+    git clone https://github.com/yourusername/nextjs-client.git](https://github.com/GameGrid-Team/gamegrid-client
     cd nextjs-client
     ```
 
