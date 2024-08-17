@@ -13,7 +13,6 @@ export default function Home() {
         </div>
       </div>
       <div>
-        
         <h1 className="font-display p-1 relative top-[-165px] -py-1 -mt-20 items-center justify-center text-4xl font-extrabold text-transparent bg-clip-text bg-emerald-100 from-white via-gray-400 to-zinc-100 ">
           Welcome to the GameGrid!
           <br />
@@ -25,13 +24,13 @@ export default function Home() {
       <nav className="flex-auto space-x-20 py-2 px-0">
         <Link
           href="/login"
-          className="shadow-lg top-[-70px] h-8 px-8 font-semibold bg-green-800 rounded-md text-white"
+          className=" px-10 py-5 font-semibold text-2xl rounded-md text-white bg-green-600 shadow-lg hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 ease-in-out"
         >
           Sign in
         </Link>
         <Link
           href="/register"
-          className="shadow-lg h-12 px-8 font-semibold rounded-md border-spacing-6 text-white bg-green-800"
+          className=" px-10 py-5 font-semibold text-2xl rounded-md text-white bg-green-600 shadow-lg hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 ease-in-out"
         >
           Register
         </Link>
