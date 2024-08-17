@@ -27,10 +27,13 @@ export const HomeNav = ({ userId }) => {
           if (response.ok) {
             setUsername(userData.nickname)
             setAvatarPreview(userData.avatar)
-            const userResponse = await fetch(`http://localhost:3001/api/users/${userId}/data`, {
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' },
-            })
+            const userResponse = await fetch(
+              `https://gamegrid-server.onrender.com/api/users/${userId}/data`,
+              {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+              }
+            )
             const user = await userResponse.json()
             const notList = user.notification.map((notification) => notification.message)
             setNotifyList(notList)
@@ -92,7 +95,7 @@ export const HomeNav = ({ userId }) => {
 
   const toggleDropdown = async () => {
     try {
-      const userResponse = await fetch(`http://localhost:3001/api/users/${userId}/data`, {
+      const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${userId}/data`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -111,10 +114,13 @@ export const HomeNav = ({ userId }) => {
 
   const clearNotification = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${userId}/notification/clear`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      })
+      const response = await fetch(
+        `https://gamegrid-server.onrender.com/api/users/${userId}/notification/clear`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
       setNumNotify(0)
     } catch (error) {
       console.error(error)

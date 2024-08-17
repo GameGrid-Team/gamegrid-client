@@ -22,7 +22,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
 
   async function sendNotification(user, clickedId, notType) {
     const response2 = await fetch(
-      `http://localhost:3001/api/users/${user}/${clickedId}/notification/${notType}`,
+      `https://gamegrid-server.onrender.com/api/users/${user}/${clickedId}/notification/${notType}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
