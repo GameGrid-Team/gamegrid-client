@@ -22,8 +22,7 @@ This is the client-side application for GameGrid, a social network for gamers. I
 ### Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/nextjs-client.git
-    cd nextjs-client
+    git clone https://github.com/GameGrid-Team/gamegrid-client
     ```
 
 2. Install dependencies:
@@ -60,9 +59,4 @@ This is the client-side application for GameGrid, a social network for gamers. I
     ```sh
     npm run test
     ```
-
-## More Explanations About Using Our Project
-- The client application communicates with the server for dynamic content.
-- The login page is a template for future authentication features.
-- The about page content is fetched from the server.
 

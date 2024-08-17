@@ -28,6 +28,13 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
         )
         const data = await response.json()
         setIsFollowing(true) // Update the state
+        const responseNotify = await fetch(
+          `http://localhost:3001/api/users/${followId}/${userId}/notification/follow`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
       } catch (error) {
         console.error('Error following user:', error)
       }

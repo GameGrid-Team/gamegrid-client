@@ -20,6 +20,17 @@ export default function Posts({ keyPost, item = null, category = null }) {
   const [isLoading, setIsLoading] = useState(true)
   const [userId, setUserId] = useState(null) // Add state for userId
 
+  async function sendNotification(user, clickedId, notType) {
+    const response2 = await fetch(
+      `http://localhost:3001/api/users/${user}/${clickedId}/notification/${notType}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+    const data2 = await response2.json()
+  }
+
   const fetchPosts = async () => {
     try {
       if (keyPost === 'following') {
@@ -201,6 +212,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
             'Content-Type': 'application/json',
           },
         })
+        sendNotification(post.user_id, userId, 'save')
       }
 
       const data = await response.json()
@@ -260,6 +272,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
 
       const data = await response.json()
       if (response.ok) {
+        sendNotification(posts[postIndex].user_id, userId, 'shared')
         setSharePost({ shared_post: { original_owner: '', original_post: '' } })
         updatedPosts[postIndex] = {
           ...updatedPosts[postIndex],
@@ -275,6 +288,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
 
     // Update the local state
     setPosts(updatedPosts)
+    // sleep(5000)
     location.reload()
   }
 
@@ -384,8 +398,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
             },
           }
         )
-
         const data = await response.json()
+        sendNotification(post.user_id, userId, 'like')
 
         if (!response.ok) {
           throw new Error(data.error || 'Failed to update like status')
