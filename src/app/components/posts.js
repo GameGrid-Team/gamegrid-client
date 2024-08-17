@@ -20,6 +20,17 @@ export default function Posts({ keyPost, item = null, category = null }) {
   const [isLoading, setIsLoading] = useState(true)
   const [userId, setUserId] = useState(null) // Add state for userId
 
+  async function sendNotification(user, clickedId, notType) {
+    const response2 = await fetch(
+      `http://localhost:3001/api/users/${user}/${clickedId}/notification/${notType}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+    const data2 = await response2.json()
+  }
+
   const fetchPosts = async () => {
     try {
       if (keyPost === 'following') {
@@ -195,6 +206,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
             'Content-Type': 'application/json',
           },
         })
+        sendNotification(userId, post.user_id, 'save')
       }
 
       const data = await response.json()
@@ -251,6 +263,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
         },
         body: JSON.stringify(sharePostData),
       })
+      sendNotification(userId, post.user_id, 'share')
 
       const data = await response.json()
       if (response.ok) {
@@ -378,8 +391,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
             },
           }
         )
-
         const data = await response.json()
+        sendNotification(userId, post.user_id, 'like')
 
         if (!response.ok) {
           throw new Error(data.error || 'Failed to update like status')
