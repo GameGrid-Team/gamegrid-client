@@ -11,7 +11,6 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
           method: 'POST',
         })
         const data = await response.json()
-        console.log('Unfollow response:', data)
         setIsFollowing(false) // Update the state
       } catch (error) {
         console.error('Error unfollowing user:', error)
@@ -22,7 +21,6 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
           method: 'POST',
         })
         const data = await response.json()
-        console.log('Follow response:', data)
         setIsFollowing(true) // Update the state
       } catch (error) {
         console.error('Error following user:', error)

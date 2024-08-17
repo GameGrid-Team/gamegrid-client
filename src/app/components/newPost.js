@@ -62,8 +62,6 @@ export default function NewPost() {
 
     const data = await response.json()
     if (response.ok) {
-      console.log('data:', data)
-
       if (imageFile) {
         const ImageData = new FormData()
         ImageData.append('image', imageFile)
@@ -75,9 +73,7 @@ export default function NewPost() {
 
         const imageResponseData = await imageResponse.json()
         if (imageResponse.ok) {
-          console.log('Image uploaded successfully:', imageResponseData)
         } else {
-          console.log('Image upload failed:', imageResponseData.error)
         }
       }
 
@@ -93,7 +89,6 @@ export default function NewPost() {
       location.reload()
     } else {
       alert(JSON.stringify(data))
-      console.log('Post failed to upload:', data.error)
     }
   }
 

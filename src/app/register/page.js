@@ -43,7 +43,7 @@ export default function Register() {
   }
 
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[A-Z]).{1,8}$/
+    const passwordRegex = /^(?=.*[A-Z]).{8,16}$/
     return passwordRegex.test(password)
   }
 
@@ -53,21 +53,17 @@ export default function Register() {
     const { confirmPassword, ...dataToSend } = formData
 
     if (!validatePassword(formData.password)) {
-      alert(
-        'Password must be at most 8 characters long and contain at least one uppercase letter and at least must contain one symbol.'
-      )
+      document.getElementById('alert-fail-pass').showModal()
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
       document.getElementById('alert-fail-pass-match').showModal()
-      // alert('Passwords do not match.')
       return
     }
     const age = calculateAge(formData.birth_date)
     if (age < 16) {
       document.getElementById('alert-age-limit').showModal()
-      // alert('Must be over 16 years old')
       return
     }
     // שליחת בקשת POST לשרת
@@ -82,11 +78,9 @@ export default function Register() {
     const data = await response.json()
 
     if (response.ok) {
-      console.log('Registration successful:', data)
       // ניתוב לדף הבית לאחר הצלחה
       window.location.href = '/' ////////////////////
     } else {
-      console.log('Registration failed:', data)
       if (data.emailCheck === 1) {
         const emailInput = document.getElementById('email')
         emailInput.placeholder = 'Email is taken'
@@ -102,9 +96,7 @@ export default function Register() {
     }
   }
 
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In')
-  }
+  const handleGoogleSignIn = () => {}
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
@@ -259,6 +251,7 @@ export default function Register() {
         </form>
         <AlertDialog text={'Passwords do not match!'} type={'fail-pass-match'} />
         <AlertDialog text={'Must be over 16 years old'} type={'age-limit'} />
+        <AlertDialog text={'Password lenfth 8-16, incluide upercase and simbol.'} type={'fail-pass'} />
       </div>
     </main>
   )
