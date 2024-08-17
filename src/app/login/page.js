@@ -103,12 +103,6 @@ export default function Login() {
                 </button>
               </Link>
             </div>
-            <button
-              type="button"
-              className="w-full py-3 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring focus:ring-green-500"
-            >
-              Forget My Password?
-            </button>
           </form>
         </div>
       </main>
