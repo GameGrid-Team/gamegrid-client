@@ -154,28 +154,28 @@ export default function ProfilePage({ params }) {
           <ul>
             {following.length > 0 ? (
               following.map((follower) => (
-                <li key={follower._id}>
+                <li key={follower?._id}>
                   {/* outer div */}
                   <div className=" justify-between flex items-center mb-3">
                     {/* link names and avatar */}
                     <div className="flex items-center">
-                      <Link href={`/HomePage/Profile/${follower._id}`}>
+                      <Link href={`/HomePage/Profile/${follower?._id}`}>
                         <Image
-                          src={follower.avatar}
-                          alt={follower.nickname}
+                          src={follower?.avatar}
+                          alt={follower?.nickname}
                           width={10000000}
                           height={1000000}
                           className="rounded-full w-14 h-14"
                         />
                       </Link>
-                      <Link href={`/HomePage/Profile/${follower._id}`}>
+                      <Link href={`/HomePage/Profile/${follower?._id}`}>
                         <p
-                          title={follower.nickname.length > 10 ? follower.nickname : ''}
+                          title={follower?.nickname.length > 10 ? follower?.nickname : ''}
                           className="text-lg font-medium pl-4 pr-4"
                         >
-                          {follower.nickname.length > 12
-                            ? `${follower.nickname.slice(0, 12)}...`
-                            : follower.nickname}
+                          {follower?.nickname.length > 12
+                            ? `${follower?.nickname.slice(0, 12)}...`
+                            : follower?.nickname}
                         </p>
                       </Link>
                     </div>
@@ -186,8 +186,8 @@ export default function ProfilePage({ params }) {
                     <div className=" bg-sky-800">
                       <FollowButton
                         userId={userId}
-                        followId={follower._id}
-                        initialIsFollowing={follower.social.followers.includes(userId)}
+                        followId={follower?._id}
+                        initialIsFollowing={follower?.social.followers.includes(userId)}
                       />
                     </div>
                   </div>
