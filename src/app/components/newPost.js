@@ -88,7 +88,6 @@ export default function NewPost() {
         image: null,
       })
       setImagePreview(null) // Clear the image preview
-      alert(JSON.stringify(data))
       location.reload()
     } else {
       alert(JSON.stringify(data))

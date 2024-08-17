@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import LoadingOverlay from '@/app/components/loading'
 import AlertDialog from '@/app/components/Alerts'
-
+import { logoutbtn } from '../../../../actions'
 export default function ProfilePage({ params }) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -101,6 +101,8 @@ export default function ProfilePage({ params }) {
     } catch (error) {
       console.error('Error ', error)
     }
+    console.log('1 ', inputPassword.value)
+    console.log('2 ', userPassword)
     if (inputPassword.value === userPassword) {
       try {
         const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/delete`, {
@@ -108,12 +110,15 @@ export default function ProfilePage({ params }) {
           headers: { 'Content-Type': 'application/json' },
         })
         const data = await response.json()
-
         if (response.ok) {
           document.getElementById('confirm_modal').close()
           document.getElementById('alert-success').showModal()
           await sleep(2000)
-          window.location.href = '/'
+          console.log('1 waddadw ')
+          logoutbtn().then(async () => {
+            console.log('2 waddadw ')
+            window.location.href = '/'
+          })
         }
       } catch (error) {
         console.error('Error deleting user data:', error)
@@ -226,7 +231,7 @@ export default function ProfilePage({ params }) {
         return
       }
     }
-    if (!inURL.value !== '') {
+    if (inURL.value !== '') {
       if (await !isValidUrl(inURL.value)) {
         inURL.placeholder = 'URL not valid'
         inURL.value = ''
