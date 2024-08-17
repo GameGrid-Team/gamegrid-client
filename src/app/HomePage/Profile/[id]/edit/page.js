@@ -178,6 +178,18 @@ export default function ProfilePage({ params }) {
 
     return age
   }
+  function isValidUrl(url) {
+    const pattern = new RegExp(
+      '^(https?:\\/\\/)?' + // protocol
+        '(www\\.)?' + // www (optional)
+        '(instagram\\.com|facebook\\.com)' + // domain (only Instagram and Facebook)
+        '(/[a-zA-Z0-9@:%_\\+.~#?&//=]*)?$',
+      'i' // path (optional)
+    )
+
+    return pattern.test(url)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -200,6 +212,29 @@ export default function ProfilePage({ params }) {
       document.getElementById('alert-age-limit').showModal()
       // alert('Must be over 16 years old')
       return
+    }
+
+    const fbURL = document.getElementById('fbURL')
+    const inURL = document.getElementById('inURL')
+    // alert(!checkURLExists(fbURL.value))
+
+    if (fbURL.value !== '') {
+      if (await !isValidUrl(fbURL.value)) {
+        fbURL.placeholder = 'URL not valid'
+        fbURL.value = ''
+        fbURL.style.borderColor = '#c72522'
+        fbURL.style.borderWidth = '4px'
+        return
+      }
+    }
+    if (!inURL.value !== '') {
+      if (await !isValidUrl(inURL.value)) {
+        inURL.placeholder = 'URL not valid'
+        inURL.value = ''
+        inURL.style.borderColor = '#c72522'
+        inURL.style.borderWidth = '4px'
+        return
+      }
     }
 
     const changedData = {}
@@ -393,6 +428,7 @@ export default function ProfilePage({ params }) {
                   Facebook
                 </label>
                 <input
+                  id="fbURL"
                   type="text"
                   name="facebook"
                   value={userData.facebook}
@@ -405,6 +441,7 @@ export default function ProfilePage({ params }) {
                   Instagram
                 </label>
                 <input
+                  id="inURL"
                   type="text"
                   name="instagram"
                   value={userData.instagram}
