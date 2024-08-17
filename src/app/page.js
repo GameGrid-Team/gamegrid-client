@@ -1,8 +1,24 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
 import Header from './components/Header'
+import { getSessionData } from './actions'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
+  const [userId, setUserId] = useState(null) // Add state for userId
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const id = await getSessionData()
+        setUserId(id) // Set userId once it is resolved
+      } catch (error) {
+        console.error('Error fetching user ID:', error)
+      }
+    }
+    fetchUserId()
+  }, [])
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className=" bgrid grid-flow-col grid-rows-2 grid-cols-3 ">
@@ -23,7 +39,7 @@ export default function Home() {
       </div>
       <nav className="flex-auto space-x-20 py-2 px-0">
         <Link
-          href="/login"
+          href={!userId ? '/login' : '/HomePage'}
           className=" px-10 py-5 font-semibold text-2xl rounded-md text-white bg-green-600 shadow-lg hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 ease-in-out"
         >
           Sign in
