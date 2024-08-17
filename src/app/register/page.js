@@ -78,11 +78,9 @@ export default function Register() {
     const data = await response.json()
 
     if (response.ok) {
-      console.log('Registration successful:', data)
       // ניתוב לדף הבית לאחר הצלחה
       window.location.href = '/' ////////////////////
     } else {
-      console.log('Registration failed:', data)
       if (data.emailCheck === 1) {
         const emailInput = document.getElementById('email')
         emailInput.placeholder = 'Email is taken'
@@ -98,9 +96,7 @@ export default function Register() {
     }
   }
 
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In')
-  }
+  const handleGoogleSignIn = () => {}
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">

@@ -33,7 +33,6 @@ export default function Posts({ keyPost, item = null, category = null }) {
         if (response.ok) {
           setPosts(data.posts_list)
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       }
 
@@ -49,11 +48,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
         if (response.ok) {
           let post_data = data.posts_list
 
-          console.log(':::', item, category)
           if (item !== null && category !== null) {
-            console.log(':::', item)
             let tag_posts = []
-            console.log(':::111', category)
             if (category === 'tags') {
               post_data.forEach((post) => {
                 if (typeof post.tags !== 'undefined' && post.tags.includes(item)) {
@@ -76,24 +72,10 @@ export default function Posts({ keyPost, item = null, category = null }) {
               })
               setPosts(tag_posts)
             }
-
-            // if (item !== null) {
-            //   console.log(':::', item)
-            //   let tag_posts = []
-            //   post_data.forEach((post) => {
-            //     console.log(':::111', post)
-            //     if (typeof post.tags !== 'undefined' && post.tags.includes(item)) {
-            //       tag_posts.push(post)
-            //     }
-            //   })
-
-            console.log(':::', tag_posts)
-            // setPosts(tag_posts)
           } else {
             setPosts(post_data)
           }
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       }
 
@@ -108,16 +90,11 @@ export default function Posts({ keyPost, item = null, category = null }) {
         if (response.ok) {
           let post_data = data.posts_list
 
-          // console.log(post_data)
           setPosts(post_data)
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       }
-
       if (keyPost === 'MySaved') {
-        // console.log(data)
-
         const response = await fetch(`http://localhost:3001/api/posts/${userId}/saved`, {
           method: 'GET',
           headers: {
@@ -129,7 +106,6 @@ export default function Posts({ keyPost, item = null, category = null }) {
           let post_data = data.saved_post_list
           setPosts(post_data)
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       }
 
@@ -143,11 +119,9 @@ export default function Posts({ keyPost, item = null, category = null }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.liked_post_list
-          console.log(post_data)
 
           setPosts(post_data)
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       } else if (keyPost !== 'all' && keyPost !== 'MySaved') {
         const response = await fetch(`http://localhost:3001/api/posts/${keyPost}/posts`, {
@@ -159,10 +133,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
         const data = await response.json()
         if (response.ok) {
           let post_data = data.posts_list
-          // console.log(post_data)
           setPosts(post_data)
         } else {
-          console.log('Failed to fetch posts:', data.error)
         }
       }
     } catch (error) {
@@ -279,7 +251,6 @@ export default function Posts({ keyPost, item = null, category = null }) {
         },
         body: JSON.stringify(sharePostData),
       })
-      console.log(sharePostData)
 
       const data = await response.json()
       if (response.ok) {

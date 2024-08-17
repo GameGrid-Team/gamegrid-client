@@ -101,7 +101,6 @@ export default function ProfilePage({ params }) {
     } catch (error) {
       console.error('Error ', error)
     }
-    console.log(userPassword)
     if (inputPassword.value === userPassword) {
       try {
         const response = await fetch(`http://localhost:3001/api/users/${params.id}/delete`, {
@@ -111,7 +110,6 @@ export default function ProfilePage({ params }) {
         const data = await response.json()
 
         if (response.ok) {
-          console.log('Delete successfully', data)
           document.getElementById('confirm_modal').close()
           document.getElementById('alert-success').showModal()
           await sleep(2000)
@@ -212,7 +210,6 @@ export default function ProfilePage({ params }) {
 
     const fbURL = document.getElementById('fbURL')
     const inURL = document.getElementById('inURL')
-    // alert(!checkURLExists(fbURL.value))
 
     if (fbURL.value !== '') {
       if (await !isValidUrl(fbURL.value)) {
@@ -260,7 +257,6 @@ export default function ProfilePage({ params }) {
 
     const data = await response.json()
     if (response.ok) {
-      console.log('Update successful:', data)
       window.location.href = '/HomePage/Profile/' + params.id
     } else {
       if (data.message.includes('Nickname')) {
