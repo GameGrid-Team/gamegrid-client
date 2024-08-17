@@ -169,10 +169,19 @@ export default function ProfilePage({ params }) {
                         />
                       </Link>
                       <Link href={`/HomePage/Profile/${follower._id}`}>
-                        <p className="text-lg font-medium pl-4 pr-4">{follower.nickname}</p>
+                        <p
+                          title={follower.nickname.length > 10 ? follower.nickname : ''}
+                          className="text-lg font-medium pl-4 pr-4"
+                        >
+                          {follower.nickname.length > 12
+                            ? `${follower.nickname.slice(0, 12)}...`
+                            : follower.nickname}
+                        </p>
                       </Link>
                     </div>
-
+                    {/* <span title={user.nickname.length > 10 ? user.nickname : ''}>
+                            {user.nickname.length > 10 ? `${user.nickname.slice(0, 10)}...` : user.nickname}
+                          </span> */}
                     {/* follow button */}
                     <div className=" bg-sky-800">
                       <FollowButton

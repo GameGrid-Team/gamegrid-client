@@ -131,7 +131,9 @@ export const HomeNav = ({ userId }) => {
                           <Image src={user.avatar} width={48} height={48} className="object-cover" />
                         </div>
                         <div>
-                          <span className="font-semibold">{user.nickname}</span>
+                          <span title={user.nickname.length > 10 ? user.nickname : ''}>
+                            {user.nickname.length > 10 ? `${user.nickname.slice(0, 10)}...` : user.nickname}
+                          </span>
                         </div>
                       </Link>
                     </li>

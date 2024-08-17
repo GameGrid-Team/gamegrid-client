@@ -33,7 +33,9 @@ export default function FollowButton({ userId, followId, initialIsFollowing }) {
   return (
     <>
       <button
-        onClick={() => isFollowing? document.getElementById(`my_modal_${followId}`).showModal(): handleClick(followId)}
+        onClick={() =>
+          isFollowing ? document.getElementById(`my_modal_${followId}`).showModal() : handleClick(followId)
+        }
         disabled={followId === userId}
         className={`btn text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out ${
           isFollowing ? 'bg-red-600' : 'bg-green-600'
