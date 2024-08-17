@@ -7,7 +7,6 @@ import LoadingOverlay from '../components/loading'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faBookmark, faShare, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
-// import sendNotification from '../actions'
 
 export default function Posts({ keyPost, item = null, category = null }) {
   const [sharePost, setSharePost] = useState({

@@ -20,16 +20,3 @@ export async function getSessionData() {
   const encryptedSessionData = cookies().get('session')?.value
   return encryptedSessionData ? encryptedSessionData : null
 }
-
-export async function sendNotification(userId, clickedId, notType) {
-  const response = await fetch(
-    `http://localhost:3001/api/users/${userId}/${clickedId}/notification/${notType}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    }
-  )
-  const data = await response.json()
-  console.log('sssssssssssss')
-  return
-}
