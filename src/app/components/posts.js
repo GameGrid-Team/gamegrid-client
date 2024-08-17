@@ -504,7 +504,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
             key={index}
             className="px-2 py-1 text-sm text-white-800 bg-transparent border border-gray-800 rounded-md hover:bg-gray-200"
           >
-            {item}
+            {category === 'tags' ? '#' + item : item}
           </button>
         ))}
       </div>

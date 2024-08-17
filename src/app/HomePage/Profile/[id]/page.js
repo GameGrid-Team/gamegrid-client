@@ -149,26 +149,32 @@ export default function ProfilePage({ params }) {
         </div>
 
         {/* Following Section - Centered Vertically and Aligned to the Right */}
-        <div className=" w-80 bg-secondary shadow-md rounded-lg p-6 mb-8 absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
-          <h3 className="text-xl font-bold mb-4">Following:</h3>
+        <div className=" w-96 bg-secondary shadow-md rounded-lg p-6 mb-8 absolute right-0 top-1/2 transform -translate-y-1/2 mr-4 ">
+          <h3 className="text-xl font-bold mb-4">Following List</h3>
           <ul>
             {following.length > 0 ? (
               following.map((follower) => (
-                <li key={follower._id} className="mb-5">
-                  <div className="flex items-center">
-                    <Link href={`/HomePage/Profile/${follower._id}`}>
-                      <Image
-                        src={follower.avatar}
-                        alt={follower.nickname}
-                        width={100000}
-                        height={1000000}
-                        className="rounded-full mr-2 w-14 h-14"
-                      />
-                    </Link>
-                    <Link href={`/HomePage/Profile/${follower._id}`}>
-                      <p className="text-xl font-medium">{follower.nickname}</p>
-                    </Link>
-                    <div className="pl-10">
+                <li key={follower._id}>
+                  {/* outer div */}
+                  <div className=" justify-between flex items-center mb-3">
+                    {/* link names and avatar */}
+                    <div className="flex items-center">
+                      <Link href={`/HomePage/Profile/${follower._id}`}>
+                        <Image
+                          src={follower.avatar}
+                          alt={follower.nickname}
+                          width={10000000}
+                          height={1000000}
+                          className="rounded-full w-14 h-14"
+                        />
+                      </Link>
+                      <Link href={`/HomePage/Profile/${follower._id}`}>
+                        <p className="text-lg font-medium pl-4 pr-4">{follower.nickname}</p>
+                      </Link>
+                    </div>
+
+                    {/* follow button */}
+                    <div className=" bg-sky-800">
                       <FollowButton
                         userId={userId}
                         followId={follower._id}
