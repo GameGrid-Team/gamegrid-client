@@ -206,7 +206,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
             'Content-Type': 'application/json',
           },
         })
-        sendNotification(userId, post.user_id, 'save')
+        sendNotification(post.user_id, userId, 'save')
       }
 
       const data = await response.json()
@@ -263,10 +263,10 @@ export default function Posts({ keyPost, item = null, category = null }) {
         },
         body: JSON.stringify(sharePostData),
       })
-      sendNotification(userId, post.user_id, 'share')
 
       const data = await response.json()
       if (response.ok) {
+        await sendNotification(data.post_owner_id, userId, 'shared')
         setSharePost({ shared_post: { original_owner: '', original_post: '' } })
         updatedPosts[postIndex] = {
           ...updatedPosts[postIndex],
@@ -282,7 +282,8 @@ export default function Posts({ keyPost, item = null, category = null }) {
 
     // Update the local state
     setPosts(updatedPosts)
-    location.reload()
+    // sleep(5000)
+    // location.reload()
   }
 
   const handleDeleteClick = async (postId) => {
@@ -392,7 +393,7 @@ export default function Posts({ keyPost, item = null, category = null }) {
           }
         )
         const data = await response.json()
-        sendNotification(userId, post.user_id, 'like')
+        sendNotification(post.user_id, userId, 'like')
 
         if (!response.ok) {
           throw new Error(data.error || 'Failed to update like status')
