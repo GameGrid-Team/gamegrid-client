@@ -62,7 +62,6 @@ export const HomeNav = ({ userId }) => {
   }
   const handleLogout = () => {
     toast.success('Logged out successfully')
-
     logoutbtn().then(() => {
       window.location.href = '/'
     })
@@ -90,10 +89,9 @@ export const HomeNav = ({ userId }) => {
       setIsDropdownVisible(false)
     }
   }
-
-  const toggleDropdown = async () => {
+  async function refreshNotificationFunc() {
     try {
-      const userResponse = await fetch(`http://localhost:3001/api/users/${userId}/data`, {
+      const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${userId}/data`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -107,6 +105,12 @@ export const HomeNav = ({ userId }) => {
     } catch (error) {
       console.error(error)
     }
+  }
+  const refreshNotification = async () => {
+    refreshNotificationFunc()
+  }
+  const toggleDropdown = async () => {
+    refreshNotificationFunc()
     setIsDropdownOpen(!isDropdownOpen)
   }
 
@@ -125,7 +129,7 @@ export const HomeNav = ({ userId }) => {
 
   return (
     <>
-      <div className="navbar">
+      <div onFocus={refreshNotification} className="navbar">
         <div className="navbar-start">
           <Link href="/HomePage" className="p-2">
             <Image src="/GameGridonlylogo.png" alt="Logo" width={100} height={100} />
