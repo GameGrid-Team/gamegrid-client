@@ -488,9 +488,28 @@ export default function Posts({ keyPost, item = null, category = null }) {
     fetchOriginalPostsAndUserData()
   }, [posts])
 
+  async function refreshNotificationFunc() {
+    try {
+      const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${userId}/data`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const user = await userResponse.json()
+      const notList = user.notification.map((notification) => notification.message)
+
+      setNotifyList(notList)
+      setNumNotify(notList.length)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const refreshNotification = async () => {
+    refreshNotificationFunc()
+  }
+
   const ButtonList = ({ list, category }) => {
     return (
-      <div className="transparent flex space-x-2">
+      <div onFocus={refreshNotification} className="transparent flex space-x-2">
         {list.map((item, index) => (
           <button
             onClick={() => (window.location.href = `/HomePage/categories/${category}/${item}`)}
