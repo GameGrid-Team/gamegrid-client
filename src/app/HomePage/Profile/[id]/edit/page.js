@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import LoadingOverlay from '@/app/components/loading'
 import AlertDialog from '@/app/components/Alerts'
-
+import { logoutbtn } from '../../../../actions'
 export default function ProfilePage({ params }) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -34,7 +34,7 @@ export default function ProfilePage({ params }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
+        const userResponse = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -89,7 +89,7 @@ export default function ProfilePage({ params }) {
     const inputPassword = document.getElementById('passwordInput')
     let userPassword = ''
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${params.id}/data`, {
+      const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/data`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -101,19 +101,22 @@ export default function ProfilePage({ params }) {
     } catch (error) {
       console.error('Error ', error)
     }
+    console.log('1 ', inputPassword.value)
+    console.log('2 ', userPassword)
     if (inputPassword.value === userPassword) {
       try {
-        const response = await fetch(`http://localhost:3001/api/users/${params.id}/delete`, {
+        const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/delete`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
         })
         const data = await response.json()
-
         if (response.ok) {
           document.getElementById('confirm_modal').close()
           document.getElementById('alert-success').showModal()
           await sleep(2000)
-          window.location.href = '/'
+          logoutbtn().then(async () => {
+            window.location.href = '/'
+          })
         }
       } catch (error) {
         console.error('Error deleting user data:', error)
@@ -138,9 +141,12 @@ export default function ProfilePage({ params }) {
     reader.readAsDataURL(file)
   }
   const deleteAvatar = async () => {
-    const response = await fetch(`http://localhost:3001/api/users/${params.id}/avatar/remove`, {
-      method: 'DELETE',
-    })
+    const response = await fetch(
+      `https://gamegrid-server.onrender.com/api/users/${params.id}/avatar/remove`,
+      {
+        method: 'DELETE',
+      }
+    )
     if (response.ok) {
       uploadAvatar()
     }
@@ -149,10 +155,13 @@ export default function ProfilePage({ params }) {
     const formData = new FormData()
     formData.append('image', userData.avatar)
 
-    const response = await fetch(`http://localhost:3001/api/users/${params.id}/avatar/upload`, {
-      method: 'POST',
-      body: formData,
-    })
+    const response = await fetch(
+      `https://gamegrid-server.onrender.com/api/users/${params.id}/avatar/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    )
 
     const data = await response.json()
 
@@ -220,7 +229,7 @@ export default function ProfilePage({ params }) {
         return
       }
     }
-    if (!inURL.value !== '') {
+    if (inURL.value !== '') {
       if (await !isValidUrl(inURL.value)) {
         inURL.placeholder = 'URL not valid'
         inURL.value = ''
@@ -247,7 +256,7 @@ export default function ProfilePage({ params }) {
       window.location.href = '/HomePage/Profile/' + params.id
     }
 
-    const response = await fetch(`http://localhost:3001/api/users/${params.id}/update`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/users/${params.id}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

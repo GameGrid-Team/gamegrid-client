@@ -52,7 +52,7 @@ export default function NewPost() {
       return
     }
 
-    const response = await fetch(`http://localhost:3001/api/posts/${userId}/post/insert`, {
+    const response = await fetch(`https://gamegrid-server.onrender.com/api/posts/${userId}/post/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,10 +66,13 @@ export default function NewPost() {
         const ImageData = new FormData()
         ImageData.append('image', imageFile)
 
-        const imageResponse = await fetch(`http://localhost:3001/api/posts/${data.post_id}/files/upload`, {
-          method: 'POST',
-          body: ImageData,
-        })
+        const imageResponse = await fetch(
+          `https://gamegrid-server.onrender.com/api/posts/${data.post_id}/files/upload`,
+          {
+            method: 'POST',
+            body: ImageData,
+          }
+        )
 
         const imageResponseData = await imageResponse.json()
         if (imageResponse.ok) {
@@ -85,7 +88,6 @@ export default function NewPost() {
         image: null,
       })
       setImagePreview(null) // Clear the image preview
-      alert(JSON.stringify(data))
       location.reload()
     } else {
       alert(JSON.stringify(data))
