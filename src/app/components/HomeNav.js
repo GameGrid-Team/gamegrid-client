@@ -198,7 +198,7 @@ export const HomeNav = ({ userId }) => {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative" onFocus={toggleDropdown}>
           <button className="btn btn-ghost btn-circle" onClick={toggleDropdown} onChange={toggleDropdown}>
             <div className="indicator">
               <svg
