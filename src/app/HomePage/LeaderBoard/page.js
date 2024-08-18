@@ -11,7 +11,7 @@ export default function LeaderBoard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://gamegrid-server.onrender.com/api/users/leaderboard`) // Adjust the endpoint to your setup
+      const response = await fetch(`http://localhost:3001/api/users/leaderboard`) // Adjust the endpoint to your setup
       const data = await response.json()
       setUsers(data.users)
     }

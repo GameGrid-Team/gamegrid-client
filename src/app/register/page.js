@@ -67,7 +67,7 @@ export default function Register() {
       return
     }
     // שליחת בקשת POST לשרת
-    const response = await fetch(`https://gamegrid-server.onrender.com/api/users/insert`, {
+    const response = await fetch(`http://localhost:3001/api/users/insert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
